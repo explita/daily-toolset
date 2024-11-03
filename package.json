@@ -1,0 +1,45 @@
+{
+  "name": "daily-toolkit",
+  "version": "1.0.0",
+  "description": "A lightweight, versatile collection of TypeScript utility functions for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and more.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "keywords": [
+    "utility functions",
+    "TypeScript utilities",
+    "JavaScript utilities",
+    "common functions",
+    "helper functions",
+    "string utilities",
+    "array utilities",
+    "date utilities",
+    "object utilities",
+    "data validation",
+    "number utilities",
+    "npm utilities",
+    "React utilities",
+    "Next.js utilities",
+    "Node.js utilities",
+    "utility library",
+    "general purpose utilities",
+    "developer toolkit",
+    "ES6 helpers",
+    "typescript helpers",
+    "npm package"
+  ],
+  "author": "explita",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/explita/daily-toolkit"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
+  }
+}
