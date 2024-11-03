@@ -1,6 +1,20 @@
 export type InputObject = { [key: string]: string | number };
 export type TransformedObject = { [key: string]: string };
 
+/**
+ * Transforms an object with flattened key strings into a nested object.
+ *
+ * The method takes an object with key strings that can be in the format of
+ * "a.b.c", where "a" is the top-level key, "b" is the second level key, and
+ * "c" is the third level key. The method returns a new object with the same
+ * values, but where each key is replaced with a nested object.
+ *
+ * If the last part of the key string is numeric, the method will treat it as
+ * an array index. Otherwise, it will treat it as an object property.
+ *
+ * @param {Object} obj
+ * @returns {Object}
+ */
 export function transformObject(obj: InputObject): TransformedObject {
   const result: TransformedObject = {};
 

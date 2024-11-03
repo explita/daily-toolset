@@ -1,12 +1,12 @@
 {
   "name": "daily-toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight, versatile collection of TypeScript utility functions for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and more.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "babel src --out-dir dist --extensions \".js,.ts,.tsx\""
   },
   "keywords": [
     "utility functions",
@@ -35,11 +35,17 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/explita/daily-toolkit"
+    "url": "https://github.com/MrAlao/daily-toolkit"
   },
   "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@types/jest": "^29.5.14",
     "jest": "^29.7.0",
     "ts-jest": "^29.2.5"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
