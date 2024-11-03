@@ -33,7 +33,7 @@
     "npm package"
   ],
   "author": "explita",
-  "license": "ISC",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/MrAlao/daily-toolkit"
@@ -47,7 +47,8 @@
     "ts-jest": "^29.2.5"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "dependencies": {
     "rimraf": "^6.0.1"
