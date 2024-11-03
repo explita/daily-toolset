@@ -1,22 +1,36 @@
-export type InputObject = { [key: string]: string | number };
-export type TransformedObject = { [key: string]: string };
+export type ObjectTransformInput = { [key: string]: string | number };
+export type Transformed = { [key: string]: string };
 
 /**
- * Transforms an object with flattened key strings into a nested object.
+ * Transforms a flat object with dot-separated keys into a nested object structure.
  *
- * The method takes an object with key strings that can be in the format of
- * "a.b.c", where "a" is the top-level key, "b" is the second level key, and
- * "c" is the third level key. The method returns a new object with the same
- * values, but where each key is replaced with a nested object.
+ * The function takes an object with keys that may contain dot notation to represent
+ * nested structures and returns a new object with the corresponding nested structure.
+ * If a key part is numeric, it will be treated as an array index.
  *
- * If the last part of the key string is numeric, the method will treat it as
- * an array index. Otherwise, it will treat it as an object property.
+ * @param {ObjectTransformInput} obj - The input object with flat, dot-separated keys.
+ * @returns {Transformed} - The transformed object with nested structure.
  *
- * @param {Object} obj
- * @returns {Object}
+ * @throws {Error} Throws an error if the input is not an object or if the key structure is invalid.
+ *
+ * @example
+ * const input = {
+ *   "a.b": 1,
+ *   "a.c": 2,
+ *   "d": 3,
+ *   "e.0": 4,
+ *   "e.1": 5
+ * };
+ * const result = transformObject(input);
+ * console.log(result);
+ * // Output: { a: { b: 1, c: 2 }, d: 3, e: [4, 5] }
  */
-export function transformObject(obj: InputObject): TransformedObject {
-  const result: TransformedObject = {};
+export function transformObject(obj: ObjectTransformInput): Transformed {
+  if (!obj || typeof obj !== "object") {
+    throw new Error("Invalid input: Expected an object");
+  }
+
+  const result: Transformed = {};
 
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
@@ -27,25 +41,24 @@ export function transformObject(obj: InputObject): TransformedObject {
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
 
-      // Check if we're at the last part of the key
       if (i === parts.length - 1) {
         if (/^\d+$/.test(part)) {
-          // If the last part is numeric, we want to set it in an array
           if (!Array.isArray(current)) current = [];
           current[parseInt(part, 10)] = value;
         } else {
-          // Otherwise, set it as an object property
           current[part] = value;
         }
       } else {
         const nextPartIsNumeric = /^\d+$/.test(parts[i + 1]);
 
         if (!current[part]) {
-          // Create an array if the next part is numeric, otherwise an object
           current[part] = nextPartIsNumeric ? [] : {};
         }
 
-        // Traverse to the next level
+        if (typeof current[part] !== "object" || current[part] === null) {
+          throw new Error(`Invalid structure at key part: ${part}`);
+        }
+
         current = current[part];
       }
     }

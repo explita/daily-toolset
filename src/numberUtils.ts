@@ -17,7 +17,7 @@ export function randomNumber(length: number = 8): number {
  * @param calculateFrom The value to calculate the percentage from.
  * @returns The percentage as a number (0-100). If total is zero, returns 0.
  */
-export function getPercentage(total: number, calculateFrom: number): number {
+export function numberPercentage(total: number, calculateFrom: number): number {
   if (total === 0) return 0; // Avoid division by zero
   return calculateFrom ? (calculateFrom / total) * 100 : 0;
 }

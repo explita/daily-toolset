@@ -1,12 +1,35 @@
-/** Formats a date as 'YYYY-MM-DD' */
+/**
+ * Formats a date as a string in the format "YYYY-MM-DD"
+ *
+ * @param {Date} date The date to format
+ * @returns {string} The formatted date string
+ * @throws {TypeError} If the provided date is not a Date object
+ */
 export function formatDate(date: Date): string {
-  return date.toISOString().split("T")[0];
+  if (!(date instanceof Date)) {
+    throw new TypeError("Expected a Date object, but received " + typeof date);
+  }
+
+  const dateStr = date.toISOString();
+  const splitStr = dateStr.split("T");
+  if (splitStr.length !== 2) {
+    throw new Error("Unexpected ISO string format: " + dateStr);
+  }
+
+  return splitStr[0];
 }
 
-/** Calculates how long ago a date was from now in a friendly format */
-export function timeAgo(date: Date): string {
+export function timeAgo(date: Date | null | undefined): string {
+  if (date === null || date === undefined) {
+    throw new Error("date is null or undefined");
+  }
+
   const diff = Date.now() - date.getTime();
   const seconds = Math.floor(diff / 1000);
+
+  if (seconds < 0) {
+    throw new Error("date is in the future");
+  }
 
   if (seconds < 60) return `a few seconds ago`;
   const minutes = Math.floor(seconds / 60);

@@ -4,6 +4,7 @@
     "lib": ["ES2019", "DOM"],
     "declaration": true,
     "outDir": "./dist",
+    "declarationDir": "./dist/types",
     "strict": true,
     "module": "CommonJS",
     "esModuleInterop": true

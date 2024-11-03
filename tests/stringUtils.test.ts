@@ -38,13 +38,15 @@ test("addOrdinal should add an ordinal to a number", () => {
 });
 
 test("chunkSplit should split a string into chunks", () => {
-  expect(chunkSplit(123456789, 3, ",")).toBe("123,456,789");
+  expect(chunkSplit({ data: 123456789, groupSize: 3, separator: "," })).toBe(
+    "123,456,789"
+  );
 });
 
 test("uniqueString should generate a unique string", () => {
-  expect(uniqueString(16, true)).toHaveLength(16);
+  expect(uniqueString({ length: 16 })).toHaveLength(16);
 });
 
 test("", () => {
-  expect(formatCurrency(1234.56, "$")).toBe("$1,234.56");
+  expect(formatCurrency({ amount: 1234.56, currency: "$" })).toBe("$1,234.56");
 });

@@ -95,22 +95,29 @@ export function addOrdinal(num: number): string {
   return `${num}th`;
 }
 
+type ChunkSplitParams = {
+  data: number | string;
+  groupSize?: number;
+  separator?: string;
+};
+
 /**
- * Splits a number or string into chunks of a specified size, separated by a
- * separator string.
+ * Splits a number or string into chunks of a specified size, separated by a specified separator.
+ *
+ * @param {Object} params - The parameters for the function.
+ * @param {number|string} params.data - The number or string to split into chunks.
+ * @param {number} [params.groupSize=3] - The size of each chunk (default is 3).
+ * @param {string} [params.separator=" "] - The string used to separate chunks (default is a space).
+ * @returns {string} - The resulting string with chunks separated by the specified separator.
  *
  * @example
- * chunkSplit(123456789, 3, ",") // "123,456,789"
- * @param {number|string} data The number or string to split.
- * @param {number} [groupSize=3] The size of each chunk.
- * @param {string} [separator=" "] The separator string to use between chunks.
- * @returns {string}
+ * chunkSplit({ data: 123456789, groupSize: 3, separator: "," }) // "123,456,789"
  */
-export function chunkSplit(
-  data: number | string,
-  groupSize: number = 3,
-  separator: string = " "
-): string {
+export function chunkSplit({
+  data,
+  groupSize = 3,
+  separator = " ",
+}: ChunkSplitParams): string {
   const numberString = data.toString();
 
   const groups: string[] = [];
@@ -121,22 +128,15 @@ export function chunkSplit(
   return groups.join(separator);
 }
 
-/**
- * Generates a random string of a specified length, optionally with
- * characters suitable for a strong password.
- *
- * @example
- * uniqueString(16) // "jxdu6r7h3m4"
- * uniqueString(16, true) // "jxdu6r7h3m4!" (with password characters)
- * @param {number} [length=10] The length of the string to generate.
- * @param {boolean} [isPassword=false] Whether to include characters suitable
- *   for a strong password.
- * @returns {string} The generated random string.
- */
-export function uniqueString(
-  length: number = 10,
-  isPassword: boolean = false
-): string {
+type UniqueStringParams = {
+  length?: number;
+  isPassword?: boolean;
+};
+
+export function uniqueString({
+  length = 10,
+  isPassword = false,
+}: UniqueStringParams = {}): string {
   let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
   if (isPassword) {
@@ -152,18 +152,31 @@ export function uniqueString(
   return uniqueString;
 }
 
+type FormatCurrencyParams = {
+  amount: number;
+  currency?: string;
+};
+
 /**
- * Formats a number as a currency string, with optional currency symbol.
+ * Formats a given number as a currency string.
+ *
+ * The function takes an amount and an optional currency symbol.
+ * It returns the amount formatted with two decimal places and
+ * a thousands separator, prefixed with the specified currency symbol.
  *
  * @example
- * formatCurrency(1234.56, "$") // "$1,234.56"
- * formatCurrency(987654.32) // "987,654.32"
+ * formatCurrency({ amount: 1234.56, currency: "$" }) // "$1,234.56"
  *
- * @param {number} amount The amount to format as currency.
- * @param {string} [currency=""] The currency symbol to prepend to the formatted amount.
+ * @param {number} amount - The amount to format.
+ * @param {string} [currency=""] - The currency symbol to prefix.
  * @returns {string} The formatted currency string.
  */
-export function formatCurrency(amount: number, currency: string = ""): string {
+export function formatCurrency({
+  amount,
+  currency = "",
+}: FormatCurrencyParams): string {
+  if (!amount) return `${currency}0`;
+
   return `${currency}${amount.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

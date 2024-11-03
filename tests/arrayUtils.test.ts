@@ -16,14 +16,14 @@ test("uniqueArrayByKey", () => {
     { id: 1, name: "John" },
   ];
 
-  expect(uniqueArrayByKey(array, "id")).toEqual([
+  expect(uniqueArrayByKey({ array, key: "id" })).toEqual([
     { id: 1, name: "John" },
     { id: 2, name: "Jane" },
   ]);
 });
 
 test("chunk", () => {
-  expect(chunk([1, 2, 3, 4, 5, 6], 2)).toEqual([
+  expect(chunk({ array: [1, 2, 3, 4, 5, 6], size: 2 })).toEqual([
     [1, 2],
     [3, 4],
     [5, 6],
