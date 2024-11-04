@@ -1,5 +1,4 @@
 type FormatDateParams = {
-  date: Date;
   format?:
     | "YYYY-MM-DD"
     | "DD-MM-YYYY"
@@ -30,10 +29,10 @@ type FormatDateParams = {
  * @throws {Error} If the `format` parameter is not a supported format string.
  */
 
-export function formatDate({
-  date,
-  format = "DD/MM/YYYY",
-}: FormatDateParams): string {
+export function formatDate(
+  date: Date,
+  { format = "DD/MM/YYYY" }: FormatDateParams = {}
+): string {
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);
   }
@@ -80,7 +79,6 @@ export function formatDate({
   }
 }
 type FormatTimeParams = {
-  date: Date;
   format?: "HH:mm:ss" | "HH:mm" | "hh:mmA" | "hh:mm:ssA" | "HH:mm:ss.SSS";
 };
 
@@ -103,10 +101,10 @@ type FormatTimeParams = {
  * @throws {TypeError} If the `date` parameter is not a `Date` object.
  * @throws {Error} If the `format` parameter is not a supported format string.
  */
-export function formatTime({
-  date,
-  format = "hh:mmA",
-}: FormatTimeParams): string {
+export function formatTime(
+  date: Date,
+  { format = "hh:mmA" }: FormatTimeParams = {}
+): string {
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);
   }
@@ -139,7 +137,6 @@ export function formatTime({
 }
 
 type FormatDateAndTimeParams = {
-  date: Date;
   dateFormat?: FormatDateParams["format"];
   timeFormat?: FormatTimeParams["format"];
   seperator?: string;
@@ -158,18 +155,20 @@ type FormatDateAndTimeParams = {
  * @returns {string} A `string` representing the formatted date and time.
  * @throws {TypeError} If the `date` parameter is not a `Date` object.
  */
-export function formatDateTime({
-  date,
-  dateFormat = "DD/MM/YYYY",
-  timeFormat = "hh:mmA",
-  seperator = " | ",
-}: FormatDateAndTimeParams): string {
+export function formatDateTime(
+  date: Date,
+  {
+    dateFormat = "DD/MM/YYYY",
+    timeFormat = "hh:mmA",
+    seperator = " | ",
+  }: FormatDateAndTimeParams = {}
+): string {
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);
   }
 
-  const formattedDate = formatDate({ date, format: dateFormat });
-  const formattedTime = formatTime({ date, format: timeFormat });
+  const formattedDate = formatDate(date, { format: dateFormat });
+  const formattedTime = formatTime(date, { format: timeFormat });
 
   return `${formattedDate}${seperator}${formattedTime}`;
 }

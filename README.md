@@ -15,7 +15,7 @@ Install the package via npm:
     import { chunkSplit, uniqueString, transformObject } from "daily-toolset";
 
     // Split a number into groups
-    console.log(chunkSplit({ data: 123456789, groupSize: 3, separator: "," })); // "123,456,789"
+    console.log(chunkSplit(123456789, { groupSize: 3, separator: "," })); // "123,456,789"
 
     // Generate a random password string
     console.log(uniqueString({ length: 12, isPassword: true })); // e.g., "A7*b8s@5Kd3!"
@@ -64,7 +64,7 @@ Install the package via npm:
 
 Splits a number or string into chunks of a specified size, separated by a specified string.
 
-> chunkSplit({ data: number | string, groupSize?: number = 3, separator?: string = " " }): string
+> chunkSplit(number | string, { groupSize?: number = 3, separator?: string = " " }): string
 
 - **Parameters**:
   - **data**: The number or string to split.
@@ -76,7 +76,7 @@ _Example:_
 
     import { chunkSplit } from "daily-toolset";
 
-    chunkSplit({ data: 123456789, groupSize: 3, separator: "," }); // "123,456,789"
+    chunkSplit(123456789, { groupSize: 3, separator: "," }); // "123,456,789"
 
 <br/>
 
@@ -575,11 +575,11 @@ _Example:_
 
 The `formatDate` function formats a JavaScript `Date` object into various string formats for different date representations.
 
-> formatDate({date:Date, format = "YYYY-MM-DD"}: FormatDateParams): string
+> formatDate(date:Date, { format = "DD/MM/YYYY"}: FormatDateParams): string
 
 - **Parameters**:
   - `date` (required): A `Date` object. If the argument passed is not a valid `Date`, a `TypeError` will be thrown.
-  - `format` (optional): A string specifying the desired output format. Defaults to `"YYYY-MM-DD"`.
+  - `format` (optional): A string specifying the desired output format. Defaults to `"DD/MM/YYYY"`.
 - **Returns**: A `string` representing the formatted date.
 
 **Supported Formats**
@@ -602,18 +602,16 @@ _Example:_
     const date = new Date("2024-01-01");
 
     // Using default format
-    console.log(formatDate(date)); // "2024-01-01"
+    console.log(formatDate(date)); // "01/01/2024"
 
     // Using various supported formats
-    console.log(formatDate({date, format:"YYYY-MM-DD"})); // "2024-01-01"
-    console.log(formatDate({date, format:"DD-MM-YYYY"})); // "01-01-2024"
-    console.log(formatDate({date, format:"MM-DD-YYYY"})); // "01-01-2024"
-    console.log(formatDate({date, format:"YYYY/MM/DD"})); // "2024/01/01"
-    console.log(formatDate({date, format:"DD/MM/YYYY"})); // "01/01/2024"
-    console.log(formatDate({date, format:"Month DD, YYYY"})); // "January 1, 2024"
-    console.log(formatDate({date, format:"DD Month YYYY"})); // "1 January 2024"
-
-<br/>
+    console.log(formatDate(date, { format:"YYYY-MM-DD"})); // "2024-01-01"
+    console.log(formatDate(date, { format:"DD-MM-YYYY"})); // "01-01-2024"
+    console.log(formatDate(date, { format:"MM-DD-YYYY"})); // "01-01-2024"
+    console.log(formatDate(date, { format:"YYYY/MM/DD"})); // "2024/01/01"
+    console.log(formatDate(date, { format:"DD/MM/YYYY"})); // "01/01/2024"
+    console.log(formatDate(date, { format:"Month DD, YYYY"})); // "January 1, 2024"
+    console.log(formatDate(date, { format:"DD Month YYYY"})); // "1 January 2024"
 
 <br/>
 
@@ -646,19 +644,19 @@ _Example:_
     const date = new Date();
 
     // Format time in 24-hour format with seconds
-    console.log(formatTime({ date, format: "HH:mm:ss" })); // Example: "14:30:15"
+    console.log(formatTime(date, { format: "HH:mm:ss" })); // Example: "14:30:15"
 
     // Format time in 12-hour format with AM/PM
-    console.log(formatTime({ date, format: "hh:mmA" })); // Example: "02:30PM"
+    console.log(formatTime(date, { format: "hh:mmA" })); // Example: "02:30PM"
 
     // Format time in 24-hour format without seconds
-    console.log(formatTime({ date, format: "HH:mm" })); // Example: "14:30"
+    console.log(formatTime(date, { format: "HH:mm" })); // Example: "14:30"
 
     // Format time in 12-hour format with seconds and AM/PM
-    console.log(formatTime({ date, format: "hh:mm:ssA" })); // Example: "02:30:15PM"
+    console.log(formatTime(date, { format: "hh:mm:ssA" })); // Example: "02:30:15PM"
 
     // Format time in 24-hour format with milliseconds
-    console.log(formatTime({ date, format: "HH:mm:ss.SSS" })); // Example: "14:30:15.123"
+    console.log(formatTime(date, { format: "HH:mm:ss.SSS" })); // Example: "14:30:15.123"
 
 <br/>
 
@@ -666,18 +664,17 @@ _Example:_
 
 The formatDateTime function formats a JavaScript Date object into a combined date and time string, using customizable date and time formats with a specified separator.
 
-> function formatDateTime({
-> date,
+> function formatDateTime(date, {
 > dateFormat = "YYYY-MM-DD",
 > timeFormat = "hh:mmA",
-> seperator = " ",
+> seperator = " | ",
 > }: FormatDateAndTimeParams): string
 
 - **Parameters**:
   - `date` (required): The Date object to format.
   - `dateFormat` (optional): A string specifying the date format. Defaults to `"YYYY-MM-DD"`.
   - `timeFormat` (optional): A string specifying the time format. Defaults to `"hh:mmA"`.
-  - `separator` (optional): A string used to separate the date and time portions. Defaults to a space `(" ")`.
+  - `separator` (optional): A string used to separate the date and time portions. Defaults to a space `(" | ")`.
 - **Returns**: A string representing the formatted time.
 
 **Supported Date Formats**
@@ -708,8 +705,7 @@ _Example:_
 
     const date = new Date();
 
-    const formattedDateTime = formatDateTime({
-      date,
+    const formattedDateTime = formatDateTime(date, {
       dateFormat: "DD Month YYYY",
       timeFormat: "HH:mm",
       separator: " at ",
@@ -824,6 +820,8 @@ _Example:_
 ## Type Safety
 
 All functions are designed with TypeScript's strong typing system to ensure type safety and prevent runtime errors. They leverage generics to maintain the integrity of the original value types while modifying them.
+
+<br/>
 
 ## Contributing
 

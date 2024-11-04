@@ -96,7 +96,6 @@ export function addOrdinal(num: number): string {
 }
 
 type ChunkSplitParams = {
-  data: number | string;
   groupSize?: number;
   separator?: string;
 };
@@ -113,11 +112,10 @@ type ChunkSplitParams = {
  * @example
  * chunkSplit({ data: 123456789, groupSize: 3, separator: "," }) // "123,456,789"
  */
-export function chunkSplit({
-  data,
-  groupSize = 3,
-  separator = " ",
-}: ChunkSplitParams): string {
+export function chunkSplit(
+  data: number | string,
+  { groupSize = 3, separator = " " }: ChunkSplitParams = {}
+): string {
   const numberString = data.toString();
 
   const groups: string[] = [];

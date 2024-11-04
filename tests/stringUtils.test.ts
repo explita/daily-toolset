@@ -38,7 +38,7 @@ test("addOrdinal should add an ordinal to a number", () => {
 });
 
 test("chunkSplit should split a string into chunks", () => {
-  expect(chunkSplit({ data: 123456789, groupSize: 3, separator: "," })).toBe(
+  expect(chunkSplit(123456789, { groupSize: 3, separator: "," })).toBe(
     "123,456,789"
   );
 });
