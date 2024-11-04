@@ -1,6 +1,13 @@
 type FormatDateParams = {
   date: Date;
-  format?: string;
+  format?:
+    | "YYYY-MM-DD"
+    | "DD-MM-YYYY"
+    | "MM-DD-YYYY"
+    | "YYYY/MM/DD"
+    | "DD/MM/YYYY"
+    | "Month DD, YYYY"
+    | "DD Month YYYY";
 };
 
 /**
@@ -71,6 +78,100 @@ export function formatDate({
     default:
       throw new Error("Unsupported format: " + format);
   }
+}
+type FormatTimeParams = {
+  date: Date;
+  format?: "HH:mm:ss" | "HH:mm" | "hh:mmA" | "hh:mm:ssA" | "HH:mm:ss.SSS";
+};
+
+/**
+ * Formats a `Date` object into a readable time string according to the given format.
+ *
+ * The following formats are supported:
+ *
+ * - `HH:mm:ss` (24-hour format with seconds)
+ * - `HH:mm` (24-hour format without seconds)
+ * - `hh:mmA` (12-hour format with AM/PM)
+ * - `hh:mm:ssA` (12-hour format with seconds and AM/PM)
+ * - `HH:mm:ss.SSS` (24-hour format with milliseconds)
+ *
+ * If an unsupported format string is provided, an error will be thrown with a message indicating the unsupported format.
+ *
+ * @param {Date} date The `Date` object to format.
+ * @param {string} [format="hh:mmA"] The format string to use.
+ * @returns {string} A `string` representing the formatted time.
+ * @throws {TypeError} If the `date` parameter is not a `Date` object.
+ * @throws {Error} If the `format` parameter is not a supported format string.
+ */
+export function formatTime({
+  date,
+  format = "hh:mmA",
+}: FormatTimeParams): string {
+  if (!(date instanceof Date)) {
+    throw new TypeError("Expected a Date object, but received " + typeof date);
+  }
+
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  const period = Number(hours) < 12 ? "AM" : "PM";
+
+  switch (format) {
+    case "HH:mm:ss":
+      return `${hours}:${minutes}:${seconds}`;
+    case "HH:mm":
+      return `${hours}:${minutes}`;
+    case "hh:mmA":
+      const hours12 =
+        hours === "00" ? "12" : String(Number(hours) % 12).padStart(2, "0");
+      return `${hours12}:${minutes}${period}`;
+    case "hh:mm:ssA":
+      const hours12Full =
+        hours === "00" ? "12" : String(Number(hours) % 12).padStart(2, "0");
+      return `${hours12Full}:${minutes}:${seconds}${period}`;
+    case "HH:mm:ss.SSS":
+      const milliseconds = String(date.getMilliseconds()).padStart(3, "0");
+      return `${hours}:${minutes}:${seconds}.${milliseconds}`;
+    default:
+      throw new Error("Unsupported format: " + format);
+  }
+}
+
+type FormatDateAndTimeParams = {
+  date: Date;
+  dateFormat?: FormatDateParams["format"];
+  timeFormat?: FormatTimeParams["format"];
+  seperator?: string;
+};
+
+/**
+ * Formats a `Date` object into a string combining both date and time according to specified formats.
+ *
+ * This function allows customization of the date and time formats and returns a single string
+ * that includes both, separated by a specified separator.
+ *
+ * @param {Date} date - The `Date` object to format.
+ * @param {string} [dateFormat="YYYY-MM-DD"] - The format string for the date portion.
+ * @param {string} [timeFormat="hh:mmA"] - The format string for the time portion.
+ * @param {string} [seperator=" "] - The separator to use between the formatted date and time.
+ * @returns {string} A `string` representing the formatted date and time.
+ * @throws {TypeError} If the `date` parameter is not a `Date` object.
+ */
+export function formatDateTime({
+  date,
+  dateFormat = "YYYY-MM-DD",
+  timeFormat = "hh:mmA",
+  seperator = " ",
+}: FormatDateAndTimeParams): string {
+  if (!(date instanceof Date)) {
+    throw new TypeError("Expected a Date object, but received " + typeof date);
+  }
+
+  const formattedDate = formatDate({ date, format: dateFormat });
+  const formattedTime = formatTime({ date, format: timeFormat });
+
+  return `${formattedDate}${seperator}${formattedTime}`;
 }
 
 /**

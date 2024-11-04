@@ -50,6 +50,8 @@ Install the package via npm:
 - [throttle](#throttle)
 - [delay](#delay)
 - [formatDate](#formatdate)
+- [formatTime](#formattime)
+- [formatDateTime](#formatdatetime)
 - [timeAgo](#timeago)
 - [uniqueArray](#uniquearray)
 - [uniqueArrayByKey](#uniquearraybykey)
@@ -610,6 +612,110 @@ _Example:_
     console.log(formatDate({date, format:"DD/MM/YYYY"})); // "01/01/2024"
     console.log(formatDate({date, format:"Month DD, YYYY"})); // "January 1, 2024"
     console.log(formatDate({date, format:"DD Month YYYY"})); // "1 January 2024"
+
+<br/>
+
+<br/>
+
+#### `formatTime`
+
+A utility function to format JavaScript `Date` objects into various time formats. This function provides several time formats and allows for 24-hour or 12-hour (AM/PM) representations.
+
+> function formatTime({ date: Date, format?: string }): string
+
+- **Parameters**:
+  - `date` (required): A JavaScript Date object to format.
+  - `format` (optional): A string specifying the time format. Default is "hh:mmA".
+- **Returns**: A string representing the formatted time.
+
+**Supported Formats**
+| Format | Description | Example Output |
+|-----------------|-------------------------------------------|-------------------|
+| `HH:mm:ss` | 24-hour format with seconds | `14:30:15` |
+| `HH:mm` | 24-hour format without seconds | `14:30` |
+| `hh:mmA` | 12-hour format with AM/PM | `02:30PM` |
+| `hh:mm:ssA` | 12-hour format with seconds and AM/PM | `02:30:15PM` |
+| `HH:mm:ss.SSS` | 24-hour format with milliseconds | `14:30:15.123` |
+
+<br/>
+
+_Example:_
+
+    import { formatTime } from "daily-toolset";
+
+    const date = new Date();
+
+    // Format time in 24-hour format with seconds
+    console.log(formatTime({ date, format: "HH:mm:ss" })); // Example: "14:30:15"
+
+    // Format time in 12-hour format with AM/PM
+    console.log(formatTime({ date, format: "hh:mmA" })); // Example: "02:30PM"
+
+    // Format time in 24-hour format without seconds
+    console.log(formatTime({ date, format: "HH:mm" })); // Example: "14:30"
+
+    // Format time in 12-hour format with seconds and AM/PM
+    console.log(formatTime({ date, format: "hh:mm:ssA" })); // Example: "02:30:15PM"
+
+    // Format time in 24-hour format with milliseconds
+    console.log(formatTime({ date, format: "HH:mm:ss.SSS" })); // Example: "14:30:15.123"
+
+<br/>
+
+#### `formatDateTime`
+
+The formatDateTime function formats a JavaScript Date object into a combined date and time string, using customizable date and time formats with a specified separator.
+
+> function formatDateTime({
+> date,
+> dateFormat = "YYYY-MM-DD",
+> timeFormat = "hh:mmA",
+> seperator = " ",
+> }: FormatDateAndTimeParams): string
+
+- **Parameters**:
+  - `date` (required): The Date object to format.
+  - `dateFormat` (optional): A string specifying the date format. Defaults to `"YYYY-MM-DD"`.
+  - `timeFormat` (optional): A string specifying the time format. Defaults to `"hh:mmA"`.
+  - `separator` (optional): A string used to separate the date and time portions. Defaults to a space `(" ")`.
+- **Returns**: A string representing the formatted time.
+
+**Supported Date Formats**
+Refer to `formatDate` for supported date formats:
+
+- `"YYYY-MM-DD"` → `2023-10-25`
+- `"DD-MM-YYYY"` → `25-10-2023`
+- `"MM-DD-YYYY"` → `10-25-2023`
+- `"YYYY/MM/DD"` → `2023/10/25`
+- `"DD/MM/YYYY"` → `25/10/2023`
+- `"Month DD, YYYY"` → `October 25, 2023`
+- `"DD Month YYYY"` → `25 October 2023`
+
+**Supported Time Formats**
+Refer to `formatTime` for supported time formats:
+
+- `"HH:mm:ss"` → `14:30:15`
+- `"HH:mm"` → `14:30`
+- `"hh:mmA"` → `02:30PM`
+- `"hh:mm:ssA"` → `02:30:15PM`
+- `"HH:mm:ss.SSS"` → `14:30:15.123`
+
+<br/>
+
+_Example:_
+
+    import { formatDateTime } from "daily-toolset";
+
+    const date = new Date();
+
+    const formattedDateTime = formatDateTime({
+      date,
+      dateFormat: "DD Month YYYY",
+      timeFormat: "HH:mm",
+      separator: " at ",
+    });
+
+    console.log(formattedDateTime); // e.g., "25 October 2023 at 14:30"
 
 <br/>
 

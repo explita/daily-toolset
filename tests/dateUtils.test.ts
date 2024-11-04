@@ -1,4 +1,4 @@
-import { formatDate, timeAgo } from "../src/dateUtils";
+import { formatDate, formatTime, timeAgo } from "../src/dateUtils";
 
 describe("formatDate", () => {
   test("should return 'January 1, 2024' for a date", () => {
@@ -28,5 +28,33 @@ describe("timeAgo", () => {
     const date = new Date();
     date.setHours(date.getHours() - 1);
     expect(timeAgo(date)).toBe("1 hour ago");
+  });
+});
+
+describe("formatTime", () => {
+  test('should return "12:00AM" for a given date', () => {
+    expect(formatTime({ date: new Date() })).toBe("12:00AM");
+  });
+
+  test('should return "20:42:50" for a given date', () => {
+    expect(formatTime({ date: new Date(), format: "HH:mm:ss" })).toBe(
+      "20:42:50"
+    );
+  });
+
+  test('should return "20:43" for a given date', () => {
+    expect(formatTime({ date: new Date(), format: "HH:mm" })).toBe("20:43");
+  });
+
+  test('should return "08:45:34PM" for a given date', () => {
+    expect(formatTime({ date: new Date(), format: "hh:mm:ssA" })).toBe(
+      "08:45:34PM"
+    );
+  });
+
+  test('should return "20:47:3.555" for a given date', () => {
+    expect(formatTime({ date: new Date(), format: "HH:mm:ss.SSS" })).toBe(
+      "20:47:3.555"
+    );
   });
 });
