@@ -66,3 +66,65 @@ export function transformObject(obj: ObjectTransformInput): Transformed {
 
   return result;
 }
+
+type PickFromObjectParams<T extends Record<string, any>, K extends keyof T> = {
+  obj: T | undefined;
+  keys: K[];
+};
+
+export function pickFromObject<
+  T extends Record<string, any>,
+  K extends keyof T
+>({ obj, keys }: PickFromObjectParams<T, K>): Pick<T, K> {
+  if (!obj) return {} as Pick<T, K>;
+
+  const result = {} as Pick<T, K>;
+  keys.forEach((key) => {
+    if (key in obj) {
+      result[key] = obj[key];
+    }
+  });
+  return result;
+}
+
+type OmitFromObjectParams<T extends Record<string, any>, K extends keyof T> = {
+  obj: T | undefined;
+  keys: K[];
+};
+
+export function omitFromObject<
+  T extends Record<string, any>,
+  K extends keyof T
+>({ obj, keys }: OmitFromObjectParams<T, K>): Omit<T, K> {
+  if (!obj) return {} as Omit<T, K>;
+
+  const result = { ...obj };
+  keys.forEach((key) => {
+    if (key in result) {
+      delete result[key];
+    }
+  });
+  return result;
+}
+
+type PrependToObjectKeyReturn<T> = {
+  [P in keyof T as `${string}${string & P}`]: T[P];
+};
+
+export function prependToObjectKey<T extends Record<string, unknown>>(
+  obj: T | null | undefined,
+  key: string
+): PrependToObjectKeyReturn<T> {
+  if (!obj) {
+    return {} as PrependToObjectKeyReturn<T>; // Return an empty object if obj is null or undefined
+  }
+
+  const result: Record<string, T[keyof T]> = {};
+
+  Object.keys(obj).forEach((item) => {
+    const newKey = `${key}${item}` as keyof PrependToObjectKeyReturn<T>;
+    result[newKey] = obj[item as keyof T];
+  });
+
+  return result as PrependToObjectKeyReturn<T>;
+}

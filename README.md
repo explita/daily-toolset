@@ -186,6 +186,60 @@ _Example:_
     transformObject({ "a.b.c": "hello", "a.b.d": 42 });
     // { a: { b: { c: "hello", d: 42 } } }
 
+<br/>`pickFromObject`
+Creates a new object containing only the specified keys from the original object.
+
+> pickFromObject<T, K>(params: PickFromObjectParams<T, K>): Pick<T, K>
+
+- **Parameters**:
+  - `obj` (T | undefined): The original object from which keys will be picked.
+  - `keys` (K[]): An array of keys to pick from the object.
+- **Returns**: A new object containing only the picked keys.
+
+_Example:_
+
+    import { pickFromObject } from "daily-toolkit";
+
+    const original = { a: 1, b: 2, c: 3 };
+    const picked = pickFromObject({ obj: original, keys: ['a', 'c'] });
+    // Result: { a: 1, c: 3 }
+
+<br/>`omitFromObject`
+Creates a new object that excludes the specified keys from the original object.
+
+> omitFromObject<T, K>(params: OmitFromObjectParams<T, K>): Omit<T, K>
+
+- **Parameters**:
+  - `obj` (T | undefined): The original object from which keys will be omitted.
+  - `keys` (K[]): An array of keys to omit from the object.
+- **Returns**: A new object excluding the omitted keys.
+
+_Example:_
+
+    import { omitFromObject } from "daily-toolkit";
+
+    const original = { a: 1, b: 2, c: 3 };
+    const omitted = omitFromObject({ obj: original, keys: ['b'] });
+    // Result: { a: 1, c: 3 }
+
+<br/>`prependToObjectKey`
+Creates a new object by prepending a specified string to each key of the original object.
+
+> prependToObjectKey<T>(obj: T | null | undefined, key: string): PrependToObjectKeyReturn<T>
+
+- **Parameters**:
+  - (T | null | undefined): The original object whose keys will be modified.
+  - `key` (string): The string to prepend to each key.
+- **Returns**: A new object with modified keys.
+
+_Example:_
+
+    import { omitFromObject } from "daily-toolkit";
+
+    const original = { name: 'Alice', age: 30 };
+    const prepended = prependToObjectKey(original, 'user_');
+    // Result: { user_name: 'Alice', user_age: 30 }
+
 <br/>`isEmpty`
 Checks if a value is empty. Returns `true` for `null`, `undefined`, empty arrays, empty objects, or empty strings.
 
@@ -390,6 +444,7 @@ The `formatDate` function formats a JavaScript `Date` object into various string
 | `DD/MM/YYYY` | `01/01/2024` |
 | `Month DD, YYYY` | `January 1, 2024` |
 | `DD Month YYYY` | `1 January 2024` |
+
 If an unsupported format string is provided, an error will be thrown with a message indicating the unsupported format.
 
 _Example:_
@@ -478,6 +533,10 @@ _Example:_
 
     const nestedArray = [1, [2, [3, 4]], 5];
     console.log(flatten(nestedArray)); // [1, 2, 3, 4, 5]
+
+## Type Safety
+
+All functions are designed with TypeScript's strong typing system to ensure type safety and prevent runtime errors. They leverage generics to maintain the integrity of the original value types while modifying them.
 
 ## Contributing
 
