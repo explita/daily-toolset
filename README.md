@@ -8,11 +8,11 @@ With **Daily Toolkit**, you’ll have access to powerful utilities for handling 
 
 Install the package via npm:
 
-    npm install daily-toolkit
+    npm install daily-toolset
 
 **Quick Examples**
 
-    import { chunkSplit, uniqueString, transformObject } from "daily-toolkit";
+    import { chunkSplit, uniqueString, transformObject } from "daily-toolset";
 
     // Split a number into groups
     console.log(chunkSplit({ data: 123456789, groupSize: 3, separator: "," })); // "123,456,789"
@@ -38,6 +38,7 @@ Install the package via npm:
 - [pickFromObject](#pickfromobject)
 - [omitFromObject](#omitfromobject)
 - [prependToObjectKey](#prependtoobjectkey)
+- [deepMerge](#deepmerge)
 - [isEmpty](#isempty)
 - [isValidEmail](#isvalidemail)
 - [isValidPhone](#isvalidphone)
@@ -53,6 +54,9 @@ Install the package via npm:
 - [uniqueArray](#uniquearray)
 - [uniqueArrayByKey](#uniquearraybykey)
 - [flatten](#flatten)
+- [shuffleArray](#shufflearray)
+
+<br/>
 
 #### `chunkSplit`
 
@@ -68,7 +72,7 @@ Splits a number or string into chunks of a specified size, separated by a specif
 
 _Example:_
 
-    import { chunkSplit } from "daily-toolkit";
+    import { chunkSplit } from "daily-toolset";
 
     chunkSplit({ data: 123456789, groupSize: 3, separator: "," }); // "123,456,789"
 
@@ -87,7 +91,7 @@ Generates a unique string of specified length with optional special characters.
 
 _Example:_
 
-    import { uniqueString } from "daily-toolkit";
+    import { uniqueString } from "daily-toolset";
 
     uniqueString({ length: 16, isPassword: true }); // "nC4t@h5Ld^3o9Kv1"
 
@@ -105,7 +109,7 @@ Capitalizes the first letter of the given string.
 
 _Example:_
 
-    import { capitalize } from "daily-toolkit";
+    import { capitalize } from "daily-toolset";
 
     capitalize("hello world"); // "Hello world"
 
@@ -123,7 +127,7 @@ Converts a string into a URL-friendly "slug" by lowercasing it, removing special
 
 _Example:_
 
-    import { slugify } from "daily-toolkit";
+    import { slugify } from "daily-toolset";
 
     slugify("Hello World! How are you?"); // "hello-world-how-are-you"
 
@@ -141,7 +145,7 @@ Converts a camelCase string into a Title Case string, adding spaces between word
 
 _Example:_
 
-    import { camelToTitle } from "daily-toolkit";
+    import { camelToTitle } from "daily-toolset";
 
     camelToTitle("camelCaseToTitleCase"); // "Camel Case To Title Case"
 
@@ -159,7 +163,7 @@ Parses the query string of a URL into a JavaScript object.
 
 _Example:_
 
-    import { parseQueryString } from "daily-toolkit";
+    import { parseQueryString } from "daily-toolset";
 
     parseQueryString("https://example.com?page=2&sort=desc"); // { page: "2", sort: "desc" }
 
@@ -177,7 +181,7 @@ Creates a query string from an object or other formats supported by `URLSearchPa
 
 _Example:_
 
-    import { buildQueryString } from "daily-toolkit";
+    import { buildQueryString } from "daily-toolset";
 
     buildQueryString({ page: "2", sort: "desc" }); // "page=2&sort=desc"
 
@@ -196,7 +200,7 @@ Formats a number as a currency string, adding a currency symbol if specified.
 
 _Example:_
 
-    import { formatCurrency } from "daily-toolkit";
+    import { formatCurrency } from "daily-toolset";
 
     formatCurrency({ amount: 1234.56, currency: "$" }); // "$1,234.56"
 
@@ -214,7 +218,7 @@ Adds an ordinal suffix to a given number (e.g., `1` becomes `1st`, `2` becomes `
 
 _Example:_
 
-    import { addOrdinal } from "daily-toolkit";
+    import { addOrdinal } from "daily-toolset";
 
     addOrdinal(23); // "23rd"
 
@@ -232,7 +236,7 @@ Transforms an object with flattened key strings (e.g., `{"a.b": 1}`) into a nest
 
 _Example:_
 
-    import { transformObject } from "daily-toolkit";
+    import { transformObject } from "daily-toolset";
 
     transformObject({ "a.b.c": "hello", "a.b.d": 42 });
     // { a: { b: { c: "hello", d: 42 } } }
@@ -252,7 +256,7 @@ Creates a new object containing only the specified keys from the original object
 
 _Example:_
 
-    import { pickFromObject } from "daily-toolkit";
+    import { pickFromObject } from "daily-toolset";
 
     const original = { a: 1, b: 2, c: 3 };
     const picked = pickFromObject({ obj: original, keys: ['a', 'c'] });
@@ -273,7 +277,7 @@ Creates a new object that excludes the specified keys from the original object.
 
 _Example:_
 
-    import { omitFromObject } from "daily-toolkit";
+    import { omitFromObject } from "daily-toolset";
 
     const original = { a: 1, b: 2, c: 3 };
     const omitted = omitFromObject({ obj: original, keys: ['b'] });
@@ -294,11 +298,60 @@ Creates a new object by prepending a specified string to each key of the origina
 
 _Example:_
 
-    import { omitFromObject } from "daily-toolkit";
+    import { omitFromObject } from "daily-toolset";
 
     const original = { name: 'Alice', age: 30 };
     const prepended = prependToObjectKey(original, 'user_');
     // Result: { user_name: 'Alice', user_age: 30 }
+
+<br/>
+
+#### `deepMerge`
+
+A TypeScript utility function to perform a deep merge of two objects, allowing for selective merging of nested properties.
+
+> deepMerge<T extends object>({ target, source }: DeepMergeProps<T>): T
+
+- **Parameters**:
+  - `target`: The original object to merge into. This is the base object in the merge operation.
+  - `source`: The object containing updates. Only properties in `source` will overwrite target properties.
+- **Returns**: An object of type `T` with `target` properties overwritten by `source` properties where applicable.
+
+_Example:_
+
+    import { deepMerge } from "daily-toolset";
+
+    const original = {
+      user: {
+        name: 'John',
+        address: {
+          city: 'New York',
+          zip: '10001'
+        }
+      }
+    };
+
+    const updates = {
+      user: {
+        address: {
+          city: 'San Francisco'
+        }
+      }
+    };
+
+    const merged = deepMerge({ target: original, source: updates });
+    console.log(merged);
+    /*
+    {
+      user: {
+        name: 'John',
+        address: {
+          city: 'San Francisco',
+          zip: '10001'
+        }
+      }
+    }
+    */
 
 <br/>
 
@@ -314,7 +367,7 @@ Checks if a value is empty. Returns `true` for `null`, `undefined`, empty arrays
 
 _Example:_
 
-    import { isEmpty } from "daily-toolkit";
+    import { isEmpty } from "daily-toolset";
 
     isEmpty(""); // true
     isEmpty([]); // true
@@ -335,7 +388,7 @@ Validates if the provided string is a properly formatted email address.
 
 _Example:_
 
-    import { isValidEmail } from "daily-toolkit";
+    import { isValidEmail } from "daily-toolset";
 
     isValidEmail("user@example.com"); // true
     isValidEmail("invalid-email");    // false
@@ -354,7 +407,7 @@ Validates if the provided string is a properly formatted phone number. This func
 
 _Example:_
 
-    import { isValidPhone } from "daily-toolkit";
+    import { isValidPhone } from "daily-toolset";
 
     isValidPhone("(123) 456-7890"); // true
     isValidPhone("123456");         // false
@@ -373,7 +426,7 @@ Checks if the provided value is a numeric value (either a number type or a strin
 
 _Example:_
 
-    import { isNumeric } from "daily-toolkit";
+    import { isNumeric } from "daily-toolset";
 
     isNumeric(123);       // true
     isNumeric("456");     // true
@@ -394,7 +447,7 @@ Generates a random number with a specified number of digits. By default, it gene
 
 _Example:_
 
-    import { randomNumber } from "daily-toolkit";
+    import { randomNumber } from "daily-toolset";
 
     randomNumber(); // e.g., 12345678
     randomNumber(5); // e.g., 56789
@@ -414,7 +467,7 @@ Calculates the percentage of `calculateFrom` relative to `total`. The result is 
 
 _Example:_
 
-    import { numberPercentage } from "daily-toolkit";
+    import { numberPercentage } from "daily-toolset";
 
     numberPercentage(200, 50);   // 25
     numberPercentage(500, 125);  // 25
@@ -435,7 +488,7 @@ Executes an asynchronous function and retries it if it fails. This function is p
 
 _Example:_
 
-    import { retry } from "daily-toolkit";
+    import { retry } from "daily-toolset";
 
     async function fetchData() {
         // Some asynchronous operation, e.g., API 		request
@@ -457,7 +510,7 @@ Creates a debounced function that delays invoking `fn` until after `delay` milli
 
 _Example:_
 
-    import { debounce } from "daily-toolkit";
+    import { debounce } from "daily-toolset";
 
     function onResize() {
       console.log("Window resized");
@@ -481,7 +534,7 @@ Creates a throttled function that only invokes `fn` at most once per `limit` mil
 
 _Example:_
 
-    import { throttle } from "daily-toolkit";
+    import { throttle } from "daily-toolset";
 
     function onScroll() {
       console.log("Scrolled!");
@@ -504,7 +557,7 @@ Pauses asynchronous code for a given number of milliseconds, often useful for de
 
 _Example:_
 
-    import { delay } from "daily-toolkit";
+    import { delay } from "daily-toolset";
 
     async function delayedTask() {
       console.log("Starting task...");
@@ -542,7 +595,7 @@ If an unsupported format string is provided, an error will be thrown with a mess
 
 _Example:_
 
-    import { formatDate } from "daily-toolkit";
+    import { formatDate } from "daily-toolset";
 
     const date = new Date("2024-01-01");
 
@@ -572,7 +625,7 @@ Returns a relative time string (e.g., "2 hours ago") from a given date to the cu
 
 _Example:_
 
-    import { timeAgo } from "daily-toolkit";
+    import { timeAgo } from "daily-toolset";
 
     const pastDate = new Date(Date.now() - 60000); // 1 minute ago
     console.log(timeAgo(pastDate)); // "1 minute ago"
@@ -591,7 +644,7 @@ Removes duplicate items from an array and returns an array with unique values.
 
 _Example:_
 
-    import { uniqueArray } from "daily-toolkit";
+    import { uniqueArray } from "daily-toolset";
 
     const numbers = [1, 2, 2, 3, 4, 4, 5];
     console.log(uniqueArray(numbers)); // [1, 2, 3, 4, 5]
@@ -611,7 +664,7 @@ Removes duplicate objects from an array based on a specific key and returns an a
 
 _Example:_
 
-    import { uniqueArrayByKey } from "daily-toolkit";
+    import { uniqueArrayByKey } from "daily-toolset";
 
     const people = [
       { id: 1, name: "Alice" },
@@ -634,10 +687,33 @@ Flattens a nested array structure into a single-level array.
 
 _Example:_
 
-    import { flatten } from "daily-toolkit";
+    import { flatten } from "daily-toolset";
 
     const nestedArray = [1, [2, [3, 4]], 5];
     console.log(flatten(nestedArray)); // [1, 2, 3, 4, 5]
+
+<br/>
+
+#### `shuffleArray`
+
+A simple utility function that shuffles an array randomly. The shuffleArray function works generically and can shuffle arrays of any type.
+
+> shuffleArray<T>(array: T[]): T[]
+
+- **Parameters**:
+  - array: `T[]` - An array of any type `T` that you want to shuffle.
+- **Returns**: `T[]` - A new array containing the elements of the input array, but in random order.
+
+_Example:_
+
+    import { shuffleArray } from "daily-toolset";
+
+    const array = [1, 2, 3, "a", "b", "c"];
+    const shuffledArray = shuffleArray(array);
+
+    console.log(shuffledArray); // Output: A randomly ordered array, e.g., ["c", 2, "b", 1, 3, "a"]
+
+<br/>
 
 ## Type Safety
 

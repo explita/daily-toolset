@@ -93,3 +93,17 @@ export function flatten<T>(arr: any[]): T[] {
 
   return arr.flat(Infinity);
 }
+
+/**
+ * Shuffles an array in place.
+ *
+ * This function takes an array as an argument and returns the same array, but
+ * with its elements in a random order. The original array is modified.
+ *
+ * @example
+ * shuffleArray([1, 2, 3])
+ * // Output: [2, 3, 1] or [3, 1, 2] or [1, 3, 2], etc.
+ */
+export function shuffleArray<T>(array: T[]): T[] {
+  return array.sort(() => Math.random() - 0.5);
+}

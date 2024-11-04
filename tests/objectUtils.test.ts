@@ -1,4 +1,5 @@
 import {
+  deepMerge,
   omitFromObject,
   pickFromObject,
   prependToObjectKey,
@@ -116,4 +117,39 @@ test("omitFromObject should omit keys from an object", () => {
       keys: ["key7", "key8"],
     })
   ).toEqual(expected);
+});
+
+test("deepMerge should merge two objects recursively", () => {
+  const target = {
+    name: "John",
+    details: {
+      age: 30,
+      address: {
+        city: "New York",
+        state: "NY",
+      },
+    },
+  };
+
+  const source = {
+    details: {
+      age: 31,
+      address: {
+        city: "Los Angeles",
+      },
+    },
+  };
+
+  const expected = {
+    name: "John",
+    details: {
+      age: 31, // Updated from source
+      address: {
+        city: "Los Angeles", // Updated from source
+        state: "NY", // Unchanged
+      },
+    },
+  };
+
+  expect(deepMerge({ target, source })).toEqual(expected);
 });

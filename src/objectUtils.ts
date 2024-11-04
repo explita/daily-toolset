@@ -72,6 +72,17 @@ type PickFromObjectParams<T extends Record<string, any>, K extends keyof T> = {
   keys: K[];
 };
 
+/**
+ * Creates a new object containing only the specified keys from the original object.
+ *
+ * @template T The type of the object from which keys will be picked.
+ * @template K The type of the keys to pick from the object.
+ *
+ * @param {PickFromObjectParams<T, K>} params - An object containing the original object and the keys to pick.
+ * @param {T | undefined} params.obj - The original object from which keys will be picked.
+ * @param {K[]} params.keys - An array of keys to pick from the object.
+ * @returns {Pick<T, K>} A new object containing only the picked keys.
+ */
 export function pickFromObject<
   T extends Record<string, any>,
   K extends keyof T
@@ -92,6 +103,17 @@ type OmitFromObjectParams<T extends Record<string, any>, K extends keyof T> = {
   keys: K[];
 };
 
+/**
+ * Creates a new object excluding the specified keys from the original object.
+ *
+ * @template T The type of the object from which keys will be omitted.
+ * @template K The type of the keys to omit from the object.
+ *
+ * @param {OmitFromObjectParams<T, K>} params - An object containing the original object and the keys to omit.
+ * @param {T | undefined} params.obj - The original object from which keys will be omitted.
+ * @param {K[]} params.keys - An array of keys to omit from the object.
+ * @returns {Omit<T, K>} A new object excluding the omitted keys.
+ */
 export function omitFromObject<
   T extends Record<string, any>,
   K extends keyof T
@@ -111,6 +133,18 @@ type PrependToObjectKeyReturn<T> = {
   [P in keyof T as `${string}${string & P}`]: T[P];
 };
 
+/**
+ * Creates a new object by prepending a specified string to each key of the original object.
+ *
+ * @param {object} obj - The original object whose keys will be modified.
+ * @param {string} key - The string to prepend to each key.
+ * @returns {object} A new object with modified keys.
+ *
+ * @example
+ * const original = { name: 'Alice', age: 30 };
+ * const prepended = prependToObjectKey(original, 'user_');
+ * // Result: { user_name: 'Alice', user_age: 30 }
+ */
 export function prependToObjectKey<T extends Record<string, unknown>>(
   obj: T | null | undefined,
   key: string
@@ -127,4 +161,77 @@ export function prependToObjectKey<T extends Record<string, unknown>>(
   });
 
   return result as PrependToObjectKeyReturn<T>;
+}
+
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
+type DeepMergeProps<T> = { target: T; source: DeepPartial<T> };
+
+/**
+ * A TypeScript utility function to perform a deep merge of two objects, allowing for selective merging of nested properties.
+ *
+ * @param {object} target - The original object to merge into.
+ * @param {object} source - The object containing updates. Only properties in `source` will overwrite target properties.
+ * @returns {object} An object of type `T` with `target` properties overwritten by `source` properties where applicable.
+ *
+ * @example
+ * const original = {
+ *   user: {
+ *     name: 'John',
+ *     address: {
+ *       city: 'New York',
+ *       zip: '10001'
+ *     }
+ *   }
+ * };
+ *
+ * const updates = {
+ *   user: {
+ *     address: {
+ *       city: 'San Francisco'
+ *     }
+ *   }
+ * };
+ *
+ * const merged = deepMerge({ target: original, source: updates });
+ * console.log(merged);
+ * /*
+ * {
+ *   user: {
+ *     name: 'John',
+ *     address: {
+ *       city: 'San Francisco',
+ *       zip: '10001'
+ *     }
+ *   }
+ * }
+ */
+export function deepMerge<T extends object>({
+  target,
+  source,
+}: DeepMergeProps<T>): T {
+  const output = { ...target };
+
+  for (const key in source) {
+    const targetValue = target[key];
+    const sourceValue = source[key];
+
+    if (isObject(targetValue) && isObject(sourceValue)) {
+      // Recursively merge objects
+      output[key as keyof T] = deepMerge({
+        target: targetValue as object,
+        source: sourceValue as object,
+      }) as T[keyof T];
+    } else if (sourceValue !== undefined) {
+      output[key as keyof T] = sourceValue as T[keyof T];
+    }
+  }
+
+  return output;
+}
+
+function isObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }
