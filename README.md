@@ -4,7 +4,8 @@ Daily Toolkit is a versatile utility library that provides helpful functions for
 
 With **Daily Toolkit**, you’ll have access to powerful utilities for handling everyday coding tasks, improving productivity and code readability. Simply install and start leveraging functions designed to simplify and standardize JavaScript/TypeScript operations.
 
-**Installation**
+#### Installation
+
 Install the package via npm:
 
     npm install daily-toolkit
@@ -22,8 +23,39 @@ Install the package via npm:
     // Transform a flattened object to nested
     console.log(transformObject({ "a.b.c": "value" })); // { a: { b: { c: "value" } } }
 
-**Functions**<br/>
-`chunkSplit`
+### Functions
+
+- [chunkSplit](#chunksplit)
+- [uniqueString](#uniquestring)
+- [capitalize](#capitalize)
+- [slugify](#slugify)
+- [camelToTitle](#cameltotitle)
+- [parseQueryString](#parsequerystring)
+- [buildQueryString](#buildquerystring)
+- [formatCurrency](#formatcurrency)
+- [addOrdinal](#addordinal)
+- [transformObject](#transformobject)
+- [pickFromObject](#pickfromobject)
+- [omitFromObject](#omitfromobject)
+- [prependToObjectKey](#prependtoobjectkey)
+- [isEmpty](#isempty)
+- [isValidEmail](#isvalidemail)
+- [isValidPhone](#isvalidphone)
+- [isNumeric](#isnumeric)
+- [randomNumber](#randomnumber)
+- [numberPercentage](#numberpercentage)
+- [retry](#retry)
+- [debounce](#debounce)
+- [throttle](#throttle)
+- [delay](#delay)
+- [formatDate](#formatdate)
+- [timeAgo](#timeago)
+- [uniqueArray](#uniquearray)
+- [uniqueArrayByKey](#uniquearraybykey)
+- [flatten](#flatten)
+
+#### `chunkSplit`
+
 Splits a number or string into chunks of a specified size, separated by a specified string.
 
 > chunkSplit({ data: number | string, groupSize?: number = 3, separator?: string = " " }): string
@@ -42,7 +74,8 @@ _Example:_
 
 <br/>
 
-`uniqueString`
+#### `uniqueString`
+
 Generates a unique string of specified length with optional special characters.
 
 > uniqueString({ length?: number = 10, isPassword?: boolean = false }): string
@@ -60,7 +93,8 @@ _Example:_
 
 <br/>
 
-`capitalize`
+#### `capitalize`
+
 Capitalizes the first letter of the given string.
 
 > capitalize(str: string): string
@@ -77,7 +111,8 @@ _Example:_
 
 <br/>
 
-`slugify`
+#### `slugify`
+
 Converts a string into a URL-friendly "slug" by lowercasing it, removing special characters, and replacing spaces with hyphens.
 
 > slugify(text: string): string
@@ -94,7 +129,8 @@ _Example:_
 
 <br/>
 
-`camelToTitle`
+#### `camelToTitle`
+
 Converts a camelCase string into a Title Case string, adding spaces between words.
 
 > camelToTitle(str: string): string
@@ -109,7 +145,10 @@ _Example:_
 
     camelToTitle("camelCaseToTitleCase"); // "Camel Case To Title Case"
 
-<br/>`parseQueryString`
+<br/>
+
+#### `parseQueryString`
+
 Parses the query string of a URL into a JavaScript object.
 
 > parseQueryString(url: string): Record<string, string>
@@ -124,7 +163,10 @@ _Example:_
 
     parseQueryString("https://example.com?page=2&sort=desc"); // { page: "2", sort: "desc" }
 
-<br/>`buildQueryString`
+<br/>
+
+#### `buildQueryString`
+
 Creates a query string from an object or other formats supported by `URLSearchParams`
 
 > buildQueryString(params: string | Record<string, string> | string[][] | URLSearchParams | undefined): string
@@ -139,7 +181,10 @@ _Example:_
 
     buildQueryString({ page: "2", sort: "desc" }); // "page=2&sort=desc"
 
-<br/>`formatCurrency`
+<br/>
+
+#### `formatCurrency`
+
 Formats a number as a currency string, adding a currency symbol if specified.
 
 > formatCurrency({ amount, currency = "" }: FormatCurrencyParams): string
@@ -155,7 +200,10 @@ _Example:_
 
     formatCurrency({ amount: 1234.56, currency: "$" }); // "$1,234.56"
 
-<br/>`addOrdinal`
+<br/>
+
+#### `addOrdinal`
+
 Adds an ordinal suffix to a given number (e.g., `1` becomes `1st`, `2` becomes `2nd`).
 
 > addOrdinal(num: number): string
@@ -170,7 +218,10 @@ _Example:_
 
     addOrdinal(23); // "23rd"
 
-<br/>`transformObject`
+<br/>
+
+#### `transformObject`
+
 Transforms an object with flattened key strings (e.g., `{"a.b": 1}`) into a nested object.
 
 > transformObject(obj: { [key: string]: string | number }): { [key: string]: string }
@@ -186,7 +237,10 @@ _Example:_
     transformObject({ "a.b.c": "hello", "a.b.d": 42 });
     // { a: { b: { c: "hello", d: 42 } } }
 
-<br/>`pickFromObject`
+<br/>
+
+#### `pickFromObject`
+
 Creates a new object containing only the specified keys from the original object.
 
 > pickFromObject<T, K>(params: PickFromObjectParams<T, K>): Pick<T, K>
@@ -204,7 +258,10 @@ _Example:_
     const picked = pickFromObject({ obj: original, keys: ['a', 'c'] });
     // Result: { a: 1, c: 3 }
 
-<br/>`omitFromObject`
+<br/>
+
+#### `omitFromObject`
+
 Creates a new object that excludes the specified keys from the original object.
 
 > omitFromObject<T, K>(params: OmitFromObjectParams<T, K>): Omit<T, K>
@@ -222,7 +279,10 @@ _Example:_
     const omitted = omitFromObject({ obj: original, keys: ['b'] });
     // Result: { a: 1, c: 3 }
 
-<br/>`prependToObjectKey`
+<br/>
+
+#### `prependToObjectKey`
+
 Creates a new object by prepending a specified string to each key of the original object.
 
 > prependToObjectKey<T>(obj: T | null | undefined, key: string): PrependToObjectKeyReturn<T>
@@ -240,7 +300,10 @@ _Example:_
     const prepended = prependToObjectKey(original, 'user_');
     // Result: { user_name: 'Alice', user_age: 30 }
 
-<br/>`isEmpty`
+<br/>
+
+#### `isEmpty`
+
 Checks if a value is empty. Returns `true` for `null`, `undefined`, empty arrays, empty objects, or empty strings.
 
 > isEmpty(value: unknown): boolean
@@ -258,7 +321,10 @@ _Example:_
     isEmpty({}); // true
     isEmpty("Hello world"); // false
 
-<br/>`isValidEmail`
+<br/>
+
+#### `isValidEmail`
+
 Validates if the provided string is a properly formatted email address.
 
 > isValidEmail(email: string): boolean
@@ -274,7 +340,10 @@ _Example:_
     isValidEmail("user@example.com"); // true
     isValidEmail("invalid-email");    // false
 
-<br/>`isValidPhone`
+<br/>
+
+#### `isValidPhone`
+
 Validates if the provided string is a properly formatted phone number. This function checks if the string contains only digits and possibly spaces, dashes, or parentheses, depending on the desired format.
 
 > isValidPhone(phone: string): boolean
@@ -290,7 +359,10 @@ _Example:_
     isValidPhone("(123) 456-7890"); // true
     isValidPhone("123456");         // false
 
-<br/>`isNumeric`
+<br/>
+
+#### `isNumeric`
+
 Checks if the provided value is a numeric value (either a number type or a string that can be converted to a number).
 
 > isNumeric(num: number): boolean
@@ -308,7 +380,10 @@ _Example:_
     isNumeric("abc");     // false
     isNumeric(undefined); // false
 
-<br/>`randomNumber`
+<br/>
+
+#### `randomNumber`
+
 Generates a random number with a specified number of digits. By default, it generates an 8-digit random number.
 
 > randomNumber(length: number = 8): number
@@ -324,7 +399,10 @@ _Example:_
     randomNumber(); // e.g., 12345678
     randomNumber(5); // e.g., 56789
 
-<br/>`numberPercentage`
+<br/>
+
+#### `numberPercentage`
+
 Calculates the percentage of `calculateFrom` relative to `total`. The result is rounded to two decimal places.
 
 > numberPercentage(total: number, calculateFrom: number): number
@@ -342,7 +420,10 @@ _Example:_
     numberPercentage(500, 125);  // 25
     numberPercentage(0, 50);     // Returns 0 (if total is 0)
 
-<br/>`retry`
+<br/>
+
+#### `retry`
+
 Executes an asynchronous function and retries it if it fails. This function is particularly useful for handling network requests or other potentially unreliable operations.
 
 > retry<T>(fn: () => Promise<T>, retries: number = 3): Promise<T>
@@ -361,7 +442,10 @@ _Example:_
     }
     retry(fetchData, 3).then((result) => console.log(result)).catch(console.error);
 
-<br/>`debounce`
+<br/>
+
+#### `debounce`
+
 Creates a debounced function that delays invoking `fn` until after `delay` milliseconds have passed since the last time it was called. This is useful for limiting the rate of function calls in response to events like resizing or typing.
 
 > debounce<T extends (...args: any[]) => void>(fn: T, delay: number): ((...args: Parameters<T>) => void)
@@ -382,7 +466,10 @@ _Example:_
     const debouncedResize = debounce(onResize, 300);
     window.addEventListener("resize", debouncedResize);
 
-<br/>`throttle`
+<br/>
+
+#### `throttle`
+
 Creates a throttled function that only invokes `fn` at most once per `limit` milliseconds. Useful for reducing the number of times a function is called during events that occur frequently, such as scrolling.
 
 > throttle(fn: (...args: any[]) => void, limit: number)
@@ -403,7 +490,10 @@ _Example:_
     const throttledScroll = throttle(onScroll, 200);
     window.addEventListener("scroll", throttledScroll);
 
-<br/>`delay`
+<br/>
+
+#### `delay`
+
 Pauses asynchronous code for a given number of milliseconds, often useful for delaying actions within an async function.
 
 > delay(ms: number = 2000): Promise<void>
@@ -424,7 +514,10 @@ _Example:_
 
     delayedTask();
 
-<br/>`formatDate`
+<br/>
+
+#### `formatDate`
+
 The `formatDate` function formats a JavaScript `Date` object into various string formats for different date representations.
 
 > formatDate({date:Date, format = "YYYY-MM-DD"}: FormatDateParams): string
@@ -465,7 +558,10 @@ _Example:_
     console.log(formatDate({date, format:"Month DD, YYYY"})); // "January 1, 2024"
     console.log(formatDate({date, format:"DD Month YYYY"})); // "1 January 2024"
 
-<br/>`timeAgo`
+<br/>
+
+#### `timeAgo`
+
 Returns a relative time string (e.g., "2 hours ago") from a given date to the current time. This function is ideal for creating human-readable time differences, such as for activity feeds or notifications.
 
 > timeAgo(date: Date | null | undefined): string
@@ -481,7 +577,10 @@ _Example:_
     const pastDate = new Date(Date.now() - 60000); // 1 minute ago
     console.log(timeAgo(pastDate)); // "1 minute ago"
 
-<br/>`uniqueArray`
+<br/>
+
+#### `uniqueArray`
+
 Removes duplicate items from an array and returns an array with unique values.
 
 > uniqueArray<T>(arr: T[]): T[]
@@ -497,7 +596,10 @@ _Example:_
     const numbers = [1, 2, 2, 3, 4, 4, 5];
     console.log(uniqueArray(numbers)); // [1, 2, 3, 4, 5]
 
-<br/>`uniqueArrayByKey`
+<br/>
+
+#### `uniqueArrayByKey`
+
 Removes duplicate objects from an array based on a specific key and returns an array with unique objects.
 
 > uniqueArrayByKey<T>({ array, key }: UniqueArrayByKeyParams<T>): T[]
@@ -518,7 +620,10 @@ _Example:_
     ];
     console.log(uniqueArrayByKey({ array: people, key: "id" })); // [{ id: 1, name: "Alice" }, { id: 2, name: "Bob" }]
 
-<br/>`flatten`
+<br/>
+
+#### `flatten`
+
 Flattens a nested array structure into a single-level array.
 
 > flatten<T>(arr: any[]): T[]
