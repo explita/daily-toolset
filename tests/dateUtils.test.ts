@@ -1,7 +1,16 @@
 import { formatDate, timeAgo } from "../src/dateUtils";
 
-test("", () => {
-  expect(formatDate(new Date())).toBe(new Date().toISOString().split("T")[0]);
+describe("formatDate", () => {
+  test("should return 'January 1, 2024' for a date", () => {
+    expect(
+      formatDate({ date: new Date("2024-01-01"), format: "Month DD, YYYY" })
+    ).toBe("January 1, 2024");
+  });
+  test('should return the current date in "YYYY-MM-DD" format', () => {
+    expect(formatDate({ date: new Date() })).toBe(
+      new Date().toISOString().split("T")[0]
+    );
+  });
 });
 
 describe("timeAgo", () => {

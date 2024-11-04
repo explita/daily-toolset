@@ -133,6 +133,17 @@ type UniqueStringParams = {
   isPassword?: boolean;
 };
 
+/**
+ * Generates a unique string of a specified length with optional special characters.
+ *
+ * @param {Object} params - The parameters for the function.
+ * @param {number} [params.length=10] - The length of the unique string to generate (default is 10).
+ * @param {boolean} [params.isPassword=false] - If true, includes special characters for passwords (default is false).
+ * @returns {string} - The generated unique string.
+ *
+ * @example
+ * uniqueString({ length: 16, isPassword: true }); // "nC4t@h5Ld^3o9Kv1"
+ */
 export function uniqueString({
   length = 10,
   isPassword = false,

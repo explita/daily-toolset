@@ -12,10 +12,10 @@
  * @throws {RangeError} If the retries parameter is not a positive number.
  * @throws {Error} If the function does not succeed within the retry attempts.
  */
-export const retry = async <T>(
+export async function retry<T>(
   fn: () => Promise<T>,
   retries: number = 3
-): Promise<T> => {
+): Promise<T> {
   if (typeof fn !== "function") {
     throw new TypeError("Expected a function as the first argument");
   }
@@ -37,7 +37,7 @@ export const retry = async <T>(
   throw new Error(
     "Unexpected error: function should have either succeeded or thrown the last error"
   );
-};
+}
 
 /**
  * Creates a debounced function that delays invoking the provided function
@@ -49,10 +49,10 @@ export const retry = async <T>(
  * @param delay The number of milliseconds to delay.
  * @returns A debounced function that delays invoking `fn`.
  */
-export const debounce = <T extends (...args: any[]) => void>(
+export function debounce<T extends (...args: any[]) => void>(
   fn: T,
   delay: number
-): ((...args: Parameters<T>) => void) => {
+): (...args: Parameters<T>) => void {
   let timer: NodeJS.Timeout | undefined;
   return (...args: Parameters<T>) => {
     if (timer !== undefined) {
@@ -63,7 +63,7 @@ export const debounce = <T extends (...args: any[]) => void>(
       fn(...args);
     }, delay);
   };
-};
+}
 
 /**
  * Creates a throttled function that invokes the provided function at most once
@@ -74,7 +74,7 @@ export const debounce = <T extends (...args: any[]) => void>(
  * @param limit The number of milliseconds to throttle.
  * @returns A throttled function.
  */
-export const throttle = (fn: (...args: any[]) => void, limit: number) => {
+export function throttle(fn: (...args: any[]) => void, limit: number) {
   let inThrottle = false;
   return (...args: any[]) => {
     if (!inThrottle) {
@@ -83,7 +83,7 @@ export const throttle = (fn: (...args: any[]) => void, limit: number) => {
       setTimeout(() => (inThrottle = false), limit);
     }
   };
-};
+}
 
 /**
  * Returns a Promise that resolves after the specified number of milliseconds.
