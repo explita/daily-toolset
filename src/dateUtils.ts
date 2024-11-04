@@ -15,16 +15,16 @@ type FormatDateParams = {
  *
  * The following formats are supported:
  *
- * - `YYYY-MM-DD` (default)
+ * - `YYYY-MM-DD`
  * - `DD-MM-YYYY`
  * - `MM-DD-YYYY`
  * - `YYYY/MM/DD`
- * - `DD/MM/YYYY`
+ * - `DD/MM/YYYY` (default)
  * - `Month DD, YYYY`
  * - `DD Month YYYY`
  *
  * @param {Date} date The `Date` object to format.
- * @param {string} [format="YYYY-MM-DD"] The format string to use.
+ * @param {string} [format="DD/MM/YYYY"] The format string to use.
  * @returns {string} A `string` representing the formatted date.
  * @throws {TypeError} If the `date` parameter is not a `Date` object.
  * @throws {Error} If the `format` parameter is not a supported format string.
@@ -32,7 +32,7 @@ type FormatDateParams = {
 
 export function formatDate({
   date,
-  format = "YYYY-MM-DD",
+  format = "DD/MM/YYYY",
 }: FormatDateParams): string {
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);
@@ -160,9 +160,9 @@ type FormatDateAndTimeParams = {
  */
 export function formatDateTime({
   date,
-  dateFormat = "YYYY-MM-DD",
+  dateFormat = "DD/MM/YYYY",
   timeFormat = "hh:mmA",
-  seperator = " ",
+  seperator = " | ",
 }: FormatDateAndTimeParams): string {
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);

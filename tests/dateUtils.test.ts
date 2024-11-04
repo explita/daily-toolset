@@ -1,4 +1,9 @@
-import { formatDate, formatTime, timeAgo } from "../src/dateUtils";
+import {
+  formatDate,
+  formatDateTime,
+  formatTime,
+  timeAgo,
+} from "../src/dateUtils";
 
 describe("formatDate", () => {
   test("should return 'January 1, 2024' for a date", () => {
@@ -57,4 +62,22 @@ describe("formatTime", () => {
       "20:47:3.555"
     );
   });
+});
+
+test('formatDateTime should return "25 October 2023 at 02:30PM"', () => {
+  expect(
+    formatDateTime({
+      date: new Date("2023-10-25T14:30:00"),
+    })
+  ).toBe("October 25, 2023 | 02:30PM");
+});
+
+test('formatDateTime should return "25 October 2023"', () => {
+  expect(
+    formatDateTime({
+      date: new Date("2023-10-25T14:30:00"),
+      dateFormat: "Month DD, YYYY",
+      timeFormat: "hh:mmA",
+    })
+  ).toBe("October 25, 2023");
 });
