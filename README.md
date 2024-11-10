@@ -1,8 +1,9 @@
-## Daily Toolkit
+## Daily Toolset
 
-Daily Toolkit is a versatile utility library that provides helpful functions for everyday JavaScript/TypeScript needs. Designed to streamline daily coding tasks, these utilities cover string manipulation, object transformation, chunk splitting, unique string generation, and more.
+Daily Toolset is a versatile utility library that provides helpful functions for everyday JavaScript/TypeScript needs. Designed to streamline daily coding tasks, these utilities cover string manipulation, object transformation, chunk splitting, unique string generation, and more.
 
-With **Daily Toolkit**, you’ll have access to powerful utilities for handling everyday coding tasks, improving productivity and code readability. Simply install and start leveraging functions designed to simplify and standardize JavaScript/TypeScript operations.
+With **Daily Toolset**, you’ll have access to powerful utilities for handling everyday coding tasks, improving productivity and code readability. Simply install and start leveraging functions designed to simplify and standardize JavaScript/TypeScript operations.
+<br/>
 
 #### Installation
 
@@ -34,6 +35,7 @@ Install the package via npm:
 - [buildQueryString](#buildquerystring)
 - [formatCurrency](#formatcurrency)
 - [addOrdinal](#addordinal)
+- [convertFileSize](#convertfilesize)
 - [transformObject](#transformobject)
 - [pickFromObject](#pickfromobject)
 - [omitFromObject](#omitfromobject)
@@ -223,6 +225,31 @@ _Example:_
     import { addOrdinal } from "daily-toolset";
 
     addOrdinal(23); // "23rd"
+
+<br/>
+
+#### `convertFileSize`
+
+A utility function to convert file sizes from bytes to a human-readable format (KB, MB, GB).
+
+> convertFileSize(sizeInBytes: number, decimalPlaces: number = 1): string
+
+- **Parameters**:
+
+  - `sizeInBytes`: The size in bytes to be converted.
+
+  - `decimalPlaces`: The number of decimal places to include in the converted size, default: 1. Useful for displaying a rounded value.
+
+- **Returns**: A string that represents the file size in the appropriate unit (Bytes, KB, MB, GB).
+
+_Example:_
+
+    import { convertFileSize } from "daily-toolset";
+
+    console.log(convertFileSize(500));            // "500 Bytes"
+    console.log(convertFileSize(2048));           // "2.0 KB"
+    console.log(convertFileSize(1048576));        // "1.0 MB"
+    console.log(convertFileSize(1073741824, 2));  // "1.00 GB"
 
 <br/>
 

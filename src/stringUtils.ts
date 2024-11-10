@@ -191,3 +191,18 @@ export function formatCurrency({
     maximumFractionDigits: 2,
   })}`;
 }
+
+export function convertFileSize(
+  sizeInBytes: number,
+  decimalPlaces: number = 1
+): string {
+  if (sizeInBytes < 1024) {
+    return `${sizeInBytes} Bytes`;
+  } else if (sizeInBytes < 1024 ** 2) {
+    return `${(sizeInBytes / 1024).toFixed(decimalPlaces)} KB`;
+  } else if (sizeInBytes < 1024 ** 3) {
+    return `${(sizeInBytes / 1024 ** 2).toFixed(decimalPlaces)} MB`;
+  } else {
+    return `${(sizeInBytes / 1024 ** 3).toFixed(decimalPlaces)} GB`;
+  }
+}
