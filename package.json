@@ -1,6 +1,6 @@
 {
   "name": "daily-toolset",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A lightweight, versatile collection of TypeScript utility functions for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and more.",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
