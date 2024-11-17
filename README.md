@@ -52,6 +52,11 @@ Install the package via npm:
 - [throttle](#throttle)
 - [delay](#delay)
 - [formatDate](#formatdate)
+- [getDayName](#getdayname)
+- [getDay](#getday)
+- [getMonthName](#getmonthname)
+- [getMonth](#getmonth)
+- [getYear](#getyear)
 - [formatTime](#formattime)
 - [formatDateTime](#formatdatetime)
 - [timeAgo](#timeago)
@@ -600,25 +605,52 @@ _Example:_
 
 #### `formatDate`
 
-The `formatDate` function formats a JavaScript `Date` object into various string formats for different date representations.
+A lightweight utility function to format JavaScript dates into customizable string formats. It supports multiple date formats, month names, and day names for diverse display needs.
 
-> formatDate(date:Date, { format = "DD/MM/YYYY"}: FormatDateParams): string
+> function formatDate(
+> date: Date | string | null = new Date(),
+> options?: {format?: "YYYY-MM-DD" | "DD-MM-YYYY" | "MM-DD-YYYY" | "YYYY/MM/DD" | "DD/MM/YYYY" | "Month DD, YYYY" | "DD Month YYYY" | "YYYY" | "MM" | "mm" | "M" | "DD" | "dd" | "D";
+> monthFormat?: "short" | "long";
+> dayFormat?: "short" | "long";}): string;
 
-- **Parameters**:
-  - `date` (required): A `Date` object. If the argument passed is not a valid `Date`, a `TypeError` will be thrown.
-  - `format` (optional): A string specifying the desired output format. Defaults to `"DD/MM/YYYY"`.
+**Parameters**:
+
+1. date (Optional) - Type: `Date` | `string` | `null` - Default: new Date() - Description: The date to format. Accepts: - `Date` object. - A `string` in `YYYY-MM-DD` format. - `null` (defaults to the current date).
+   <br/>
+2. `options` (Optional)
+   - Type: Object
+     - `format`:
+       - Type: `string`
+       - Default: `"DD/MM/YYYY"`
+       - Description: Defines the date format. See Supported Formats below.
+     - monthFormat:
+       - Type: `"short" | "long"`
+       - Default: `"short"`
+       - Description: Controls how month names are displayed.
+     - dayFormat:
+       - Type: `"short" | "long"`
+       - Default: `"short"`
+       - Description: Controls how day names are displayed.
+
 - **Returns**: A `string` representing the formatted date.
 
 **Supported Formats**
-| Format | Example Output |
-|-------------------|---------------------|
-| `YYYY-MM-DD` | `2024-01-01` |
-| `DD-MM-YYYY` | `01-01-2024` |
-| `MM-DD-YYYY` | `01-01-2024` |
-| `YYYY/MM/DD` | `2024/01/01` |
-| `DD/MM/YYYY` | `01/01/2024` |
-| `Month DD, YYYY` | `January 1, 2024` |
-| `DD Month YYYY` | `1 January 2024` |
+| Format | Example Output | Description |
+|------------------|------------------|---------------------------|
+| YYYY-MM-DD | 2024-11-04 | ISO-style format. |
+| DD-MM-YYYY | 04-11-2024 | Day-first numeric format. |
+| MM-DD-YYYY | 11-04-2024 | US numeric format. |
+| YYYY/MM/DD | 2024/11/04 | ISO with slashes. |
+| DD/MM/YYYY | 04/11/2024 | Day-first with slashes. |
+| Month DD, YYYY | Nov 04, 2024 | Full month name first. |
+| DD Month YYYY | 04 Nov 2024 | Day with full month. |
+| YYYY | 2024 | Year only. |
+| MM | 11 | Padded numeric month. |
+| mm | 11 | Unpadded numeric month. |
+| M | Nov | Short month name. |
+| DD | 04 | Padded day. |
+| dd | 4 | Unpadded day. |
+| D | Mon | Short day name. |
 
 If an unsupported format string is provided, an error will be thrown with a message indicating the unsupported format.
 
@@ -629,18 +661,208 @@ _Example:_
     const date = new Date("2024-01-01");
 
     // Using default format
-    console.log(formatDate(date)); // "01/01/2024"
+    console.log(formatDate(date));
+    // Output: "01/01/2024" (default: DD/MM/YYYY)
 
-    // Using various supported formats
-    console.log(formatDate(date, { format:"YYYY-MM-DD"})); // "2024-01-01"
-    console.log(formatDate(date, { format:"DD-MM-YYYY"})); // "01-01-2024"
-    console.log(formatDate(date, { format:"MM-DD-YYYY"})); // "01-01-2024"
-    console.log(formatDate(date, { format:"YYYY/MM/DD"})); // "2024/01/01"
-    console.log(formatDate(date, { format:"DD/MM/YYYY"})); // "01/01/2024"
-    console.log(formatDate(date, { format:"Month DD, YYYY"})); // "January 1, 2024"
-    console.log(formatDate(date, { format:"DD Month YYYY"})); // "1 January 2024"
+    console.log(formatDate(date, { format: "YYYY-MM-DD" }));
+    // Output: "2024-01-01"
+
+    console.log(formatDate(date, { format: "Month DD, YYYY" }));
+    // Output: "Jan 01, 2024"
+
+    console.log(formatDate(date, { format: "D", dayFormat: "long" }));
+    // Output: "Monday"
+
+    console.log(formatDate(date, { format: "M", monthFormat: "long" }));
+    // Output: "January"
+
+    console.log(formatDate("invalid-date-string"));
+    // Throws Error: Invalid date string provided: "invalid-date-string".
 
 <br/>
+
+#### `getDayName`
+
+The `getDayName` function extracts the day name (e.g., Monday, Tue) from a given date in either short or long format. If no date is provided, the current date is used by default.
+
+> getDayName(date?: Date | FixedDate | null, format?: "short" | "long"): string
+
+<br />
+
+**Parameters**
+| Parameter | Type | Default Value | Description |
+|-------------|-------------------------|---------------|------------------------------------------|
+| `date` | `Date | FixedDate | null` | `new Date()` | The date to extract the day name from. |
+| `format` | `"short" | "long"` | `"short"` | The format of the day name: |
+| | | | - `"short"`: Abbreviated name (e.g., Tue). |
+| | | | - `"long"`: Full name (e.g., Tuesday). |
+
+<br />
+
+_Example:_
+
+    import { getDayName } from "daily-toolset";
+
+    // Default: current date in short format
+    getDayName(); // "Mon"
+
+    // Specified date in short format
+    getDayName(new Date("2024-11-04")); // "Mon"
+
+    // Specified date in long format
+    getDayName(new Date("2024-11-04"), "long"); // "Monday"
+
+    // Using a fixed date string
+    getDayName("2024-11-04", "long"); // "Monday"
+
+<br/>
+
+**Notes**
+
+- The function uses the formatDate utility internally to extract the day name.
+- Fixed dates must follow the YYYY-MM-DD format for proper parsing.
+  <br/>
+
+#### `getDay`
+
+The `getDay` function extracts the day of the month (e.g., 01, 15) from a given date. If no date is provided, the current date is used by default.
+
+> getDay(date?: Date | FixedDate | null): string
+
+<br />
+
+**Parameters**
+| Parameter | Type | Default Value | Description |
+|-------------|-------------------------|---------------|------------------------------------------|
+| `date` | `Date | FixedDate | null` | `new Date()` | The date to extract the day from. |
+
+<br />
+
+_Example:_
+
+    import { getDay } from "daily-toolset";
+
+    // Default: current date
+    getDay(); // "04" (if today's date is 4th)
+
+    // Specified date
+    getDay(new Date("2024-11-04")); // "04"
+
+    // Using a fixed date string
+    getDay("2024-11-04"); // "04"
+
+<br/>
+
+**Notes**
+
+- The function uses the formatDate utility internally with the `DD` format.
+- Fixed dates must follow the YYYY-MM-DD format for proper parsing.
+  <br/>
+
+#### `getMonthName`
+
+The `getMonthName` function retrieves the name of the month (e.g., `Jan`, `January`) from a given date. If no date is provided, it defaults to the current date.
+
+> getMonthName(date?: Date | FixedDate | null, format?: "short" | "long"): string
+
+<br />
+
+**Parameters**
+| Parameter | Type | Default Value | Description |
+|-------------|-------------------------|---------------|------------------------------------------------|
+| `date` | `Date | FixedDate | null` | `new Date()` | The date to extract the month name from. |
+| `format` | `"short" | "long"` | `"short"` | The format of the month name (`short` or `long`). |
+
+<br />
+
+_Example:_
+
+    import { getMonthName } from "daily-toolset";
+
+    // Default: current date and short format
+    getMonthName(); // "Nov" (if today's month is November)
+
+    // Specified date with long format
+    getMonthName(new Date("2024-11-04"), "long"); // "November"
+
+    // Using a fixed date string with short format
+    getMonthName("2024-11-04", "short"); // "Nov"
+
+<br/>
+
+#### `getMonth`
+
+The `getMonth` function retrieves the numeric representation of the month (e.g., `01`, `11`) from a given date. If no date is provided, it defaults to the current date.
+
+> getMonth(date?: Date | FixedDate | null, format?: "short" | "long"): string
+
+<br />
+
+**Parameters**
+| Parameter | Type | Default Value | Description |
+|-------------|-------------------------|---------------|------------------------------------------------|
+| `date` | `Date | FixedDate | null` | `new Date()` | The date to extract the numeric month from. |
+| `format` | `"short" | "long"` | `"short"` | Determines how the month name is handled but doesn’t affect the numeric output. |
+
+<br />
+
+_Example:_
+
+    import { getMonth } from "daily-toolset";
+
+    // Default: current date
+    getMonth(); // "11" (if today's month is November)
+
+    // Specified date
+    getMonth(new Date("2024-11-04")); // "11"
+
+    // Using a fixed date string
+    getMonth("2024-11-04"); // "11"
+
+<br/>
+
+**Notes**
+
+- This function returns the month as a two-digit number, such as `01` for January or `11` for November.
+- Fixed dates must follow the `YYYY-MM-DD` format for proper parsing.
+- The `format` parameter does not alter the numeric month output but is kept for consistency with related utilities.
+  <br/>
+
+#### `getYear`
+
+The `getYear` function extracts the year from a given date. If no date is provided, it defaults to the current date.
+
+> getYear(date?: Date | FixedDate | null): string
+
+<br />
+
+**Parameters**
+| Parameter | Type | Default Value | Description |
+|-------------|-------------------------|---------------|---------------------------------------------|
+| `date` | `Date | FixedDate | null` | `new Date()` | The date to extract the year from. |
+
+<br />
+
+_Example:_
+
+    import { getYear } from "daily-toolset";
+
+    // Default: current date
+    getYear(); // "2024" (if the current year is 2024)
+
+    // Specified date
+    getYear(new Date("1999-12-31")); // "1999"
+
+    // Using a fixed date string
+    getYear("2000-01-01"); // "2000"
+
+<br/>
+
+**Notes**
+
+- The function returns the year as a four-digit string, such as `2024` or `1999`.
+- Fixed dates must follow the `YYYY-MM-DD` format for correct parsing.
+  <br/>
 
 #### `formatTime`
 
@@ -685,7 +907,7 @@ _Example:_
     // Format time in 24-hour format with milliseconds
     console.log(formatTime(date, { format: "HH:mm:ss.SSS" })); // Example: "14:30:15.123"
 
-<br/>
+<br />
 
 #### `formatDateTime`
 

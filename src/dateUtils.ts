@@ -6,78 +6,264 @@ type FormatDateParams = {
     | "YYYY/MM/DD"
     | "DD/MM/YYYY"
     | "Month DD, YYYY"
-    | "DD Month YYYY";
+    | "DD Month YYYY"
+    | "YYYY"
+    | "MM"
+    | "mm"
+    | "M"
+    | "DD"
+    | "dd"
+    | "D"
+    | "d";
+  monthFormat?: Format;
+  dayFormat?: Format;
 };
 
-/**
- * Formats a `Date` object into a readable date string according to the given format.
- *
- * The following formats are supported:
- *
- * - `YYYY-MM-DD`
- * - `DD-MM-YYYY`
- * - `MM-DD-YYYY`
- * - `YYYY/MM/DD`
- * - `DD/MM/YYYY` (default)
- * - `Month DD, YYYY`
- * - `DD Month YYYY`
- *
- * @param {Date} date The `Date` object to format.
- * @param {string} [format="DD/MM/YYYY"] The format string to use.
- * @returns {string} A `string` representing the formatted date.
- * @throws {TypeError} If the `date` parameter is not a `Date` object.
- * @throws {Error} If the `format` parameter is not a supported format string.
- */
+type Format = "short" | "long";
 
+type FixedDate = `${string | number}-${string | number}-${string | number}`;
+
+/**
+ * Formats a given date object into a specified date format string.
+ *
+ * @param date The date object to format. If a string is passed, it must be a valid
+ *             date in the format "YYYY-MM-DD". If null is passed, the function
+ *             will format the current date.
+ * @param opts An object containing options for the formatter. The following
+ *             options are available:
+ *              - format: The desired output format. Defaults to "DD/MM/YYYY".
+ *              - monthFormat: The format for the month. Defaults to "short". Can
+ *              be either "short" or "long". If "long", the full month name
+ *              will be used. If "short", the abbreviated month name will be
+ *              used.
+ *              - dayFormat: The format for the day. Defaults to "short". Can
+ *              be either "short" or "long". If "long", the full day name
+ *              will be used. If "short", the abbreviated day name will be
+ *              used.
+ * @returns A string representing the formatted date.
+ *
+ * Supported formats include:
+ * - "YYYY-MM-DD"
+ * - "DD-MM-YYYY"
+ * - "MM-DD-YYYY"
+ * - "YYYY/MM/DD"
+ * - "DD/MM/YYYY"
+ * - "Month DD, YYYY"
+ * - "DD Month YYYY"
+ * - "YYYY"
+ * - "MM"
+ * - "mm"
+ * - "M"
+ * - "DD"
+ * - "dd"
+ * - "D"
+ */
 export function formatDate(
-  date: Date,
-  { format = "DD/MM/YYYY" }: FormatDateParams = {}
+  date: Date | FixedDate | null = new Date(),
+  {
+    format = "DD/MM/YYYY",
+    monthFormat = "short",
+    dayFormat = "short",
+  }: FormatDateParams = {}
 ): string {
+  const isValidDate = (date: string): date is FixedDate => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/; // Matches YYYY-MM-DD format
+    return regex.test(date);
+  };
+
+  if (date === null) {
+    date = new Date();
+  }
+
+  if (typeof date === "string" && !isValidDate(date)) {
+    throw new Error(
+      `Invalid date string provided: "${date}". Expected format: YYYY-MM-DD or similar.`
+    );
+  }
+
+  if (typeof date === "string" && isValidDate(date)) {
+    date = new Date(date);
+  }
+
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);
   }
 
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate());
-  const paddedDay = String(date.getDate()).padStart(2, "0");
+  const month = date.getMonth(); // 0-based index
+  const day = date.getDate();
+  const weekDay = date.getDay();
 
-  // Array of month names for easy lookup
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const monthName = monthNames[date.getMonth()];
+  // Zero-padded values
+  const paddedMonth = String(month + 1).padStart(2, "0");
+  const paddedDay = String(day).padStart(2, "0");
 
+  // Names for months and days
+  const monthNames = {
+    long: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    short: [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ],
+  };
+
+  const dayNames = {
+    long: [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ],
+    short: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  };
+
+  const monthName = monthNames[monthFormat]?.[month] || "";
+  const dayName = dayNames[dayFormat]?.[weekDay] || "";
+
+  // Switch for format selection
   switch (format) {
     case "YYYY-MM-DD":
-      return `${year}-${month}-${paddedDay}`;
+      return `${year}-${paddedMonth}-${paddedDay}`;
     case "DD-MM-YYYY":
-      return `${paddedDay}-${month}-${year}`;
+      return `${paddedDay}-${paddedMonth}-${year}`;
     case "MM-DD-YYYY":
-      return `${month}-${paddedDay}-${year}`;
+      return `${paddedMonth}-${paddedDay}-${year}`;
     case "YYYY/MM/DD":
-      return `${year}/${month}/${paddedDay}`;
+      return `${year}/${paddedMonth}/${paddedDay}`;
     case "DD/MM/YYYY":
-      return `${paddedDay}/${month}/${year}`;
+      return `${paddedDay}/${paddedMonth}/${year}`;
     case "Month DD, YYYY":
       return `${monthName} ${day}, ${year}`;
     case "DD Month YYYY":
       return `${day} ${monthName} ${year}`;
+    case "YYYY":
+      return `${year}`;
+    case "MM":
+      return `${paddedMonth}`;
+    case "mm":
+      return `${month + 1}`;
+    case "M":
+      return `${monthName}`;
+    case "DD":
+      return `${paddedDay}`;
+    case "dd":
+      return `${day}`;
+    case "D":
+      return `${dayName}`;
     default:
-      throw new Error("Unsupported format: " + format);
+      throw new Error(`Unsupported format: "${format}".`);
   }
 }
+
+/**
+ * Retrieves the day of the week from a given date as a string.
+ *
+ * @param {Date | FixedDate | null} date - The date to retrieve the day from. Defaults to the current date.
+ * @param {"short" | "long"} [format="short"] - The format of the day name to return. Defaults to "short".
+ * @returns {string} The day name as a string (e.g. "Mon" or "Monday").
+ */
+export function getDayName(
+  date: Date | FixedDate | null = new Date(),
+  format: FormatDateParams["dayFormat"] = "short"
+): string {
+  const day = formatDate(date, { format: "D", dayFormat: format });
+  return day;
+}
+
+/**
+ * Retrieves the day of the month from a given date as a zero-padded two-digit string.
+ *
+ * @param {Date | FixedDate | null} date - The date to retrieve the day from. Defaults to the current date.
+ * @returns {string} A two-digit string representing the day of the month (01-31).
+ */
+
+export function getDay(date: Date | FixedDate | null = new Date()): string {
+  const day = formatDate(date, { format: "DD" });
+  return day;
+}
+
+/**
+ * Retrieves the month from a given date as a formatted string.
+ *
+ * @example
+ * const result = getMonthName();
+ * console.log(result);
+ * // Output: "Jan" (or the current month)
+ *
+ * const result = getMonthName(new Date(), "long");
+ * console.log(result);
+ * // Output: "August" (or the current month)
+ *
+ * @param {Date | FixedDate | null} [date] - The date to retrieve the month from.
+ * @param {FormatDateParams["monthFormat"]} [format] - The format of the month string.
+ * @returns {string} The month as a formatted string.
+ */
+export function getMonthName(
+  date: Date | FixedDate | null = new Date(),
+  format: FormatDateParams["monthFormat"] = "short"
+): string {
+  const month = formatDate(date, { format: "M", monthFormat: format });
+  return month;
+}
+
+/**
+ * Retrieves the month from a given date as a formatted string.
+ *
+ * This function takes a Date object, a FixedDate object, or null and returns
+ * the month in the specified format. If no date is provided, the current date is used.
+ *
+ * @param {Date | FixedDate | null} [date=new Date()] - The date from which to extract the month.
+ * @param {FormatDateParams["monthFormat"]} [format="short"] - The format to use for the month.
+ * @returns {string} The month extracted from the date, formatted as a string.
+ */
+export function getMonth(
+  date: Date | FixedDate | null = new Date(),
+  format: FormatDateParams["monthFormat"] = "short"
+): string {
+  const month = formatDate(date, { format: "MM", monthFormat: format });
+  return month;
+}
+
+/**
+ * Retrieves the year from a given date as a string.
+ *
+ * This function takes a Date object, a FixedDate object, or null and returns
+ * the year in the "YYYY" format. If no date is provided, the current date is used.
+ *
+ * @param {Date | FixedDate | null} [date=new Date()] - The date from which to extract the year.
+ * @returns {string} The year extracted from the date, formatted as a string.
+ */
+export function getYear(date: Date | FixedDate | null = new Date()): string {
+  const year = formatDate(date, { format: "YYYY" });
+  return year;
+}
+
 type FormatTimeParams = {
   format?: "HH:mm:ss" | "HH:mm" | "hh:mmA" | "hh:mm:ssA" | "HH:mm:ss.SSS";
 };

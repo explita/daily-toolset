@@ -14,6 +14,9 @@ describe("formatDate", () => {
   test('should return the current date in "YYYY-MM-DD" format', () => {
     expect(formatDate(new Date())).toBe(new Date().toISOString().split("T")[0]);
   });
+  test('should return the current date in "DD/MM/YYYY" format', () => {
+    expect(formatDate(null, { format: "YYYY" })).toBe("2024");
+  });
 });
 
 describe("timeAgo", () => {
