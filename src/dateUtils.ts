@@ -21,7 +21,7 @@ type FormatDateParams = {
 
 type Format = "short" | "long";
 
-type FixedDate = `${string | number}-${string | number}-${string | number}`;
+type FixedDate = string; //`${string | number}-${string | number}-${string | number}`;
 
 /**
  * Formats a given date object into a specified date format string.
@@ -66,11 +66,6 @@ export function formatDate(
     dayFormat = "short",
   }: FormatDateParams = {}
 ): string {
-  const isValidDate = (date: string): date is FixedDate => {
-    const regex = /^\d{4}-\d{2}-\d{2}$/; // Matches YYYY-MM-DD format
-    return regex.test(date);
-  };
-
   if (date === null) {
     date = new Date();
   }
@@ -242,11 +237,8 @@ export function getMonthName(
  * @param {FormatDateParams["monthFormat"]} [format="short"] - The format to use for the month.
  * @returns {string} The month extracted from the date, formatted as a string.
  */
-export function getMonth(
-  date: Date | FixedDate | null = new Date(),
-  format: FormatDateParams["monthFormat"] = "short"
-): string {
-  const month = formatDate(date, { format: "MM", monthFormat: format });
+export function getMonth(date: Date | FixedDate | null = new Date()): string {
+  const month = formatDate(date, { format: "MM" });
   return month;
 }
 
@@ -259,9 +251,9 @@ export function getMonth(
  * @param {Date | FixedDate | null} [date=new Date()] - The date from which to extract the year.
  * @returns {string} The year extracted from the date, formatted as a string.
  */
-export function getYear(date: Date | FixedDate | null = new Date()): string {
+export function getYear(date: Date | FixedDate | null = new Date()): number {
   const year = formatDate(date, { format: "YYYY" });
-  return year;
+  return Number(year);
 }
 
 type FormatTimeParams = {
@@ -288,7 +280,7 @@ type FormatTimeParams = {
  * @throws {Error} If the `format` parameter is not a supported format string.
  */
 export function formatTime(
-  date: Date,
+  date: Date = new Date(),
   { format = "hh:mmA" }: FormatTimeParams = {}
 ): string {
   if (!(date instanceof Date)) {
@@ -342,7 +334,7 @@ type FormatDateAndTimeParams = {
  * @throws {TypeError} If the `date` parameter is not a `Date` object.
  */
 export function formatDateTime(
-  date: Date,
+  date: Date = new Date(),
   {
     dateFormat = "DD/MM/YYYY",
     timeFormat = "hh:mmA",
@@ -398,4 +390,376 @@ export function timeAgo(date: Date | null | undefined): string {
   if (months < 12) return `${months} ${months === 1 ? "month" : "months"} ago`;
   const years = Math.floor(days / 365); // approximate year
   return `${years} ${years === 1 ? "year" : "years"} ago`;
+}
+
+/**
+ * Adds the given number of days to the given date and returns a new Date object.
+ *
+ * @param {number} days - The number of days to add to the date.
+ * @param {Date} [date=new Date()] - The date to add the days to. Defaults to the current date.
+ * @returns {Date} - A new Date object with the given number of days added.
+ */
+export function addDays(days: number, date: Date = new Date()): Date {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + days);
+  return newDate;
+}
+
+/**
+ * Adds the given number of months to the given date and returns a new Date object.
+ *
+ * @param {number} months - The number of months to add to the date.
+ * @param {Date} [date=new Date()] - The date to add the months to. Defaults to the current date.
+ * @returns {Date} - A new Date object with the given number of months added.
+ */
+export function addMonths(months: number, date: Date = new Date()): Date {
+  const newDate = new Date(date);
+  newDate.setMonth(newDate.getMonth() + months);
+  return newDate;
+}
+
+/**
+ * Adds the given number of years to the given date and returns a new Date object.
+ *
+ * @param {number} years - The number of years to add to the date.
+ * @param {Date} [date=new Date()] - The date to add the years to. Defaults to the current date.
+ * @returns {Date} - A new Date object with the given number of years added.
+ */
+export function addYears(years: number, date: Date = new Date()): Date {
+  const newDate = new Date(date);
+  newDate.setFullYear(newDate.getFullYear() + years);
+  return newDate;
+}
+
+/**
+ * Adds the given number of hours to the given date and returns a new Date object.
+ *
+ * @param {number} hours - The number of hours to add to the date.
+ * @param {Date} [date=new Date()] - The date to add the hours to. Defaults to the current date.
+ * @returns {Date} - A new Date object with the given number of hours added.
+ */
+export function addHours(hours: number, date: Date = new Date()): Date {
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + hours);
+  return newDate;
+}
+
+/**
+ * Adds the given number of minutes to the given date and returns a new Date object.
+ *
+ * @param {number} minutes - The number of minutes to add to the date.
+ * @param {Date} [date=new Date()] - The date to add the minutes to. Defaults to the current date.
+ * @returns {Date} - A new Date object with the given number of minutes added.
+ */
+export function addMinutes(minutes: number, date: Date = new Date()): Date {
+  const newDate = new Date(date);
+  newDate.setMinutes(newDate.getMinutes() + minutes);
+  return newDate;
+}
+
+/**
+ * Adds the specified number of seconds to a given date and returns a new Date object.
+ *
+ * @param {number} seconds - The number of seconds to add to the date.
+ * @param {Date} [date=new Date()] - The date to which the seconds will be added. Defaults to the current date.
+ * @returns {Date} A new Date object with the specified number of seconds added.
+ */
+export function addSeconds(seconds: number, date: Date = new Date()): Date {
+  const newDate = new Date(date);
+  newDate.setSeconds(newDate.getSeconds() + seconds);
+  return newDate;
+}
+
+/**
+ * Retrieves the number of days in a given month.
+ *
+ * This function takes a Date object and returns the number of days in its
+ * corresponding month. If no Date object is provided, it defaults to the
+ * current month.
+ *
+ * @param {Date} [date=new Date()] - The date to retrieve the days in month from.
+ * @returns {number} The number of days in the month.
+ */
+export function daysInMonth(date: Date = new Date()): number {
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+  return Math.ceil(
+    (lastDay.getTime() - firstDay.getTime()) / (1000 * 60 * 60 * 24) + 1
+  );
+}
+
+/**
+ * Returns true if the given date is today, false otherwise.
+ *
+ * @param {Date} date The date to check.
+ * @returns {boolean} True if the given date is today.
+ */
+export function isToday(date: Date): boolean {
+  if (!date || isNaN(date.getTime())) return false;
+
+  const today = new Date();
+
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+}
+
+/**
+ * Returns true if the given date is tomorrow, false otherwise.
+ *
+ * @param {Date} date The date to check.
+ * @returns {boolean} True if the given date is tomorrow.
+ */
+export function isTomorrow(date: Date): boolean {
+  if (!date || isNaN(date.getTime())) return false;
+
+  const today = new Date();
+  today.setDate(today.getDate() + 1);
+
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+}
+
+/**
+ * Checks if a given date is yesterday.
+ *
+ * This function determines whether the provided date corresponds to the day
+ * before the current date. It returns true if the date is yesterday, otherwise
+ * it returns false.
+ *
+ * @param {Date} date - The date to check.
+ * @returns {boolean} - `true` if the date is yesterday, `false` otherwise.
+ */
+export function isYesterday(date: Date): boolean {
+  if (!date || isNaN(date.getTime())) return false;
+
+  const today = new Date();
+  today.setDate(today.getDate() - 1);
+
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+}
+
+/**
+ * Checks if a given date is in the past.
+ *
+ * Takes a `Date` object and determines if it is earlier than the current date.
+ * Returns a boolean indicating whether the date is in the past.
+ *
+ * @param {Date} date The date to check.
+ * @returns {boolean} `true` if the date is in the past.
+ */
+export function isPast(date: Date): boolean {
+  if (!date || isNaN(date.getTime())) return false;
+
+  const today = new Date();
+  return date < today;
+}
+
+/**
+ * Checks if a given date is in the future.
+ *
+ * Takes a `Date` object and determines if it is later than the current date.
+ * Returns a boolean indicating whether the date is in the future.
+ *
+ * @param {Date} date The date to check.
+ * @returns {boolean} `true` if the date is in the future.
+ */
+export function isFuture(date: Date): boolean {
+  if (!date || isNaN(date.getTime())) return false;
+
+  const today = new Date();
+  return date > today;
+}
+
+/**
+ * Returns the number of days between two dates.
+ *
+ * This function takes two dates and calculates the number of days
+ * between them. It returns the difference in days as an integer.
+ *
+ * @param {Date} date1 - The first date to compare.
+ * @param {Date} date2 - The second date to compare.
+ * @returns {number} - The number of days between the two dates.
+ */
+export function daysBetween(date1: Date, date2: Date): number {
+  if (!date1 || !date2 || isNaN(date1.getTime()) || isNaN(date2.getTime()))
+    return 0;
+
+  const timeDiff = Math.abs(date1.getTime() - date2.getTime());
+  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return diffDays;
+}
+
+/**
+ * Returns the number of hours between two dates.
+ *
+ * This function takes two dates and calculates the number of hours
+ * between them. The returned value is an integer and is always
+ * positive (i.e., the order of the dates does not matter).
+ */
+export function hoursBetween(date1: Date, date2: Date): number {
+  if (!date1 || !date2 || isNaN(date1.getTime()) || isNaN(date2.getTime()))
+    return 0;
+
+  const timeDiff = Math.abs(date1.getTime() - date2.getTime());
+  const diffHours = Math.ceil(timeDiff / (1000 * 3600));
+  return diffHours;
+}
+
+/**
+ * Returns the number of minutes between two dates.
+ *
+ * This function takes two dates and calculates the number of minutes
+ * between them. It returns the difference in minutes as an integer.
+ *
+ * @param {Date} date1 - The first date to compare.
+ * @param {Date} date2 - The second date to compare.
+ * @returns {number} - The number of minutes between the two dates.
+ */
+export function minutesBetween(date1: Date, date2: Date): number {
+  if (!date1 || !date2 || isNaN(date1.getTime()) || isNaN(date2.getTime()))
+    return 0;
+
+  const timeDiff = Math.abs(date1.getTime() - date2.getTime());
+  const diffMinutes = Math.ceil(timeDiff / (1000 * 60));
+  return diffMinutes;
+}
+
+/**
+ * Returns the number of days since the given date.
+ *
+ * This function takes a date and calculates the number of days that have
+ * passed since that date. If the given date is in the future, it returns 0.
+ *
+ * @param {Date} date - The date to calculate the number of days since.
+ * @returns {number} - The number of days since the given date.
+ */
+export function daysSince(date: Date): number {
+  if (!date || isNaN(date.getTime())) return 0;
+
+  const today = new Date();
+
+  if (date >= today) return 0;
+
+  const timeDiff = Math.abs(today.getTime() - date.getTime());
+  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return diffDays;
+}
+
+/**
+ * Returns the number of days until the given date from today.
+ *
+ * @param {Date} date - The date to calculate the number of days until.
+ * @returns {number} - The number of days until the given date from today.
+ * @throws {Error} - Throws an error if the date is null, undefined, or in the past.
+ */
+export function daysUntil(date: Date): number {
+  if (!date || isNaN(date.getTime())) return 0;
+
+  const today = new Date();
+
+  if (date <= today) return 0;
+
+  const timeDiff = Math.abs(date.getTime() - today.getTime());
+  const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return diffDays;
+}
+
+/**
+ * Calculates the number of hours since the given date.
+ *
+ * @param {Date} date - The date to calculate the hours since.
+ * @returns {number} The number of hours since the given date.
+ */
+export function hoursSince(date: Date): number {
+  if (!date || isNaN(date.getTime())) return 0;
+
+  const today = new Date();
+
+  if (date >= today) return 0;
+
+  const timeDiff = Math.abs(today.getTime() - date.getTime());
+  const diffHours = Math.ceil(timeDiff / (1000 * 3600));
+  return diffHours;
+}
+
+/**
+ * Calculates the number of hours until the given date.
+ *
+ * @param {Date} date - The date to calculate the hours until.
+ * @returns {number} The number of hours until the given date.
+ */
+export function hoursUntil(date: Date): number {
+  if (!date || isNaN(date.getTime())) return 0;
+
+  const today = new Date();
+
+  if (date <= today) return 0;
+
+  const timeDiff = Math.abs(date.getTime() - today.getTime());
+  const diffHours = Math.ceil(timeDiff / (1000 * 3600));
+  return diffHours;
+}
+
+/**
+ * Retrieves the day of the year from a given date.
+ *
+ * @param {Date | FixedDate | null} date - The date to retrieve the day from. Defaults to the current date.
+ * @returns {number} The day of the year (1-365) as per ISO 8601.
+ */
+export function dayOfYear(date: Date = new Date()): number {
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff = date.getTime() - start.getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const day = Math.floor(diff / oneDay);
+
+  return day;
+}
+
+/**
+ * Retrieves the week of the year from a given date.
+ *
+ * @param {Date | FixedDate | null} date - The date to retrieve the week from. Defaults to the current date.
+ * @returns {number} The week of the year (1-52) as per ISO 8601.
+ */
+export function weekOfYear(date: Date = new Date()): number {
+  const start = new Date(date.getFullYear(), 0, 1);
+  const diff = date.getTime() - start.getTime();
+  const oneDay = 1000 * 60 * 60 * 24;
+  const day = Math.floor(diff / oneDay);
+  const week = Math.floor(day / 7);
+
+  return week + 1;
+}
+
+/**
+ * Validates if the provided string is a valid ISO date.
+ *
+ * This function checks if a given string matches the ISO date format
+ * using a regular expression. It then attempts to parse it into a
+ * JavaScript Date object to ensure it represents a valid date.
+ *
+ * @param {string} value - The string to validate as a date.
+ * @returns {boolean} - True if the string is a valid date, false otherwise.
+ */
+export function isValidDate(value: string): boolean {
+  if (typeof value !== "string") return false;
+
+  const isoDateRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z)?)?$/;
+
+  if (!isoDateRegex.test(value)) return false;
+
+  const date = new Date(value);
+
+  return !isNaN(date.getTime());
 }

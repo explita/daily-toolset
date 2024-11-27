@@ -36,8 +36,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MrAlao/daily-toolset.git"
+    "url": "git+https://github.com/explita/daily-toolset.git"
   },
+  "homepage": "https://daily-toolset.explita.ng",
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
