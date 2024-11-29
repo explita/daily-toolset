@@ -6,8 +6,12 @@
     "outDir": "./dist",
     "declarationDir": "./dist/types",
     "strict": true,
-    "module": "CommonJS",
-    "esModuleInterop": true
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"]
 }
