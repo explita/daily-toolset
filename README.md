@@ -35,8 +35,9 @@ console.log(transformObject({ "a.b.c": "value" })); // { a: { b: { c: "value" } 
 
 <br />
 
-**Documentation**
-For detailed documentation, including a comprehensive list of functions and their use cases, visit the [Daily Toolset Documentation](https://daily-toolset.explita.ng).
+##### Documentation
+
+For detailed documentation, including a comprehensive list of functions and their use cases, visit the [Daily Toolset Documentation](https://daily-toolset.explita.ng){target="\_blank"}.
 
 <br/>
 

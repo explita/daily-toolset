@@ -1,3 +1,5 @@
+import { isValidDate } from "./dateUtils";
+
 export type ObjectTransformInput = { [key: string]: string | number };
 export type Transformed = { [key: string]: string };
 
@@ -232,6 +234,63 @@ export function deepMerge<T extends object>({
   return output;
 }
 
+/**
+ * Determines if the provided value is a non-null object.
+ *
+ * This function checks whether a given value is of type 'object'
+ * and is not null. It is useful for type guarding to ensure that
+ * a value is a valid object before performing operations on it.
+ *
+ * @param {unknown} value - The value to check.
+ * @returns {boolean} - True if the value is a non-null object, false otherwise.
+ */
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
+}
+
+/**
+ * Converts the given data to a JSON string and then parses it back into the
+ * original object, with some extra processing to support bigints and dates.
+ *
+ * The replacer function is used to convert bigints to numbers if they fit in
+ * the number type range, and to convert all bigints to strings otherwise.
+ *
+ * The reviver function is used to convert strings that represent dates back into
+ * Date objects.
+ *
+ * If there is an error during the process, null is returned.
+ *
+ * @param {object | object[] | null} data - The data to convert to a JSON string
+ *   and then parse back into an object.
+ * @returns {object | object[] | null} - The parsed object, or null if there was
+ *   an error.
+ */
+export function jsonify<T extends object | object[]>(data: T | null): T | null {
+  if (data === null) return null;
+
+  const replacer = (key: string, value: any) => {
+    if (typeof value === "bigint") {
+      return value <= Number.MAX_SAFE_INTEGER
+        ? Number(value)
+        : value.toString();
+    }
+    return value;
+  };
+
+  const reviver = (key: string, value: any) => {
+    if (typeof value === "string" && isValidDate(value)) {
+      return new Date(value);
+    }
+
+    return value;
+  };
+
+  try {
+    const serialized = JSON.stringify(data, replacer);
+
+    return JSON.parse(serialized, reviver) as T;
+  } catch (error) {
+    console.error("TransformData error:", error);
+    return null;
+  }
 }
