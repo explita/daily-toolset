@@ -1,56 +1,76 @@
 import { z, ZodType } from "zod";
 
-type Response<T> = {
-  status: "success" | "error";
-  errorData?: {
-    errors: Partial<T>;
-    message: string;
-  };
-  formData: T;
-};
+type ValidationResponse<T> =
+  | {
+      status: "success";
+      formData: T;
+    }
+  | {
+      status: "error";
+      errorData: {
+        errors: Partial<Record<keyof T, string>>;
+        message: string;
+      };
+      formData: T;
+    };
 
 /**
- * Validates a given form data using the provided Zod schema.
+ * Validates form data against a given Zod schema.
  *
- * @param validationSchema the Zod schema to validate the form data against
- * @param formData the form data to validate
+ * @template Schema - A Zod schema type.
+ * @param {Schema} validationSchema - The Zod schema to validate the form data against.
+ * @param {FormData} formData - The form data to validate.
+ * @returns {Promise<ValidationResponse<z.infer<Schema>>>} - A promise that resolves to a validation response.
  *
- * @returns a response object with a status of "success" if the
- * validation is successful, or "error" if there are any validation
- * errors. The "errorData" property contains the validation errors, and
- * the "formData" property contains the validated form data.
+ * @throws {Error} - Throws an error if a valid Zod schema is not provided or if an unexpected error occurs during validation.
  */
-export const formValidation = async <Schema extends ZodType<any>>(
+export async function formValidation<Schema extends ZodType<unknown>>(
   validationSchema: Schema,
   formData: FormData
-): Promise<Response<z.infer<Schema>>> => {
-  const form = Object.fromEntries(formData) as Record<string, unknown>;
-
-  const result = await validationSchema.safeParseAsync(form);
-
-  if (result.success) {
-    return {
-      status: "success",
-      formData: result.data, // Validated data
-    };
+): Promise<ValidationResponse<z.infer<Schema>>> {
+  if (typeof validationSchema?.safeParseAsync !== "function") {
+    throw new Error(
+      "A valid Zod schema is required for form validation. Please provide a valid Zod schema and try again."
+    );
   }
 
-  // Extract errors from Zod
-  const errors: Partial<z.infer<Schema>> = {};
+  try {
+    const form = Object.fromEntries(formData.entries()) as Record<
+      string,
+      unknown
+    >;
 
-  result.error.errors.forEach(({ path, message }) => {
-    if (path.length > 0) {
-      const key = path[0] as keyof z.infer<Schema>;
-      errors[key] = message;
+    const result = await validationSchema.safeParseAsync(form);
+
+    if (result.success) {
+      return {
+        status: "success",
+        formData: result.data,
+      };
     }
-  });
 
-  return {
-    status: "error",
-    errorData: {
-      errors,
-      message: "Validation failed",
-    },
-    formData: form as z.infer<Schema>,
-  };
-};
+    const errors: Partial<Record<keyof z.infer<Schema>, string>> = {};
+
+    for (const { path, message } of result.error.errors) {
+      if (path.length > 0) {
+        const key = path[0] as keyof z.infer<Schema>;
+        errors[key] = message;
+      }
+    }
+
+    return {
+      status: "error",
+      errorData: {
+        errors,
+        message: "Validation failed",
+      },
+      formData: form as z.infer<Schema>,
+    };
+  } catch (error: any) {
+    throw new Error(
+      `Validation failed due to an unexpected error: ${
+        error.message || "Please make sure Zod is installed and try again."
+      }`
+    );
+  }
+}
