@@ -2,8 +2,16 @@
   "name": "daily-toolset",
   "version": "2.4.0",
   "description": "A lightweight, versatile collection of TypeScript utility functions for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and more.",
-  "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./form": {
+      "require": "./dist/form/index.js",
+      "types": "./dist/types/form/index.d.ts"
+    }
+  },
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist",
@@ -46,7 +54,11 @@
     "@types/jest": "^29.5.14",
     "jest": "^29.7.0",
     "rimraf": "^6.0.1",
-    "ts-jest": "^29.2.5"
+    "ts-jest": "^29.2.5",
+    "zod": "^3.23.8"
+  },
+  "peerDependencies": {
+    "zod": "^3.23.8"
   },
   "files": [
     "dist",
