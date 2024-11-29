@@ -6,12 +6,26 @@
     "outDir": "./dist",
     "declarationDir": "./dist/types",
     "strict": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "module": "CommonJS",
+    "esModuleInterop": true
   },
   "include": ["src/**/*"]
 }
+
+// {
+//   "compilerOptions": {
+//     "target": "ES2019",
+//     //"lib": ["ES2015", "DOM"],
+//     "declaration": true,
+//     "outDir": "./dist",
+//     "declarationDir": "./dist/types",
+//     "strict": true,
+//     "module": "CommonJS",
+//     "moduleResolution": "node",
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "resolveJsonModule": true,
+//     "allowSyntheticDefaultImports": true
+//   },
+//   "include": ["src/**/*"]
+// }
