@@ -1,31 +1,18 @@
 {
   "compilerOptions": {
     "target": "ES2019",
-    //"lib": ["ES2015", "DOM"],
+    //"lib": ["ES2019", "DOM"],
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*"]
+    },
     "declaration": true,
     "outDir": "./dist",
-    "declarationDir": "./dist/types",
+    // "declarationDir": "./dist/types",
     "strict": true,
     "module": "CommonJS",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
   },
   "include": ["src/**/*"]
 }
-
-// {
-//   "compilerOptions": {
-//     "target": "ES2019",
-//     //"lib": ["ES2015", "DOM"],
-//     "declaration": true,
-//     "outDir": "./dist",
-//     "declarationDir": "./dist/types",
-//     "strict": true,
-//     "module": "CommonJS",
-//     "moduleResolution": "node",
-//     "esModuleInterop": true,
-//     "skipLibCheck": true,
-//     "resolveJsonModule": true,
-//     "allowSyntheticDefaultImports": true
-//   },
-//   "include": ["src/**/*"]
-// }
