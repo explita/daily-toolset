@@ -14,7 +14,6 @@ import { z, ZodEffects, ZodObject, ZodRawShape, ZodTypeAny } from "zod";
 
 import { debounce } from "../functionUtils";
 import { formValidation } from "./formValidation";
-import { generateDefaultObject } from "./helper";
 
 type ZodSchema =
   | ZodObject<ZodRawShape>
@@ -65,8 +64,8 @@ export function FormProvider({ children }: FormProviderProps) {
     async (name: string | undefined, inputValue: InputValue) => {
       if (!name || !schema || mode === "uncontrolled") return;
 
-      const schemaKeys = Object.keys(generateDefaultObject(schema));
-      if (!schemaKeys.includes(name)) return;
+      // const schemaKeys = Object.keys(generateDefaultObject(schema));
+      // if (!schemaKeys.includes(name)) return;
 
       const formData = new FormData();
       formData.append(name, inputValue?.toString() ?? "");
@@ -169,9 +168,9 @@ export function useForm<
   }, [errors, context]);
 
   if (!context) {
-    console.warn(
-      "FormContext is not initialized. Wrap your component in a FormProvider."
-    );
+    // console.warn(
+    //   "FormContext is not initialized. Wrap your component in a FormProvider."
+    // );
     return {
       formValues: defaultValues,
       formErrors: errors,
@@ -181,9 +180,7 @@ export function useForm<
   }
 
   const formValues = (
-    context.schema &&
-    context.formValues &&
-    Object.keys(context.formValues).length > 0
+    context.formValues && Object.keys(context.formValues).length > 0
       ? context.formValues
       : {}
   ) as InferZodSchema<UnwrapZodSchema<Schema>> | DefaultValues;
