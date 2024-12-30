@@ -20,7 +20,7 @@ export function uniqueArray<T>(arr: T[]): T[] {
 }
 
 type UniqueArrayByKeyParams<T> = {
-  array: T[];
+  array: T[] | null | undefined;
   key: keyof T;
 };
 /**

@@ -19,6 +19,8 @@ import {
   dayOfYear,
   weekOfYear,
   isValidDate,
+  isPast,
+  isFuture,
 } from "../src/dateUtils";
 
 // describe("formatDate", () => {
@@ -183,4 +185,14 @@ import {
 
 // test("isValidDate should return false for an invalid date string", () => {
 //   expect(isValidDate("invalid-date")).toBe(false);
+// });
+
+// test("isPast should return true if the date is in the past", () => {
+//   const date = new Date("2024-12-30");
+//   expect(isPast(date, { includeTime: false })).toBe(true);
+// });
+
+// test("isFuture should return true if the date is in the future", () => {
+//   const date = new Date("2024-12-31");
+//   expect(isFuture(date, { includeTime: false })).toBe(false);
 // });

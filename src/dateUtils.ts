@@ -549,35 +549,69 @@ export function isYesterday(date: Date): boolean {
   );
 }
 
+type IsPastOptions = {
+  includeTime?: boolean;
+};
+
 /**
  * Checks if a given date is in the past.
  *
- * Takes a `Date` object and determines if it is earlier than the current date.
+ * Takes a Date object and determines if it is earlier than the current date.
  * Returns a boolean indicating whether the date is in the past.
  *
  * @param {Date} date The date to check.
+ * @param {IsPastOptions} options Configuration options
+ * @param {boolean} [options.includeTime=true] Whether to include time in the comparison
  * @returns {boolean} `true` if the date is in the past.
  */
-export function isPast(date: Date): boolean {
+export function isPast(
+  date: Date,
+  options: IsPastOptions = { includeTime: true }
+): boolean {
   if (!date || isNaN(date.getTime())) return false;
 
   const today = new Date();
+
+  if (!options.includeTime) {
+    return (
+      new Date(date.getFullYear(), date.getMonth(), date.getDate()) <
+      new Date(today.getFullYear(), today.getMonth(), today.getDate())
+    );
+  }
+
   return date < today;
 }
+
+type IsFutureOptions = {
+  includeTime?: boolean;
+};
 
 /**
  * Checks if a given date is in the future.
  *
- * Takes a `Date` object and determines if it is later than the current date.
+ * Takes a Date object and determines if it is later than the current date.
  * Returns a boolean indicating whether the date is in the future.
  *
  * @param {Date} date The date to check.
+ * @param {IsFutureOptions} options Configuration options
+ * @param {boolean} [options.includeTime=true] Whether to include time in the comparison
  * @returns {boolean} `true` if the date is in the future.
  */
-export function isFuture(date: Date): boolean {
+export function isFuture(
+  date: Date,
+  options: IsFutureOptions = { includeTime: true }
+): boolean {
   if (!date || isNaN(date.getTime())) return false;
 
   const today = new Date();
+
+  if (!options.includeTime) {
+    return (
+      new Date(date.getFullYear(), date.getMonth(), date.getDate()) >
+      new Date(today.getFullYear(), today.getMonth(), today.getDate())
+    );
+  }
+
   return date > today;
 }
 
