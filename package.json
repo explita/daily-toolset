@@ -33,8 +33,7 @@
   "scripts": {
     "test": "jest",
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc && babel src --out-dir dist --extensions \".js,.ts,.tsx\"",
-    "prepublishOnly": "npm run build"
+    "build": "npm run clean && tsc && babel src --out-dir dist --extensions \".js,.ts,.tsx\""
   },
   "keywords": [
     "utility functions",
