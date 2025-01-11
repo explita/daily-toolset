@@ -43,8 +43,10 @@ type FormProviderProps = {
 const FormContext = createContext<FormContextType | null>(null);
 
 export function FormProvider({ children }: FormProviderProps) {
-  const [formValues, setFormValues] = useState({} as any);
-  const [formErrors, setFormErrors] = useState({} as any);
+  const [formValues, setFormValues] = useState<Record<string, InputValue>>({});
+  const [formErrors, setFormErrors] = useState<
+    Record<string, string | undefined>
+  >({});
   const [schema, setSchema] = useState<ZodSchema>(undefined);
   const [mode, setMode] = useState<FormMode>("controlled");
 
@@ -64,20 +66,17 @@ export function FormProvider({ children }: FormProviderProps) {
     async (name: string | undefined, inputValue: InputValue) => {
       if (!name || !schema || mode === "uncontrolled") return;
 
-      // const schemaKeys = Object.keys(generateDefaultObject(schema));
-      // if (!schemaKeys.includes(name)) return;
-
       const formData = new FormData();
       formData.append(name, inputValue?.toString() ?? "");
       const result = await formValidation(schema, formData);
 
       if (result.status !== "success") {
-        setFormErrors((prev: any) => ({
+        setFormErrors((prev) => ({
           ...prev,
           [name]: result.errorData?.errors[name],
         }));
       } else {
-        setFormErrors((prev: any) => ({ ...prev, [name]: undefined }));
+        setFormErrors((prev) => ({ ...prev, [name]: undefined }));
       }
     },
     [schema, mode]

@@ -21,6 +21,7 @@ import {
   isValidDate,
   isPast,
   isFuture,
+  ageFromDOB,
 } from "../src/dateUtils";
 
 // describe("formatDate", () => {
@@ -195,4 +196,9 @@ import {
 // test("isFuture should return true if the date is in the future", () => {
 //   const date = new Date("2024-12-31");
 //   expect(isFuture(date, { includeTime: false })).toBe(false);
+// });
+
+// test("ageFromDOB should return the age in years", () => {
+//   const date = new Date("1990-01-01");
+//   expect(ageFromDOB(date)).toBe(33); // 2023 - 1990 = 33 years
 // });

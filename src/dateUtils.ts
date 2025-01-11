@@ -235,11 +235,11 @@ export function getMonthName(
  *
  * @param {Date | FixedDate | null} [date=new Date()] - The date from which to extract the month.
  * @param {FormatDateParams["monthFormat"]} [format="short"] - The format to use for the month.
- * @returns {string} The month extracted from the date, formatted as a string.
+ * @returns {string} The month extracted from the date, formatted as a number.
  */
-export function getMonth(date: Date | FixedDate | null = new Date()): string {
+export function getMonth(date: Date | FixedDate | null = new Date()): number {
   const month = formatDate(date, { format: "MM" });
-  return month;
+  return Number(month);
 }
 
 /**
@@ -796,4 +796,45 @@ export function isValidDate(value: string): boolean {
   const date = new Date(value);
 
   return !isNaN(date.getTime());
+}
+
+/**
+ * Extracts the years, months, and days from a given date of birth.
+ *
+ * This function takes a Date object and returns an object with the years,
+ * months, and days properties.
+ *
+ * @param {Date} dateOfBirth - The date of birth to extract the years, months, and days from.
+ * @returns {object} An object with the years, months, and days properties.
+ */
+export function ageFromDOB(dateOfBirth: Date | string): {
+  years: number;
+  months: number;
+  days: number;
+} {
+  if (typeof dateOfBirth === "string" && !isValidDate(dateOfBirth)) {
+    throw new Error(
+      `Invalid date string provided: "${dateOfBirth}". Expected format: YYYY-MM-DD or similar.`
+    );
+  }
+
+  if (typeof dateOfBirth === "string" && isValidDate(dateOfBirth)) {
+    dateOfBirth = new Date(dateOfBirth);
+  }
+
+  if (!(dateOfBirth instanceof Date)) {
+    throw new TypeError(
+      "Expected a Date object, but received " + typeof dateOfBirth
+    );
+  }
+
+  const today = new Date();
+
+  const years = today.getFullYear() - dateOfBirth.getFullYear();
+
+  const months = today.getMonth() - dateOfBirth.getMonth();
+
+  const days = today.getDate() - dateOfBirth.getDate();
+
+  return { years, months, days };
 }
