@@ -249,24 +249,25 @@ function isObject(value: unknown): value is Record<string, unknown> {
 }
 
 /**
- * Converts the given data to a JSON string and then parses it back into the
- * original object, with some extra processing to support bigints and dates.
+ * Converts the provided data to a JSON-compatible format by replacing
+ * big integers with either numbers or strings and reviving date strings
+ * to Date objects.
  *
- * The replacer function is used to convert bigints to numbers if they fit in
- * the number type range, and to convert all bigints to strings otherwise.
+ * @param {object | object[]} data - The data to serialize.
+ * @returns {object | object[]} - The serialized data.
  *
- * The reviver function is used to convert strings that represent dates back into
- * Date objects.
+ * @example
+ * const data = {
+ *   id: 1234567890123456789,
+ *   name: "John Doe",
+ *   date: "2022-01-01T12:00:00.000Z",
+ * };
  *
- * If there is an error during the process, null is returned.
- *
- * @param {object | object[] | null} data - The data to convert to a JSON string
- *   and then parse back into an object.
- * @returns {object | object[] | null} - The parsed object, or null if there was
- *   an error.
+ * const jsonified = jsonify(data);
+ * // Result: { id: "1234567890123456789", name: "John Doe", date: Date object }
  */
-export function jsonify<T extends object | object[]>(data: T | null): T | null {
-  if (data === null) return null;
+export function jsonify<T extends object | object[]>(data: T): T {
+  if (typeof data !== "object" || !Array.isArray(data)) return data;
 
   const replacer = (key: string, value: any) => {
     if (typeof value === "bigint") {
@@ -291,6 +292,6 @@ export function jsonify<T extends object | object[]>(data: T | null): T | null {
     return JSON.parse(serialized, reviver) as T;
   } catch (error) {
     console.error("TransformData error:", error);
-    return null;
+    return data;
   }
 }

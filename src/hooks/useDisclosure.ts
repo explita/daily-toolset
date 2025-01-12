@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 type Props = {
-  initialState?: boolean;
   options?: {
     onOpen?: () => void;
     onClose?: () => void;
@@ -14,7 +13,7 @@ type Props = {
  * @param defaultOpen - Initial open state (default is false).
  * @returns A tuple containing the current open state and an object with methods to open, close, and toggle the state.
  */
-export function useDisclosure({ initialState = false, options }: Props) {
+export function useDisclosure(initialState = false, { options }: Props) {
   const [open, setOpen] = useState(initialState);
 
   return [
