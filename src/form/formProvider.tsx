@@ -145,6 +145,17 @@ export function useForm<
     }
   }, [mode, context]);
 
+  // const setDefaultValues = useMemo(() => {
+  //   if (context && Object.keys(defaultValues as object).length > 0) {
+  //     const valuesEqual =
+  //       JSON.stringify(context.formValues) === JSON.stringify(defaultValues);
+
+  //     if (!valuesEqual) {
+  //       context.setFormValues(defaultValues);
+  //     }
+  //   }
+  // }, [defaultValues]);
+
   useEffect(() => {
     if (context && Object.keys(defaultValues as object).length > 0) {
       const valuesEqual =

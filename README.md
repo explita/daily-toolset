@@ -3,6 +3,8 @@
 Daily Toolset is a versatile utility library designed to simplify everyday JavaScript/TypeScript development. From string manipulation and object transformation to chunk splitting and unique string generation, Daily Toolset provides an array of powerful, reusable functions to streamline coding tasks, boost productivity, and enhance code readability.
 <br/>
 
+## From version 3.0.0, Daily Toolset is now available as a [@explita/daily-toolset](https://www.npmjs.com/package/@explita/daily-toolset).
+
 #### Features
 
 - **String Manipulation**: Format and process strings with ease.
