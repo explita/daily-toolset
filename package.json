@@ -36,7 +36,8 @@
       "import": {
         "default": "./dist/components/index.js"
       }
-    }
+    },
+    "./dist/styles.css": "./dist/styles.css"
   },
   "scripts": {
     "test": "jest",
