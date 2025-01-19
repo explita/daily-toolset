@@ -36,7 +36,6 @@ export function MultiSelect({
   handleSelection,
   error,
   placeholder,
-  ...rest
 }: MultiSelectProps) {
   const { formValues, formErrors, updateValue, validateField } = useForm();
 

@@ -16,12 +16,16 @@ Daily Toolset is a lightweight and versatile collection of TypeScript utility fu
 
 Install the package via npm:
 
-    npm install daily-toolset --save
+    npm install @explita/daily-toolset --save
 
 **Quick Examples**
 
 ```javascript
-import { chunkSplit, uniqueString, transformObject } from "daily-toolset";
+import {
+  chunkSplit,
+  uniqueString,
+  transformObject,
+} from "@explita/daily-toolset";
 
 // Split a number into groups
 console.log(chunkSplit(123456789, { groupSize: 3, separator: "," })); // "123,456,789"

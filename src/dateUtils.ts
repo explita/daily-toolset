@@ -830,11 +830,28 @@ export function ageFromDOB(dateOfBirth: Date | string): {
 
   const today = new Date();
 
-  const years = today.getFullYear() - dateOfBirth.getFullYear();
+  let years = today.getFullYear() - dateOfBirth.getFullYear();
 
-  const months = today.getMonth() - dateOfBirth.getMonth();
+  let months = today.getMonth() - dateOfBirth.getMonth();
+  let days = today.getDate() - dateOfBirth.getDate();
 
-  const days = today.getDate() - dateOfBirth.getDate();
+  if (days < 0) {
+    days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); // get last day of previous month
+    months -= 1;
+  }
+
+  if (months < 0) {
+    months += 12;
+  }
+
+  const hasBirthdayPassed =
+    today.getMonth() > dateOfBirth.getMonth() ||
+    (today.getMonth() === dateOfBirth.getMonth() &&
+      today.getDate() >= dateOfBirth.getDate());
+
+  if (!hasBirthdayPassed) {
+    years -= 1;
+  }
 
   return { years, months, days };
 }
