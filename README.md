@@ -1,9 +1,7 @@
 ## Daily Toolset
 
-Daily Toolset is a versatile utility library designed to simplify everyday JavaScript/TypeScript development. From string manipulation and object transformation to chunk splitting and unique string generation, Daily Toolset provides an array of powerful, reusable functions to streamline coding tasks, boost productivity, and enhance code readability.
+Daily Toolset is a lightweight and versatile collection of TypeScript utility functions and form components (inspired by ShadCN UI), for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and customizable form elements. Perfect for building efficient, modern web applications with ease.
 <br/>
-
-## From version 3.0.0, Daily Toolset is now available as a [@explita/daily-toolset](https://www.npmjs.com/package/@explita/daily-toolset).
 
 #### Features
 

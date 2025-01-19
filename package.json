@@ -1,7 +1,7 @@
 {
-  "name": "daily-toolset",
+  "name": "@explita/daily-toolset",
   "version": "2.9.4",
-  "description": "A lightweight, versatile collection of TypeScript utility functions for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and more.",
+  "description": "A lightweight and versatile collection of TypeScript utility functions and form components, inspired by ShadCN UI, for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and customizable form elements. Perfect for building efficient, modern web applications with ease.",
   "main": "./dist/index.js",
   "exports": {
     "./package.json": "./package.json",
@@ -85,7 +85,9 @@
     "next.js form",
     "next.js form validation",
     "next.js form helpers",
-    "next.js form utilities"
+    "next.js form utilities",
+    "shadcn ui",
+    "shadcn ui components"
   ],
   "author": "explita",
   "license": "MIT",
