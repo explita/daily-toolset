@@ -8,7 +8,7 @@ const Switch = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
-    className={`peer explita-switch-root ${className}`}
+    className={`peer explita-switch-root ${className || ""}`}
     {...props}
     ref={ref}
   >

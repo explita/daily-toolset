@@ -14,7 +14,7 @@ const Command = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={`flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground
-      ${className}`}
+      ${className || ""}`}
     {...props}
   />
 ));
@@ -38,7 +38,7 @@ const CommandInput = React.forwardRef<
     <LuSearch />
     <CommandPrimitive.Input
       ref={ref}
-      className={`input ${className}`}
+      className={`input ${className || ""}`}
       {...props}
     />
   </div>
@@ -52,7 +52,7 @@ const CommandList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.List
     ref={ref}
-    className={`explita-command-list ${className}`}
+    className={`explita-command-list ${className || ""}`}
     {...props}
   />
 ));
@@ -78,7 +78,7 @@ const CommandGroup = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Group
     ref={ref}
-    className={`explita-command-group ${className}`}
+    className={`explita-command-group ${className || ""}`}
     {...props}
   />
 ));
@@ -91,7 +91,7 @@ const CommandSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
-    className={`explita-command-separator ${className}`}
+    className={`explita-command-separator ${className || ""}`}
     {...props}
   />
 ));
@@ -103,7 +103,7 @@ const CommandItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Item
     ref={ref}
-    className={`explita-command-item ${className}`}
+    className={`explita-command-item ${className || ""}`}
     {...props}
   />
 ));
@@ -115,7 +115,10 @@ const CommandShortcut = ({
   ...props
 }: React.HTMLAttributes<HTMLSpanElement>) => {
   return (
-    <span className={`explita-command-shortcut ${className}`} {...props} />
+    <span
+      className={`explita-command-shortcut ${className || ""}`}
+      {...props}
+    />
   );
 };
 CommandShortcut.displayName = "CommandShortcut";

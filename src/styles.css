@@ -68,7 +68,7 @@
   justify-content: center;
   gap: 0.5rem;
   white-space: nowrap;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
@@ -83,7 +83,7 @@
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
 }
 
 .explita-button:disabled {
@@ -107,62 +107,62 @@
 }
 
 .explita-button.default {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--explita-primary));
+  color: hsl(var(--explita-primary-foreground));
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .explita-button.default:hover {
-  background-color: hsl(var(--primary) / 0.9);
+  background-color: hsl(var(--explita-primary) / 0.9);
 }
 
 .explita-button.destructive {
-  background-color: hsl(var(--destructive));
-  color: hsl(var(--destructive-foreground));
+  background-color: hsl(var(--explita-destructive));
+  color: hsl(var(--explita-destructive-foreground));
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .explita-button.destructive:hover {
-  background-color: hsl(var(--destructive) / 0.9);
+  background-color: hsl(var(--explita-destructive) / 0.9);
 }
 
 .explita-button.outline {
   border-width: 1px;
-  border-color: hsl(var(--input));
-  background-color: hsl(var(--background));
+  border-color: hsl(var(--explita-input));
+  background-color: hsl(var(--explita-background));
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .explita-button.outline:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-button.secondary {
-  background-color: hsl(var(--secondary));
-  color: hsl(var(--secondary-foreground));
+  background-color: hsl(var(--explita-secondary));
+  color: hsl(var(--explita-secondary-foreground));
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .explita-button.secondary:hover {
-  background-color: hsl(var(--secondary) / 0.8);
+  background-color: hsl(var(--explita-secondary) / 0.8);
 }
 
 .explita-button.ghost:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-button.link {
-  color: hsl(var(--primary));
+  color: hsl(var(--explita-primary));
   text-underline-offset: 4px;
 }
 
@@ -210,7 +210,7 @@
 
 .explita-button.size-sm {
   height: 2rem;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   padding-left: 0.75rem;
   padding-right: 0.75rem;
   font-size: 0.75rem;
@@ -219,7 +219,7 @@
 
 .explita-button.size-lg {
   height: 2.5rem;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -278,9 +278,9 @@
   display: flex;
   height: 2.25rem;
   width: 100%;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   border-width: 1px;
-  border-color: hsl(var(--input));
+  border-color: hsl(var(--explita-input));
   background-color: transparent;
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
@@ -304,21 +304,21 @@
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: 500;
-  color: hsl(var(--foreground));
+  color: hsl(var(--explita-foreground));
 }
 
 .explita-input-root input::-moz-placeholder {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root input::placeholder {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root input:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
 }
 
 .explita-input-root input:disabled {
@@ -380,7 +380,7 @@
 }
 
 .explita-input-root .date-input[data-empty="true"] {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root .date-input:is(.dark *) {
@@ -434,9 +434,9 @@
   width: 1.25rem;
   height: 1.25rem;
   flex-shrink: 0;
-  border-radius: calc(var(--radius) - 4px);
+  border-radius: calc(var(--explita-radius) - 4px);
   border-width: 1px;
-  border-color: hsl(var(--primary));
+  border-color: hsl(var(--explita-primary));
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -448,7 +448,7 @@
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
 }
 
 .explita-checkbox-root button:disabled {
@@ -457,8 +457,8 @@
 }
 
 .explita-checkbox-root button[data-state="checked"] {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--explita-primary));
+  color: hsl(var(--explita-primary-foreground));
 }
 
 .explita-checkbox-root .indicator {
@@ -491,7 +491,7 @@
 }
 
 .explita-input-root .multi-select-input[data-empty="true"] {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root .multi-select-input:is(.dark *) {
@@ -544,7 +544,7 @@
   max-height: 300px;
 }
 
-.select-list .emty-list {
+.select-list .empty-list {
   height: -moz-fit-content;
   height: fit-content;
   padding: 0.5rem;
@@ -616,7 +616,7 @@
 }
 
 .explita-input-root .select-trigger[data-empty="true"] {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root .select-trigger:is(.dark *) {
@@ -629,12 +629,12 @@
 .explita-popover-content {
   z-index: 9999999;
   width: 100%;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   border-width: 1px;
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
   padding: 0px;
-  color: hsl(var(--popover-foreground));
+  color: hsl(var(--explita-popover-foreground));
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -659,9 +659,9 @@
   min-height: -moz-fit-content;
   min-height: fit-content;
   width: 100%;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   border-width: 1px;
-  border-color: hsl(var(--input));
+  border-color: hsl(var(--explita-input));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
   padding-left: 0.75rem;
@@ -676,17 +676,17 @@
 }
 
 .explita-input-root textarea::-moz-placeholder {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root textarea::placeholder {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-input-root textarea:focus-visible {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
 }
 
 .explita-input-root textarea:disabled {
@@ -722,7 +722,7 @@
 .explita-calendar-root {
   position: relative;
   overflow: hidden;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   padding: 0.75rem;
 }
 
@@ -804,12 +804,12 @@
   left: 0.75rem;
 }
 
-.explita-calendar-root .table {
+.explita-calendar-root .calendar-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.explita-calendar-root .table > :not([hidden]) ~ :not([hidden]) {
+.explita-calendar-root .calendar-table > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
@@ -821,10 +821,10 @@
 
 .explita-calendar-root .head-cell {
   width: 2rem;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   font-size: 0.8rem;
   font-weight: 400;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-calendar-root .row {
@@ -847,40 +847,40 @@
 }
 
 .explita-calendar-root .cell:has([aria-selected]) {
-  background-color: hsl(var(--accent));
+  background-color: hsl(var(--explita-accent));
 }
 
 .explita-calendar-root .cell:has([aria-selected].day-range-end) {
-  border-top-right-radius: calc(var(--radius) - 2px);
-  border-bottom-right-radius: calc(var(--radius) - 2px);
+  border-top-right-radius: calc(var(--explita-radius) - 2px);
+  border-bottom-right-radius: calc(var(--explita-radius) - 2px);
 }
 
 .explita-calendar-root .cell:has([aria-selected].dayoutside) {
-  background-color: hsl(var(--accent) / 0.5);
+  background-color: hsl(var(--explita-accent) / 0.5);
 }
 
 .explita-calendar-root .cell.range-cell:has(>.day-range-end) {
-  border-top-right-radius: calc(var(--radius) - 2px);
-  border-bottom-right-radius: calc(var(--radius) - 2px);
+  border-top-right-radius: calc(var(--explita-radius) - 2px);
+  border-bottom-right-radius: calc(var(--explita-radius) - 2px);
 }
 
 .explita-calendar-root .cell.range-cell:has(>.day-range-start) {
-  border-top-left-radius: calc(var(--radius) - 2px);
-  border-bottom-left-radius: calc(var(--radius) - 2px);
+  border-top-left-radius: calc(var(--explita-radius) - 2px);
+  border-bottom-left-radius: calc(var(--explita-radius) - 2px);
 }
 
 .explita-calendar-root .cell.range-cell:has([aria-selected]):first-child {
-  border-top-left-radius: calc(var(--radius) - 2px);
-  border-bottom-left-radius: calc(var(--radius) - 2px);
+  border-top-left-radius: calc(var(--explita-radius) - 2px);
+  border-bottom-left-radius: calc(var(--explita-radius) - 2px);
 }
 
 .explita-calendar-root .cell.range-cell:has([aria-selected]):last-child {
-  border-top-right-radius: calc(var(--radius) - 2px);
-  border-bottom-right-radius: calc(var(--radius) - 2px);
+  border-top-right-radius: calc(var(--explita-radius) - 2px);
+  border-bottom-right-radius: calc(var(--explita-radius) - 2px);
 }
 
 .explita-calendar-root .cell.single-cell:has([aria-selected]) {
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
 }
 
 .explita-calendar-root .day {
@@ -895,42 +895,42 @@
 }
 
 .explita-calendar-root .day-selected {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--explita-primary));
+  color: hsl(var(--explita-primary-foreground));
 }
 
 .explita-calendar-root .day-selected:hover {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--explita-primary));
+  color: hsl(var(--explita-primary-foreground));
 }
 
 .explita-calendar-root .day-selected:focus {
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: hsl(var(--explita-primary));
+  color: hsl(var(--explita-primary-foreground));
 }
 
 .explita-calendar-root .day-today {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-calendar-root .day-outside {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-calendar-root .day-outside[aria-selected="true"] {
-  background-color: hsl(var(--accent) / 0.5);
-  color: hsl(var(--muted-foreground));
+  background-color: hsl(var(--explita-accent) / 0.5);
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-calendar-root .day-disabled {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
   opacity: 0.5;
 }
 
 .explita-calendar-root .day-range-middle[aria-selected="true"] {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-calendar-root .day-hidden {
@@ -964,8 +964,8 @@
   --tw-scale-x: 1.1;
   --tw-scale-y: 1.1;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-calendar-root .year-picker-root {
@@ -995,7 +995,7 @@
 
 .explita-calendar-root .year-picker-root .title {
   display: block;
-  background-color: hsl(var(--accent));
+  background-color: hsl(var(--explita-accent));
   padding: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -1029,13 +1029,13 @@
 }
 
 .explita-calendar-root .year-picker-root .items .item:hover {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-calendar-root .year-picker-root .items .item[data-active="true"] {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-calendar-content,
@@ -1081,7 +1081,7 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   font-weight: 500;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-command [cmdk-group]:not([hidden]) ~[cmdk-group] {
@@ -1134,7 +1134,7 @@
   display: flex;
   height: 2.5rem;
   width: 100%;
-  border-radius: calc(var(--radius) - 2px);
+  border-radius: calc(var(--explita-radius) - 2px);
   background-color: transparent;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -1145,11 +1145,11 @@
 }
 
 .explita-command-input-wrapper .input::-moz-placeholder {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-command-input-wrapper .input::placeholder {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-command-input-wrapper .input:disabled {
@@ -1174,7 +1174,7 @@
 .explita-command-group {
   overflow: hidden;
   padding: 0.25rem;
-  color: hsl(var(--foreground));
+  color: hsl(var(--explita-foreground));
 }
 
 .explita-command-group [cmdk-group-heading] {
@@ -1185,14 +1185,14 @@
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 500;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-command-separator {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
   height: 1px;
-  background-color: hsl(var(--border));
+  background-color: hsl(var(--explita-border));
 }
 
 .explita-command-item {
@@ -1204,7 +1204,7 @@
           user-select: none;
   align-items: center;
   gap: 0.5rem;
-  border-radius: calc(var(--radius) - 4px);
+  border-radius: calc(var(--explita-radius) - 4px);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.375rem;
@@ -1220,8 +1220,8 @@
 }
 
 .explita-command-item[data-selected="true"] {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--accent-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-accent-foreground));
 }
 
 .explita-command-item[data-disabled="true"] {
@@ -1240,7 +1240,7 @@
   font-size: 0.75rem;
   line-height: 1rem;
   letter-spacing: 0.1em;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-dialog-overlay {
@@ -1263,7 +1263,7 @@
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
   gap: 1rem;
   border-width: 1px;
-  background-color: hsl(var(--background));
+  background-color: hsl(var(--explita-background));
   padding: 1.5rem;
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
@@ -1273,7 +1273,7 @@
 
 @media (min-width: 640px) {
   .explita-dialog-content {
-    border-radius: var(--radius);
+    border-radius: var(--explita-radius);
   }
 }
 
@@ -1281,9 +1281,9 @@
   position: absolute;
   right: 1rem;
   top: 1rem;
-  border-radius: calc(var(--radius) - 4px);
+  border-radius: calc(var(--explita-radius) - 4px);
   opacity: 0.7;
-  --tw-ring-offset-color: hsl(var(--background));
+  --tw-ring-offset-color: hsl(var(--explita-background));
   transition-property: opacity;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
@@ -1299,7 +1299,7 @@
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
   --tw-ring-offset-width: 2px;
 }
 
@@ -1308,8 +1308,8 @@
 }
 
 .explita-dialog-close[data-state="open"] {
-  background-color: hsl(var(--accent));
-  color: hsl(var(--muted-foreground));
+  background-color: hsl(var(--explita-accent));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-dialog-header {
@@ -1362,7 +1362,7 @@
 .explita-dialog-description {
   font-size: 0.875rem;
   line-height: 1.25rem;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--explita-muted-foreground));
 }
 
 .explita-radio-group-root {
@@ -1376,8 +1376,8 @@
   width: 1rem;
   border-radius: 9999px;
   border-width: 1px;
-  border-color: hsl(var(--primary));
-  color: hsl(var(--primary));
+  border-color: hsl(var(--explita-primary));
+  color: hsl(var(--explita-primary));
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -1392,7 +1392,7 @@
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
 }
 
 .explita-radio-group-item:disabled {
@@ -1409,7 +1409,7 @@
 .explita-radio-group-item .button {
   height: 0.875rem;
   width: 0.875rem;
-  fill: hsl(var(--primary));
+  fill: hsl(var(--explita-primary));
 }
 
 .explita-scroll-area-root {
@@ -1454,7 +1454,7 @@
   position: relative;
   flex: 1 1 0%;
   border-radius: 9999px;
-  background-color: hsl(var(--border));
+  background-color: hsl(var(--explita-border));
 }
 
 .explita-switch-root {
@@ -1481,9 +1481,9 @@
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-  --tw-ring-color: hsl(var(--ring));
+  --tw-ring-color: hsl(var(--explita-ring));
   --tw-ring-offset-width: 2px;
-  --tw-ring-offset-color: hsl(var(--background));
+  --tw-ring-offset-color: hsl(var(--explita-background));
 }
 
 .explita-switch-root:disabled {
@@ -1492,11 +1492,11 @@
 }
 
 .explita-switch-root[data-state="checked"] {
-  background-color: hsl(var(--primary));
+  background-color: hsl(var(--explita-primary));
 }
 
 .explita-switch-root[data-state="unchecked"] {
-  background-color: hsl(var(--input));
+  background-color: hsl(var(--explita-input));
 }
 
 .explita-switch-thumb {
@@ -1505,7 +1505,7 @@
   height: 1rem;
   width: 1rem;
   border-radius: 9999px;
-  background-color: hsl(var(--background));
+  background-color: hsl(var(--explita-background));
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -1528,58 +1528,58 @@
 }
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 0 0% 3.9%;
-  --card: 0 0% 100%;
-  --card-foreground: 0 0% 3.9%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 3.9%;
-  --primary: 0 0% 9%;
-  --primary-foreground: 0 0% 98%;
-  --secondary: 0 0% 96.1%;
-  --secondary-foreground: 0 0% 9%;
-  --muted: 0 0% 96.1%;
-  --muted-foreground: 0 0% 45.1%;
-  --accent: 0 0% 96.1%;
-  --accent-foreground: 0 0% 9%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 89.8%;
-  --input: 0 0% 89.8%;
-  --ring: 0 0% 3.9%;
-  --chart-1: 12 76% 61%;
-  --chart-2: 173 58% 39%;
-  --chart-3: 197 37% 24%;
-  --chart-4: 43 74% 66%;
-  --chart-5: 27 87% 67%;
-  --radius: 0.5rem;
+  --explita-background: 0 0% 100%;
+  --explita-foreground: 0 0% 3.9%;
+  --explita-card: 0 0% 100%;
+  --explita-card-foreground: 0 0% 3.9%;
+  --explita-popover: 0 0% 100%;
+  --explita-popover-foreground: 0 0% 3.9%;
+  --explita-primary: 0 0% 9%;
+  --explita-primary-foreground: 0 0% 98%;
+  --explita-secondary: 0 0% 96.1%;
+  --explita-secondary-foreground: 0 0% 9%;
+  --explita-muted: 0 0% 96.1%;
+  --explita-muted-foreground: 0 0% 45.1%;
+  --explita-accent: 0 0% 96.1%;
+  --explita-accent-foreground: 0 0% 9%;
+  --explita-destructive: 0 84.2% 60.2%;
+  --explita-destructive-foreground: 0 0% 98%;
+  --explita-border: 0 0% 89.8%;
+  --explita-input: 0 0% 89.8%;
+  --explita-ring: 0 0% 3.9%;
+  --explita-chart-1: 12 76% 61%;
+  --explita-chart-2: 173 58% 39%;
+  --explita-chart-3: 197 37% 24%;
+  --explita-chart-4: 43 74% 66%;
+  --explita-chart-5: 27 87% 67%;
+  --explita-radius: 0.5rem;
 }
 
 .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --explita-background: 0 0% 3.9%;
+  --explita-foreground: 0 0% 98%;
+  --explita-card: 0 0% 3.9%;
+  --explita-card-foreground: 0 0% 98%;
+  --explita-popover: 0 0% 3.9%;
+  --explita-popover-foreground: 0 0% 98%;
+  --explita-primary: 0 0% 98%;
+  --explita-primary-foreground: 0 0% 9%;
+  --explita-secondary: 0 0% 14.9%;
+  --explita-secondary-foreground: 0 0% 98%;
+  --explita-muted: 0 0% 14.9%;
+  --explita-muted-foreground: 0 0% 63.9%;
+  --explita-accent: 0 0% 14.9%;
+  --explita-accent-foreground: 0 0% 98%;
+  --explita-destructive: 0 62.8% 30.6%;
+  --explita-destructive-foreground: 0 0% 98%;
+  --explita-border: 0 0% 14.9%;
+  --explita-input: 0 0% 14.9%;
+  --explita-ring: 0 0% 83.1%;
+  --explita-chart-1: 220 70% 50%;
+  --explita-chart-2: 160 60% 45%;
+  --explita-chart-3: 30 80% 55%;
+  --explita-chart-4: 280 65% 60%;
+  --explita-chart-5: 340 75% 55%;
 }
 
 *,

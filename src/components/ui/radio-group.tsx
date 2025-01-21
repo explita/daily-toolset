@@ -10,7 +10,7 @@ const RadioGroup = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Root
-      className={`explita-radio-group-root ${className}`}
+      className={`explita-radio-group-root ${className || ""}`}
       {...props}
       ref={ref}
     />
@@ -25,7 +25,7 @@ const RadioGroupItem = React.forwardRef<
   return (
     <RadioGroupPrimitive.Item
       ref={ref}
-      className={`explita-radio-group-item ${className}`}
+      className={`explita-radio-group-item ${className || ""}`}
       {...props}
     >
       <RadioGroupPrimitive.Indicator className="indicator">

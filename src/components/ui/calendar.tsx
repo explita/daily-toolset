@@ -16,7 +16,6 @@ function Calendar({
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
-      className={className}
       classNames={{
         months: "months",
         month: "month",
@@ -26,7 +25,7 @@ function Calendar({
         nav_button: `${buttonVariants({ variant: "outline" })} nav-button`,
         nav_button_previous: "nav-prev",
         nav_button_next: "nav-next",
-        table: "table",
+        table: "calendar-table",
         head_row: "head-row",
         head_cell: "head-cell",
         row: "row",

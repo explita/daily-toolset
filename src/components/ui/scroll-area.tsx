@@ -9,7 +9,7 @@ const ScrollArea = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
-    className={`explita-scroll-area-root ${className}`}
+    className={`explita-scroll-area-root ${className || ""}`}
     {...props}
   >
     <ScrollAreaPrimitive.Viewport className="explita-scroll-area-viewport">
@@ -30,7 +30,7 @@ const ScrollBar = React.forwardRef<
     orientation={orientation}
     className={`explita-scroll-area-scrollbar ${
       orientation === "vertical" && "vertical"
-    } ${orientation === "horizontal" && "horizontal"} ${className}`}
+    } ${orientation === "horizontal" && "horizontal"} ${className || ""}`}
     {...props}
   >
     <ScrollAreaPrimitive.ScrollAreaThumb className="explita-scroll-area-thumb" />

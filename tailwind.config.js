@@ -5,51 +5,51 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "hsl(var(--explita-background))",
+        foreground: "hsl(var(--explita-foreground))",
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "hsl(var(--explita-card))",
+          foreground: "hsl(var(--explita-card-foreground))",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "hsl(var(--explita-popover))",
+          foreground: "hsl(var(--explita-popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "hsl(var(--explita-primary))",
+          foreground: "hsl(var(--explita-primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "hsl(var(--explita-secondary))",
+          foreground: "hsl(var(--explita-secondary-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "hsl(var(--explita-muted))",
+          foreground: "hsl(var(--explita-muted-foreground))",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "hsl(var(--explita-accent))",
+          foreground: "hsl(var(--explita-accent-foreground))",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "hsl(var(--explita-destructive))",
+          foreground: "hsl(var(--explita-destructive-foreground))",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
+        border: "hsl(var(--explita-border))",
+        input: "hsl(var(--explita-input))",
+        ring: "hsl(var(--explita-ring))",
         chart: {
-          1: "hsl(var(--chart-1))",
-          2: "hsl(var(--chart-2))",
-          3: "hsl(var(--chart-3))",
-          4: "hsl(var(--chart-4))",
-          5: "hsl(var(--chart-5))",
+          1: "hsl(var(--explita-chart-1))",
+          2: "hsl(var(--explita-chart-2))",
+          3: "hsl(var(--explita-chart-3))",
+          4: "hsl(var(--explita-chart-4))",
+          5: "hsl(var(--explita-chart-5))",
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--explita-radius)",
+        md: "calc(var(--explita-radius) - 2px)",
+        sm: "calc(var(--explita-radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {
@@ -57,12 +57,12 @@ module.exports = {
             height: "0",
           },
           to: {
-            height: "var(--radix-accordion-content-height)",
+            height: "var(--explita-radix-accordion-content-height)",
           },
         },
         "accordion-up": {
           from: {
-            height: "var(--radix-accordion-content-height)",
+            height: "var(--explita-radix-accordion-content-height)",
           },
           to: {
             height: "0",

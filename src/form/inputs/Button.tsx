@@ -2,30 +2,10 @@
 
 import { BsPlusLg, BsSearch, BsXLg } from "react-icons/bs";
 import { HiOutlineSaveAs } from "react-icons/hi";
-import React from "react";
-import { Button as BaseButton, ButtonProps } from "../../components/ui/button";
+import { Button as BaseButton } from "../../components/ui/button";
 import { Spinner } from "../../components/Spinner";
 import { LuMinus } from "react-icons/lu";
-
-type BtnProps = ButtonProps & {
-  icon?: React.ReactNode;
-  type?: "submit" | "button";
-  isDisabled?: boolean;
-  loading?: boolean;
-  onClick?: () => void;
-  className?: string;
-  variant?:
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link"
-    | "teal"
-    | "green"
-    | null;
-  size?: "default" | "sm" | "lg" | "icon" | "xs" | null;
-};
+import { ButtonProps } from "../../input.type";
 
 export function Button({
   children,
@@ -36,7 +16,7 @@ export function Button({
   isDisabled = false,
   loading = false,
   ...rest
-}: BtnProps) {
+}: ButtonProps) {
   return (
     <BaseButton
       type={type}
@@ -57,7 +37,7 @@ Button.Add = function Add({
   variant = "green",
   size = "sm",
   ...rest
-}: BtnProps) {
+}: ButtonProps) {
   return (
     <Button icon={<BsPlusLg />} size={size} variant={variant} {...rest}>
       {children}
@@ -70,7 +50,7 @@ Button.Remove = function Remove({
   variant = "destructive",
   size = "icon",
   ...rest
-}: BtnProps) {
+}: ButtonProps) {
   return (
     <Button size={size} variant={variant} {...rest}>
       <LuMinus />
@@ -78,7 +58,7 @@ Button.Remove = function Remove({
   );
 };
 
-export function ButtonAdd({ ...rest }: BtnProps) {
+export function ButtonAdd({ ...rest }: ButtonProps) {
   return <Button.Add {...rest} />;
 }
 
@@ -88,7 +68,7 @@ Button.Submit = function Submit({
   size = "default",
   loading,
   ...rest
-}: BtnProps) {
+}: ButtonProps) {
   return (
     <Button
       type={"submit"}
@@ -107,7 +87,7 @@ Button.Search = function Search({
   children = "Search",
   variant = "secondary",
   ...rest
-}: BtnProps) {
+}: ButtonProps) {
   return (
     <Button.Submit icon={<BsSearch />} variant={variant} {...rest}>
       {children}
@@ -120,7 +100,7 @@ Button.Close = function Close({
   variant = "destructive",
   size,
   ...rest
-}: BtnProps) {
+}: ButtonProps) {
   return (
     <Button
       type="button"

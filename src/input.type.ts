@@ -1,3 +1,4 @@
+import { ButtonProps as BtnProps } from "components/ui/button";
 import React, { ChangeEvent, ReactNode } from "react";
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
@@ -17,6 +18,26 @@ type SelectOption = {
   label: ReactNode | string;
   description?: ReactNode | string;
   disabled?: boolean;
+};
+
+export type ButtonProps = BtnProps & {
+  icon?: React.ReactNode;
+  type?: "submit" | "button";
+  isDisabled?: boolean;
+  loading?: boolean;
+  onClick?: () => void;
+  className?: string;
+  variant?:
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | "link"
+    | "teal"
+    | "green"
+    | null;
+  size?: "default" | "sm" | "lg" | "icon" | "xs" | null;
 };
 
 export type SelectProps = Omit<CommonProps, "isChecked"> & {

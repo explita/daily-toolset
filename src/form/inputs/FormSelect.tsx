@@ -108,7 +108,7 @@ export function Select({
       <Label id={id} label={label} isRequired={isRequired} />
       <Popover open={open} onOpenChange={setOpen}>
         <div>
-          {isClearable && inputValue && !isDisabled && (
+          {isClearable && inputValue !== "" && !isDisabled && (
             <Clear onClick={() => handleSelect("")} />
           )}
           <PopoverTrigger asChild>
@@ -118,7 +118,7 @@ export function Select({
               aria-expanded={open}
               data-error={errorData.length > 0}
               data-empty={!inputValue}
-              data-clearable={isClearable && inputValue}
+              data-clearable={isClearable && inputValue !== ""}
               className={"select-trigger"}
               disabled={isDisabled}
             >

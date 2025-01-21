@@ -104,7 +104,7 @@ export function MultiSelect({
             aria-expanded={open}
             data-error={errorData.length > 0}
             data-empty={value.length === 0}
-            data-clearable={isClearable}
+            data-clearable={isClearable && value.length > 0}
             className={"multi-select-input"}
             disabled={isDisabled}
           >

@@ -90,7 +90,7 @@ DatePickerProps) {
               variant={"outline"}
               data-error={errorData.length > 0}
               data-empty={!value}
-              data-clearable={isClearable}
+              data-clearable={isClearable && value !== ""}
               className={"date-input"}
               disabled={isDisabled}
             >

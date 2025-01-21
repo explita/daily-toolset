@@ -4,3 +4,4 @@ export { useLocalStorage } from "./useLocalStorage";
 export { useList } from "./useList";
 export { useNetwork } from "./useNetwork";
 export { useDisclosure } from "./useDisclosure";
+export { useLocation } from "./useLocation";
