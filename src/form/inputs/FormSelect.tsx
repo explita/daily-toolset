@@ -21,9 +21,9 @@ import { ScrollArea } from "../../components/ui/scroll-area";
 import { Label } from "./FormLabel";
 import { Clear } from "./ClearInput";
 import { InputError } from "./InputError";
-import { useForm } from "../formProvider";
-import { stripTags } from "../../stringUtils";
+import { stripTags } from "../../react/snippets/stripTags";
 import { SelectProps } from "../../input.type";
+import { useForm } from "../../react/snippets/formProvider";
 
 export function Select({
   addEmpty = false,

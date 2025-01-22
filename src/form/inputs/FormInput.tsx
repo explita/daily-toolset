@@ -12,7 +12,7 @@ import { Label } from "./FormLabel";
 import { LuCheck, LuX } from "react-icons/lu";
 import { InputError } from "./InputError";
 import { DateInput } from "./FormDateInput";
-import { useForm } from "../../form/formProvider";
+import { useForm } from "../../react/snippets/formProvider";
 import { FormInputProps } from "../../input.type";
 
 export function FormInput(props: FormInputProps) {

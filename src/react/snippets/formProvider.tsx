@@ -12,8 +12,8 @@ import {
 
 import { z, ZodEffects, ZodObject, ZodRawShape, ZodTypeAny } from "zod";
 
-import { debounce } from "../functionUtils";
-import { formValidation } from "./formValidation";
+import { debounce } from "../../functionUtils";
+import { formValidation } from "../../validation/formValidation";
 
 type ZodSchema =
   | ZodObject<ZodRawShape>

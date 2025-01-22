@@ -12,14 +12,6 @@
         "default": "./dist/index.js"
       }
     },
-    "./form": {
-      "require": {
-        "default": "./dist/form/index.js"
-      },
-      "import": {
-        "default": "./dist/form/index.js"
-      }
-    },
     "./hooks": {
       "require": {
         "default": "./dist/hooks/index.js"
@@ -34,6 +26,22 @@
       },
       "import": {
         "default": "./dist/components/index.js"
+      }
+    },
+    "./react": {
+      "require": {
+        "default": "./dist/react/snippets/index.js"
+      },
+      "import": {
+        "default": "./dist/react/snippets/index.js"
+      }
+    },
+    "./validation": {
+      "require": {
+        "default": "./dist/validation/index.js"
+      },
+      "import": {
+        "default": "./dist/validation/index.js"
       }
     },
     "./dist/styles.css": "./dist/styles.css"

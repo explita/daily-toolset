@@ -11,7 +11,7 @@ import { LuCalendar as CalendarIcon } from "react-icons/lu";
 import { Calendar } from "../../components/ui/calendar";
 import { InputError } from "./InputError";
 import { ScrollArea } from "../../components/ui/scroll-area";
-import { useForm } from "../../form/formProvider";
+import { useForm } from "../../react/snippets/formProvider";
 import { formatDate } from "../../dateUtils";
 import { DatePickerProps } from "../../input.type";
 

@@ -4,7 +4,7 @@ import { useEffect, useId, useRef } from "react";
 import { Textarea } from "../../components/ui/textarea";
 import { Label } from "./FormLabel";
 import { InputError } from "./InputError";
-import { useForm } from "../../form/formProvider";
+import { useForm } from "../../react/snippets/formProvider";
 import { FormTextAreaProps } from "../../input.type";
 
 export function FormTextArea({

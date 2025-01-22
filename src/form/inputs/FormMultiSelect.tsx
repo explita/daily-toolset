@@ -17,7 +17,7 @@ import {
 } from "../../components/ui/popover";
 import { ScrollArea } from "../../components/ui/scroll-area";
 import { Button } from "./Button";
-import { useForm } from "../formProvider";
+import { useForm } from "../../react/snippets/formProvider";
 import { Label } from "./FormLabel";
 import { LuX } from "react-icons/lu";
 import { InputError } from "./InputError";
