@@ -37,12 +37,13 @@ export function FormInput(props: FormInputProps) {
 
   const errorData = error
     ? error
-    : name
+    : name && name in formErrors
     ? (formErrors as { [key: string]: any })?.[name] || ""
     : "";
+
   const inputValue = defaultValue
     ? defaultValue
-    : name
+    : name && name in formValues
     ? (formValues as { [key: string]: any })[name] ?? ""
     : "";
 

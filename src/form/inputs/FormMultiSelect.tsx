@@ -56,11 +56,11 @@ export function MultiSelect({
     if (name && inputValue) {
       setValue(inputValue);
     }
-  }, [formValues, name]);
+  }, [name]); //formValues,
 
   const errorData = error
     ? error
-    : name
+    : name && name in formErrors
     ? (formErrors as { [key: string]: any })?.[name] || ""
     : "";
 

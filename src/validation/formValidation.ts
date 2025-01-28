@@ -26,11 +26,17 @@ type ValidationResponse<T> =
  */
 export async function formValidation<Schema extends ZodType<unknown>>(
   validationSchema: Schema,
-  formData: FormData
+  formData: FormData | undefined
 ): Promise<ValidationResponse<z.infer<Schema>>> {
   if (typeof validationSchema?.safeParseAsync !== "function") {
     throw new Error(
       "A valid Zod schema is required for form validation. Please provide a valid Zod schema and try again."
+    );
+  }
+
+  if (!formData) {
+    throw new Error(
+      "A valid FormData object is required for form validation. Please provide a valid FormData object and try again."
     );
   }
 
