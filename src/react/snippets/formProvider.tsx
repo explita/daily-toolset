@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -125,6 +126,8 @@ export function useForm<
     mode?: "controlled" | "uncontrolled";
   } = {}
 ) {
+  const previousErrorsRef = useRef<Record<string, string | undefined>>({});
+
   const {
     schema,
     defaultValues = {} as DefaultValues,
@@ -158,12 +161,26 @@ export function useForm<
   }, [defaultValues]);
 
   useEffect(() => {
-    if (
-      context &&
-      // Object.keys(errors).length > 0 &&
-      JSON.stringify(context.formErrors) !== JSON.stringify(errors)
-    ) {
-      context.setFormErrors(errors);
+    if (context) {
+      if (Object.keys(errors).length === 0) {
+        // Only clear errors if they are different from the previous state
+        if (Object.keys(previousErrorsRef.current).length > 0) {
+          context.setFormErrors({});
+          previousErrorsRef.current = {}; // Update the ref to the new state
+        }
+      } else {
+        const hasErrorsChanged =
+          Object.keys(errors).length !==
+            Object.keys(previousErrorsRef.current).length ||
+          Object.keys(errors).some(
+            (key) => previousErrorsRef.current[key] !== (errors as any)[key]
+          );
+
+        if (hasErrorsChanged) {
+          context.setFormErrors(errors);
+          previousErrorsRef.current = errors; // Update the ref to the new state
+        }
+      }
     }
   }, [errors, context]);
 

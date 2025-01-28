@@ -45,18 +45,16 @@ export function MultiSelect({
   const id = useId();
 
   useEffect(() => {
-    const inputValue = (
-      defaultValue
-        ? defaultValue
-        : name
-        ? (formValues as { [key: string]: string })?.[name]?.split(",") ?? []
-        : []
-    ) as string[];
+    const inputValue = defaultValue
+      ? defaultValue
+      : name && formValues
+      ? (formValues as { [key: string]: string })[name]?.split(",") ?? []
+      : [];
 
-    if (name && inputValue) {
+    if (name && inputValue.length > 0) {
       setValue(inputValue);
     }
-  }, [name]); //formValues,
+  }, [name, formValues, defaultValue]);
 
   const errorData = error
     ? error
