@@ -127,6 +127,7 @@ export function useForm<
   } = {}
 ) {
   const previousErrorsRef = useRef<Record<string, string | undefined>>({});
+  const previousDefaultValuesRef = useRef<Record<string, any>>({});
 
   const {
     schema,
@@ -150,15 +151,21 @@ export function useForm<
 
   useEffect(() => {
     if (context && defaultValues) {
-      // && Object.keys(defaultValues as object).length > 0
+      const previousDefaultValues = previousDefaultValuesRef.current;
+
       const valuesEqual =
-        JSON.stringify(context.formValues) === JSON.stringify(defaultValues);
+        Object.keys(previousDefaultValues).length ===
+          Object.keys(defaultValues).length &&
+        Object.keys(defaultValues).every(
+          (key) => previousDefaultValues[key] === (defaultValues as any)[key]
+        );
 
       if (!valuesEqual) {
         context.setFormValues(defaultValues);
+        previousDefaultValuesRef.current = defaultValues; // Update the ref to the new state
       }
     }
-  }, [defaultValues]);
+  }, [defaultValues, context]);
 
   useEffect(() => {
     if (context) {

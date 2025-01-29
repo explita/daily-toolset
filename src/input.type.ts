@@ -9,7 +9,7 @@ type CommonProps = {
   isDisabled?: true | false;
   defaultValue?: string | number | null;
   name?: string;
-  label?: string;
+  label?: React.ReactNode;
   error?: string;
 };
 
@@ -58,6 +58,7 @@ export type MultiSelectProps = Omit<
 > & {
   defaultValue?: string[];
   handleSelection?: (value: string[]) => void;
+  maxCount?: number;
 };
 
 export type FormInputProps = Omit<

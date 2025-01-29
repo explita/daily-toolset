@@ -1,6 +1,6 @@
 type Props = {
   id?: string;
-  label?: string;
+  label?: React.ReactNode;
   isRequired?: boolean;
 };
 

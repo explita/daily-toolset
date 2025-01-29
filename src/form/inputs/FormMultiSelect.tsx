@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { LuCheck, LuChevronsUpDown } from "react-icons/lu";
 import {
   Command,
@@ -36,6 +36,7 @@ export function MultiSelect({
   handleSelection,
   error,
   placeholder,
+  maxCount,
 }: MultiSelectProps) {
   const { formValues, formErrors, updateValue, validateField } = useForm();
 
@@ -91,6 +92,14 @@ export function MultiSelect({
     await validateField(name, newValue.join(","));
   }
 
+  const values = useMemo(() => {
+    if (maxCount) {
+      return value.filter(Boolean).slice(0, maxCount);
+    }
+
+    return value.filter(Boolean);
+  }, [value]);
+
   return (
     <div className="explita-input-root">
       <Label id={id} label={label} isRequired={isRequired} />
@@ -101,14 +110,14 @@ export function MultiSelect({
             role="combobox"
             aria-expanded={open}
             data-error={errorData.length > 0}
-            data-empty={value.length === 0}
-            data-clearable={isClearable && value.length > 0}
-            className={"multi-select-input"}
+            data-empty={value.filter(Boolean).length === 0}
+            data-clearable={isClearable && value.filter(Boolean).length > 0}
+            className={"group multi-select-input"}
             disabled={isDisabled}
           >
-            {value.length > 0 ? (
-              <div className="multi-select-items">
-                {value.map((v) => {
+            {values.length > 0 ? (
+              <div className="multi-select-items items-center">
+                {values.map((v) => {
                   const label = formattedOptions.find(
                     (item) => item.value === v
                   )?.label;
@@ -121,10 +130,12 @@ export function MultiSelect({
                     />
                   );
                 })}
+                {}
               </div>
             ) : (
               <span>{placeholder}</span>
             )}
+            <Remainder value={value} maxCount={maxCount} />
             <LuChevronsUpDown className="chevron-icon" />
           </Button>
         </PopoverTrigger>
@@ -182,4 +193,17 @@ function SelectItem({ label, value, handleSelectOptions }: SelectItemProps) {
       </span>
     </span>
   );
+}
+
+type RemainderProps = {
+  value: string[];
+  maxCount: number | undefined;
+};
+
+function Remainder({ value, maxCount }: RemainderProps) {
+  if (!maxCount || value.length <= maxCount) return null;
+
+  const rem = value.length - maxCount;
+
+  return <span className="multi-select-remainder">+{rem > 9 ? 9 : rem}</span>;
 }

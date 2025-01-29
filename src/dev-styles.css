@@ -130,7 +130,11 @@
 }
 
 .explita-input-root .multi-select-items {
-  @apply flex flex-wrap gap-1;
+  @apply flex items-center flex-wrap gap-1;
+}
+
+.explita-input-root .multi-select-items .multi-select-remainder {
+  @apply absolute right-1 size-6 text-xs bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center z-50 group-hover:bg-neutral-200 dark:group-hover:bg-gray-900 transition-colors;
 }
 
 .explita-input-root .multi-select-item {
