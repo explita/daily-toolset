@@ -136,8 +136,9 @@ export function Select({
           className="explita-popover-content"
           align={align}
           onPointerDown={(e) => e.stopPropagation()}
+          forceMount
         >
-          <Command>
+          <Command loop>
             {isSearchable && <CommandInput placeholder="Search..." />}
             <CommandList>
               <ScrollArea>

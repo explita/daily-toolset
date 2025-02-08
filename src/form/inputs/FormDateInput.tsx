@@ -109,6 +109,7 @@ DatePickerProps) {
           className="explita-calendar-content explita-popover-content"
           align="start"
           onPointerDown={(e) => e.stopPropagation()}
+          forceMount
         >
           <Calendar
             key={value?.toString()}

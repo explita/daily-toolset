@@ -143,6 +143,7 @@ export function MultiSelect({
           className="explita-popover-content"
           align="start"
           onPointerDown={(e) => e.stopPropagation()}
+          forceMount
         >
           <Command>
             {isSearchable && <CommandInput placeholder="Search..." />}
