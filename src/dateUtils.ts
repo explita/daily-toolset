@@ -280,9 +280,19 @@ type FormatTimeParams = {
  * @throws {Error} If the `format` parameter is not a supported format string.
  */
 export function formatTime(
-  date: Date = new Date(),
+  date: Date | FixedDate | null = new Date(),
   { format = "hh:mmA" }: FormatTimeParams = {}
 ): string {
+  if (typeof date === "string" && !isValidDate(date)) {
+    throw new Error(
+      `Invalid date string provided: "${date}". Expected format: YYYY-MM-DD or similar.`
+    );
+  }
+
+  if (typeof date === "string" && isValidDate(date)) {
+    date = new Date(date);
+  }
+
   if (!(date instanceof Date)) {
     throw new TypeError("Expected a Date object, but received " + typeof date);
   }
@@ -334,7 +344,7 @@ type FormatDateAndTimeParams = {
  * @throws {TypeError} If the `date` parameter is not a `Date` object.
  */
 export function formatDateTime(
-  date: Date = new Date(),
+  date: Date | FixedDate | null = new Date(),
   {
     dateFormat = "DD/MM/YYYY",
     timeFormat = "hh:mmA",

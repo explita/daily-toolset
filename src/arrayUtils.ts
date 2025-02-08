@@ -19,10 +19,6 @@ export function uniqueArray<T>(arr: T[]): T[] {
   return Array.from(new Set(arr));
 }
 
-type UniqueArrayByKeyParams<T> = {
-  array: T[] | null | undefined;
-  key: keyof T;
-};
 /**
  * Returns a new array with all duplicate elements removed, based on the specified key.
  *
@@ -43,27 +39,22 @@ type UniqueArrayByKeyParams<T> = {
  * // Output: [{ id: 1, name: 'John' }, { id: 2, name: 'Jane' }]
  */
 
-export function uniqueArrayByKey<T>({
-  array,
-  key,
-}: UniqueArrayByKeyParams<T>): T[] {
+export function uniqueArrayByKey<T>(
+  array: T[] | null | undefined,
+  key: keyof T
+): T[] {
   if (!Array.isArray(array) || array.length === 0) return [];
 
   return Array.from(new Map(array.map((item) => [item[key], item])).values());
 }
 
-type ArrayChunkParams<T> = {
-  array: T[];
-  size: number;
-};
-
 /**
  * Chunks an array into smaller arrays of the specified size.
  *
  * @example
- * chunk({ arr: [1, 2, 3, 4, 5], size: 2 }) // [[1, 2], [3, 4], [5]]
+ * chunk([1, 2, 3, 4, 5], 2) // [[1, 2], [3, 4], [5]]
  */
-export function chunk<T>({ array, size }: ArrayChunkParams<T>): T[][] {
+export function chunk<T>(array: T[], size: number): T[][] {
   if (!Array.isArray(array)) {
     throw new Error("Expected an array as input");
   }
