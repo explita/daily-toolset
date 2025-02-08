@@ -1,6 +1,6 @@
 {
   "name": "@explita/daily-toolset",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "A lightweight and versatile collection of TypeScript utility functions and form components, inspired by ShadCN UI, for everyday development needs. Simplify and streamline your Node.js, React, and Next.js projects with a powerful suite of well-organized helpers for strings, arrays, dates, objects, and customizable form elements. Perfect for building efficient, modern web applications with ease.",
   "main": "./dist/index.js",
   "types": "./dist/input.type.d.ts",
