@@ -29,9 +29,11 @@ export function DateInput({
   onChange,
 }: // mode = "single",
 DatePickerProps) {
-  const { formValues, formErrors, updateValue, validateField } = useForm();
+  const { formValues, formErrors, setValue, validateValue } = useForm();
 
-  const [value, setValue] = useState<Date | string | undefined>(defaultValue);
+  const [value, setInputValue] = useState<Date | string | undefined>(
+    defaultValue
+  );
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -41,7 +43,7 @@ DatePickerProps) {
         ? (formValues as { [key: string]: any })[name]
         : undefined;
     if (name && inputValue) {
-      setValue(inputValue);
+      setInputValue(inputValue);
     }
   }, [formValues, name]);
 
@@ -52,13 +54,13 @@ DatePickerProps) {
       const selected =
         inputValue === value || !inputValue ? undefined : formatted;
 
-      validateField(name, selected ?? "");
+      validateValue(name, selected ?? "");
 
-      setValue(selected);
+      setInputValue(selected);
 
-      onChange ? onChange(selected || "") : updateValue(name, selected);
+      onChange ? onChange(selected || "") : setValue(name, selected);
     },
-    [name, onChange, updateValue, validateField]
+    [name, onChange, setValue, validateValue]
   );
 
   const handleYearAndMonthChange = useCallback(

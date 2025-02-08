@@ -40,7 +40,7 @@ export function Select({
   error,
   placeholder = "",
 }: SelectProps) {
-  const { formValues, formErrors, updateValue, validateField } = useForm();
+  const { formValues, formErrors, setValue, validateValue } = useForm();
 
   const [open, setOpen] = useState(false);
 
@@ -92,9 +92,9 @@ export function Select({
 
     setInputValue(selected);
 
-    handleSelection ? handleSelection(selected) : updateValue(name, selected);
+    handleSelection ? handleSelection(selected) : setValue(name, selected);
 
-    await validateField(name, selected);
+    await validateValue(name, selected);
 
     setOpen(false);
   }

@@ -233,7 +233,6 @@ export function chunkSplit(
 }
 
 type UniqueStringParams = {
-  length?: number;
   isPassword?: boolean;
 };
 
@@ -248,10 +247,10 @@ type UniqueStringParams = {
  * @example
  * uniqueString({ length: 16, isPassword: true }); // "nC4t@h5Ld^3o9Kv1"
  */
-export function uniqueString({
-  length = 10,
-  isPassword = false,
-}: UniqueStringParams = {}): string {
+export function uniqueString(
+  length: number = 10,
+  { isPassword = false }: UniqueStringParams = {}
+): string {
   let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
   if (isPassword) {
@@ -268,7 +267,6 @@ export function uniqueString({
 }
 
 type FormatCurrencyParams = {
-  amount: number;
   currency?: string;
 };
 
@@ -286,10 +284,10 @@ type FormatCurrencyParams = {
  * @param {string} [currency=""] - The currency symbol to prefix.
  * @returns {string} The formatted currency string.
  */
-export function formatCurrency({
-  amount,
-  currency = "",
-}: FormatCurrencyParams): string {
+export function formatCurrency(
+  amount: number,
+  { currency = "" }: FormatCurrencyParams
+): string {
   if (!amount) return `${currency}0`;
 
   return `${currency}${amount.toLocaleString("en-US", {

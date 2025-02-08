@@ -30,8 +30,12 @@ type FormContextType = {
   setFormValues: (values: any) => void;
   setSchema: (schema: ZodSchema) => void;
   updateValue: (name: string | undefined, value: any) => void;
-  validateField: (name: string | undefined, value: InputValue) => Promise<void>;
+  validateValue: (name: string | undefined, value: InputValue) => Promise<void>;
   setMode: (mode: FormMode) => void;
+  getValues: () => Record<string, InputValue>;
+  getErrors: () => Record<string, string | undefined>;
+  setValue: (name: string | undefined, value: any) => void;
+  getValue: (name: string) => InputValue | undefined;
 };
 
 type InputValue = string | string[] | number | null;
@@ -92,8 +96,12 @@ export function FormProvider({ children }: FormProviderProps) {
       setFormErrors,
       setSchema,
       updateValue,
-      validateField,
+      validateValue: validateField,
       setMode,
+      getValues: () => formValues,
+      getErrors: () => formErrors,
+      setValue: updateValue,
+      getValue: (name: string) => formValues[name],
     }),
     [formValues, formErrors, schema]
   );
@@ -198,8 +206,11 @@ export function useForm<
     return {
       formValues: defaultValues,
       formErrors: errors,
-      updateValue: () => {},
-      validateField: async () => {},
+      getValues: () => defaultValues,
+      getErrors: () => errors,
+      setValue: () => {},
+      validateValue: async () => {},
+      getValue: () => undefined,
     };
   }
 
@@ -209,12 +220,44 @@ export function useForm<
       : {}
   ) as InferZodSchema<UnwrapZodSchema<Schema>> | DefaultValues;
 
+  const formErrors = context.formErrors as Partial<
+    Record<keyof InferZodSchema<UnwrapZodSchema<Schema>>, string>
+  >;
+
   return {
     formValues,
-    formErrors: context.formErrors as Partial<
-      Record<keyof InferZodSchema<UnwrapZodSchema<Schema>>, string>
-    >,
-    updateValue: context.updateValue,
-    validateField: context.validateField,
+    formErrors,
+    validateValue: context.validateValue,
+    getValues: () => formValues,
+    getErrors: () => formErrors,
+    setValue: context.setValue,
+    getValue: (name: keyof DefaultValues) => context.getValue(name.toString()),
   };
 }
+
+// export function useField(name: string) {
+//   const context = useContext(FormContext);
+//   if (!context) {
+//     // console.warn(
+//     //   "FormContext is not initialized. Wrap your component in a FormProvider."
+//     // );
+//     return {
+//       value: undefined,
+//       errors: [],
+//       setValue: () => {},
+//       validate: () => {},
+//     };
+//   }
+
+//   const value = context.getValue(name);
+//   const errors = context.getErrors();
+//   const setValue = context.setValue(name, value);
+//   const validate = context.validateValue(name);
+
+//   return {
+//     value,
+//     errors,
+//     setValue,
+//     validate,
+//   };
+// }

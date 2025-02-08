@@ -27,11 +27,11 @@ export function FormInput(props: FormInputProps) {
     onChange,
     showError = true,
     leftSection,
-    className,
+    className = "",
     ...rest
   } = props;
 
-  const { formValues, formErrors, updateValue, validateField } = useForm();
+  const { formValues, formErrors, setValue, validateValue } = useForm();
 
   const id = useId();
 
@@ -66,11 +66,11 @@ export function FormInput(props: FormInputProps) {
             onChange
               ? onChange
               : async (e) => {
-                  updateValue(name, e.target.value);
-                  await validateField(name, e.target.value);
+                  setValue(name, e.target.value);
+                  await validateValue(name, e.target.value);
                 }
           }
-          className={`${leftSection && "has-left-section"} ${className}`}
+          className={`${leftSection ? "has-left-section" : ""} ${className}`}
           {...rest}
         />
       </div>

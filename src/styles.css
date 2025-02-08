@@ -508,7 +508,7 @@
   gap: 0.25rem;
 }
 
-.explita-input-root .multi-select-items .multi-select-remainder {
+.explita-input-root .multi-select-remainder {
   position: absolute;
   right: 0.25rem;
   z-index: 50;
@@ -527,17 +527,17 @@
   transition-duration: 150ms;
 }
 
-.group:hover .explita-input-root .multi-select-items .multi-select-remainder {
+.group:hover .explita-input-root .multi-select-remainder {
   --tw-bg-opacity: 1;
   background-color: rgb(229 229 229 / var(--tw-bg-opacity, 1));
 }
 
-.explita-input-root .multi-select-items .multi-select-remainder:is(.dark *) {
+.explita-input-root .multi-select-remainder:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity, 1));
 }
 
-.group:hover .explita-input-root .multi-select-items .multi-select-remainder:is(.dark *) {
+.group:hover .explita-input-root .multi-select-remainder:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(17 24 39 / var(--tw-bg-opacity, 1));
 }

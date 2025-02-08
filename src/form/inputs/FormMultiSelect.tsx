@@ -38,10 +38,10 @@ export function MultiSelect({
   placeholder,
   maxCount,
 }: MultiSelectProps) {
-  const { formValues, formErrors, updateValue, validateField } = useForm();
+  const { formValues, formErrors, setValue, validateValue } = useForm();
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<string[]>(defaultValue || []);
+  const [value, setInputValue] = useState<string[]>(defaultValue || []);
 
   const id = useId();
 
@@ -53,7 +53,7 @@ export function MultiSelect({
       : [];
 
     if (name && inputValue.length > 0) {
-      setValue(inputValue);
+      setInputValue(inputValue);
     }
   }, [name, formValues, defaultValue]);
 
@@ -84,12 +84,12 @@ export function MultiSelect({
     } else {
       newValue = [...value.filter((v) => v !== selected)];
     }
-    setValue(newValue);
+    setInputValue(newValue);
 
     handleSelection
       ? handleSelection(newValue)
-      : updateValue(name, newValue.join(","));
-    await validateField(name, newValue.join(","));
+      : setValue(name, newValue.join(","));
+    await validateValue(name, newValue.join(","));
   }
 
   const values = useMemo(() => {

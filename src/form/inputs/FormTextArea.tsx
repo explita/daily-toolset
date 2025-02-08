@@ -21,7 +21,7 @@ export function FormTextArea({
   style,
   ...rest
 }: FormTextAreaProps) {
-  const { formValues, formErrors, updateValue, validateField } = useForm();
+  const { formValues, formErrors, setValue, validateValue } = useForm();
 
   const errorData = error
     ? error
@@ -72,8 +72,8 @@ export function FormTextArea({
           onChange
             ? onChange
             : async (e) => {
-                updateValue(name, e.target.value);
-                await validateField(name, e.target.value);
+                setValue(name, e.target.value);
+                await validateValue(name, e.target.value);
               }
         }
         disabled={isDisabled}
