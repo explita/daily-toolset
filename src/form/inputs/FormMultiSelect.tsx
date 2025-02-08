@@ -25,7 +25,7 @@ import { MultiSelectProps } from "../../input.type";
 
 export function MultiSelect({
   addEmpty = false,
-  name,
+  name = "",
   label,
   options,
   isDisabled = false,
@@ -39,42 +39,46 @@ export function MultiSelect({
   maxCount,
 }: MultiSelectProps) {
   const { formValues, formErrors, setValue, validateValue } = useForm();
-
   const [open, setOpen] = useState(false);
-  const [value, setInputValue] = useState<string[]>(defaultValue || []);
-
   const id = useId();
 
+  // Extract formValues[name] safely to avoid unnecessary re-renders
+  const formValue = useMemo(() => {
+    return name && formValues ? formValues[name]?.split(",") ?? [] : [];
+  }, [name, formValues]);
+
+  // Use lazy initialization to avoid unnecessary re-renders
+  const [value, setInputValue] = useState<string[]>(() => defaultValue || []);
+
+  // Sync state when formValues or defaultValue changes
   useEffect(() => {
-    const inputValue = defaultValue
-      ? defaultValue
-      : name && formValues
-      ? (formValues as { [key: string]: string })[name]?.split(",") ?? []
-      : [];
+    const inputValue = defaultValue ? defaultValue : formValue;
 
     if (name && inputValue.length > 0) {
       setInputValue(inputValue);
     }
-  }, [name, formValues, defaultValue]);
+  }, [defaultValue, formValue, name]);
 
+  // Simplify error handling
   const errorData = error
     ? error
-    : name && name in formErrors
-    ? (formErrors as { [key: string]: any })?.[name] || ""
-    : "";
+    : (formErrors as { [key: string]: string })?.[name] || "";
 
-  let formattedOptions =
-    options?.map((option) => ({
-      value: option.value?.toString() || "",
-      label: option.label?.toString() || "",
-      disabled: option.disabled ?? false,
-    })) || [];
+  // Memoize options formatting to improve performance
+  const formattedOptions = useMemo(() => {
+    let optionsList =
+      options?.map((option) => ({
+        value: option.value?.toString() || "",
+        label: option.label?.toString() || "",
+        disabled: option.disabled ?? false,
+      })) || [];
 
-  if (addEmpty && options)
-    formattedOptions = [
-      { value: "", label: "", disabled: false },
-      ...formattedOptions,
-    ];
+    if (addEmpty && options) {
+      optionsList = [{ value: "", label: "", disabled: false }, ...optionsList];
+    }
+
+    return optionsList;
+  }, [options, addEmpty]);
 
   async function handleSelectOptions(selected: string) {
     let newValue = value;

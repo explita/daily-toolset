@@ -41,19 +41,29 @@ export function Select({
   placeholder = "",
 }: SelectProps) {
   const { formValues, formErrors, setValue, validateValue } = useForm();
-
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
   const id = useId();
 
-  const [inputValue, setInputValue] = useState("");
+  // Memoize form value to prevent unnecessary re-renders
+  const formValue = useMemo(() => formValues[name] ?? "", [formValues, name]);
+
+  // Set initial state from defaultValue or formValues[name]
+  const [inputValue, setInputValue] = useState(() =>
+    (defaultValue ?? formValue).toString()
+  );
+
+  // Ensure inputValue always stays in sync with formValues[name]
+  useEffect(() => {
+    setInputValue(formValue.toString());
+  }, [formValue]);
 
   const errorData = error
     ? error
-    : name
-    ? (formErrors as { [key: string]: string })?.[name] || ""
-    : "";
+    : (formErrors as { [key: string]: string })?.[name] || "";
 
+  // Format options and ensure all values are strings
   const formattedOptions = useMemo(() => {
     let optionsList =
       options?.map((option) => ({
@@ -69,17 +79,17 @@ export function Select({
     return optionsList;
   }, [options, addEmpty]);
 
-  useEffect(() => {
-    const value = (name ? formValues[name] ?? "" : "").toString();
+  const filteredOptions = useMemo(() => {
+    if (!isSearchable || !search.trim()) return formattedOptions;
 
-    if (value) {
-      setInputValue(value);
-    }
-  }, [formValues[name]]);
+    const lowerSearch = search.toLowerCase();
 
-  useEffect(() => {
-    setInputValue(defaultValue?.toString() || "");
-  }, [defaultValue]);
+    return formattedOptions.filter(
+      (opt) =>
+        opt.value.toLowerCase().includes(lowerSearch) || // Ensure value is lowercase
+        stripTags(opt.label).toLowerCase().includes(lowerSearch)
+    );
+  }, [formattedOptions, isSearchable, search]);
 
   async function handleSelect(currentValue: string) {
     if (currentValue === inputValue && !isClearable) {
@@ -99,7 +109,7 @@ export function Select({
     setOpen(false);
   }
 
-  const selectedOption = formattedOptions.find(
+  const selectedOption = filteredOptions.find(
     (item) => item.value === inputValue
   );
 
@@ -138,8 +148,14 @@ export function Select({
           onPointerDown={(e) => e.stopPropagation()}
           forceMount
         >
-          <Command loop>
-            {isSearchable && <CommandInput placeholder="Search..." />}
+          <Command shouldFilter={false} loop>
+            {isSearchable && (
+              <CommandInput
+                placeholder="Search..."
+                value={search}
+                onValueChange={setSearch}
+              />
+            )}
             <CommandList>
               <ScrollArea>
                 <div className="select-list">
@@ -147,7 +163,7 @@ export function Select({
                     No records found.
                   </CommandEmpty>
                   <CommandGroup>
-                    {formattedOptions.map((item) => (
+                    {filteredOptions.map((item) => (
                       <CommandItem
                         key={item.value}
                         value={item.value}

@@ -1,4 +1,4 @@
-import { ButtonProps as BtnProps } from "components/ui/button";
+import { ButtonProps as BtnProps } from "./components/ui/button";
 import React, { ChangeEvent, ReactNode } from "react";
 import { CaptionLabelProps, DayPicker } from "react-day-picker";
 
