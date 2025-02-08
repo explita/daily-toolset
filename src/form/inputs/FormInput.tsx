@@ -127,6 +127,7 @@ FormInput.Password = function Password({
         <PopoverContent
           className="explita-popover-content explita-password-popover"
           align="start"
+          onPointerDown={(e) => e.stopPropagation()}
         >
           <PasswordRequirement
             label={`Includes at least ${minLength} characters`}

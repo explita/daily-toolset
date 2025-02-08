@@ -139,7 +139,11 @@ export function MultiSelect({
             <LuChevronsUpDown className="chevron-icon" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="explita-popover-content" align="start">
+        <PopoverContent
+          className="explita-popover-content"
+          align="start"
+          onPointerDown={(e) => e.stopPropagation()}
+        >
           <Command>
             {isSearchable && <CommandInput placeholder="Search..." />}
             <CommandList>

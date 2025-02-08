@@ -132,7 +132,11 @@ export function Select({
             </Button>
           </PopoverTrigger>
         </div>
-        <PopoverContent className="explita-popover-content" align={align}>
+        <PopoverContent
+          className="explita-popover-content"
+          align={align}
+          onPointerDown={(e) => e.stopPropagation()}
+        >
           <Command>
             {isSearchable && <CommandInput placeholder="Search..." />}
             <CommandList>

@@ -286,7 +286,7 @@ type FormatCurrencyParams = {
  */
 export function formatCurrency(
   amount: number,
-  { currency = "" }: FormatCurrencyParams
+  { currency = "" }: FormatCurrencyParams = {}
 ): string {
   if (!amount) return `${currency}0`;
 
