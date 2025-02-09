@@ -26,7 +26,7 @@ type ValidationResponse<T> =
  */
 export async function formValidation<Schema extends ZodType<unknown>>(
   validationSchema: Schema,
-  formData: FormData | undefined
+  formData: FormData | Record<string, unknown> | undefined
 ): Promise<ValidationResponse<z.infer<Schema>>> {
   if (typeof validationSchema?.safeParseAsync !== "function") {
     throw new Error(
@@ -41,10 +41,12 @@ export async function formValidation<Schema extends ZodType<unknown>>(
   }
 
   try {
-    const form = Object.fromEntries(formData.entries()) as Record<
-      string,
-      unknown
-    >;
+    // TODO: Find a way to type this without losing the ability to use formData directly
+    let form = formData;
+
+    if (formData instanceof FormData) {
+      form = Object.fromEntries(formData.entries()) as Record<string, unknown>;
+    }
 
     const result = await validationSchema.safeParseAsync(form);
 

@@ -10,6 +10,7 @@ import {
 } from "../../components/ui/popover";
 import { Label } from "./FormLabel";
 import { LuCheck, LuX } from "react-icons/lu";
+import { IoIosEyeOff, IoIosEye } from "react-icons/io";
 import { InputError } from "./InputError";
 import { DateInput } from "./FormDateInput";
 import { useForm } from "../../react/snippets/formProvider";
@@ -91,6 +92,7 @@ FormInput.Password = function Password({
 }: PasswordProps) {
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState("");
+  const [revealed, setReveal] = useState(false);
 
   const checks = requirements.map((requirement, index) => (
     <PasswordRequirement
@@ -109,37 +111,68 @@ FormInput.Password = function Password({
   //     : "bg-red-500";
 
   return (
-    <Popover open={popoverOpened} onOpenChange={setPopoverOpened}>
-      <PopoverTrigger
-        onFocusCapture={() => setPopoverOpened(true)}
-        onBlurCapture={() => setPopoverOpened(false)}
-        asChild
-      >
-        <FormInput
-          type="password"
-          autoComplete="off"
-          defaultValue={value}
-          onChange={(event) => setValue(event.currentTarget.value)}
-          {...props}
-        />
-      </PopoverTrigger>
+    <div
+      className="group explita-password-input-root"
+      data-has-label={!!props.label}
+    >
       {showRequirements && (
-        <PopoverContent
-          className="explita-popover-content explita-password-popover"
-          align="start"
-          onPointerDown={(e) => e.stopPropagation()}
-          forceMount
-        >
-          <PasswordRequirement
-            label={`Includes at least ${minLength} characters`}
-            meets={value.length > minLength - 1}
-          />
-          {checks}
-        </PopoverContent>
+        <PasswordRevealer
+          revealed={revealed}
+          onReveal={() => setReveal(!revealed)}
+        />
       )}
-    </Popover>
+      <Popover open={popoverOpened} onOpenChange={setPopoverOpened}>
+        <PopoverTrigger
+          onFocusCapture={() => setPopoverOpened(true)}
+          onBlurCapture={() => setPopoverOpened(false)}
+          asChild
+        >
+          <FormInput
+            type={revealed ? "text" : "password"}
+            autoComplete="off"
+            defaultValue={value}
+            onChange={(event) => setValue(event.currentTarget.value)}
+            {...props}
+          />
+        </PopoverTrigger>
+
+        {showRequirements && (
+          <PopoverContent
+            className="explita-popover-content explita-password-popover"
+            align="start"
+            onPointerDown={(e) => e.stopPropagation()}
+            forceMount
+          >
+            <PasswordRequirement
+              label={`Includes at least ${minLength} characters`}
+              meets={value.length > minLength - 1}
+            />
+            {checks}
+          </PopoverContent>
+        )}
+      </Popover>
+    </div>
   );
 };
+
+function PasswordRevealer({
+  revealed,
+  onReveal,
+}: {
+  revealed: boolean;
+  onReveal: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={revealed ? "Hide password" : "Reveal password"}
+      onClick={onReveal}
+      className="explita-password-reveal"
+    >
+      {revealed ? <IoIosEyeOff size={16} /> : <IoIosEye size={16} />}
+    </button>
+  );
+}
 
 function PasswordRequirement({
   meets,

@@ -56,8 +56,8 @@ export function Select({
 
   // Ensure inputValue always stays in sync with formValues[name]
   useEffect(() => {
-    setInputValue(formValue.toString());
-  }, [formValue]);
+    setInputValue((defaultValue ?? formValue).toString());
+  }, [formValue, defaultValue]);
 
   const errorData = error
     ? error
@@ -167,7 +167,10 @@ export function Select({
                       <CommandItem
                         key={item.value}
                         value={item.value}
-                        onSelect={handleSelect}
+                        onSelect={(value) => {
+                          handleSelect(value);
+                          setSearch("");
+                        }}
                         className="select-list-item"
                       >
                         <span>
