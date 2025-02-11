@@ -36,8 +36,9 @@ export function DataTable<D extends Record<string, any>>({
   columns = [],
   data = [],
   onRowClick,
-  showHeader,
-  showFooter,
+  hideFilter = false,
+  hideHeader = false,
+  hideFooter = false,
   additionalFilter,
   ref,
   emptyMessage = "No records found.",
@@ -51,8 +52,8 @@ export function DataTable<D extends Record<string, any>>({
   });
 
   useEffect(() => {
-    if (showFooter == false) setRowsPerPage(data?.length);
-  }, [data, showFooter]);
+    if (hideFooter === true) setRowsPerPage(data?.length);
+  }, [data, hideFooter]);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -85,8 +86,18 @@ export function DataTable<D extends Record<string, any>>({
     if (!sortable) return items;
 
     return [...items].sort((a, b) => {
-      const first = stripTags(a[sortDescriptor.column]);
-      const second = stripTags(b[sortDescriptor.column]);
+      const typeOfA = typeof a[sortDescriptor.column];
+      const typeOfB = typeof b[sortDescriptor.column];
+
+      const first =
+        typeOfA === "number"
+          ? Number(a[sortDescriptor.column])
+          : stripTags(a[sortDescriptor.column]);
+      const second =
+        typeOfB === "number"
+          ? Number(b[sortDescriptor.column])
+          : stripTags(b[sortDescriptor.column]);
+
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "desc" ? -cmp : cmp;
@@ -119,7 +130,7 @@ export function DataTable<D extends Record<string, any>>({
 
   return (
     <div className="explita-table-container">
-      {(pages > 0 || filterValue != "") && showHeader !== false && (
+      {(pages > 0 || filterValue !== "") && hideFilter === false && (
         <TableFilter
           {...{
             filterValue,
@@ -133,9 +144,11 @@ export function DataTable<D extends Record<string, any>>({
 
       <div className="table-main">
         <table className="explita-table" ref={ref}>
-          <TableHeader
-            {...{ columns, setSortDescriptor, sortDescriptor, sortable }}
-          />
+          {hideHeader === false && (
+            <TableHeader
+              {...{ columns, setSortDescriptor, sortDescriptor, sortable }}
+            />
+          )}
           <tbody>
             {sortedItems.map((row, index: number) => {
               return (
@@ -182,7 +195,7 @@ export function DataTable<D extends Record<string, any>>({
 
       {pages > 0 &&
         filteredItems.length > rowsPerPage &&
-        showFooter !== false && (
+        hideFooter === false && (
           <TableFooter
             {...{ pages, page, onNextPage, onPreviousPage, filteredItems }}
           />
@@ -359,11 +372,12 @@ type TableProps<Data extends object = any> = {
   columns?: Column<Data>[];
   data?: Data[];
   onRowClick?: (data: Data) => void;
-  showHeader?: boolean;
-  showFooter?: boolean;
+  hideFilter?: boolean;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
   additionalFilter?: ReactNode;
   additionalFooter?: ReactNode;
-  ref?: React.RefObject<HTMLTableElement> | null;
+  ref?: React.RefObject<HTMLTableElement>;
   emptyMessage?: string;
 };
 

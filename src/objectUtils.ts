@@ -1,38 +1,19 @@
 import { isValidDate } from "./dateUtils";
 
-export type ObjectTransformInput = { [key: string]: string | number };
-export type Transformed = { [key: string]: string };
+export type Transformed<T extends Record<string, any>> = {
+  [K in Extract<keyof T, string> as K extends `${infer Root}.${string}`
+    ? Root
+    : never]: Record<string, any>;
+};
 
-/**
- * Transforms a flat object with dot-separated keys into a nested object structure.
- *
- * The function takes an object with keys that may contain dot notation to represent
- * nested structures and returns a new object with the corresponding nested structure.
- * If a key part is numeric, it will be treated as an array index.
- *
- * @param {ObjectTransformInput} obj - The input object with flat, dot-separated keys.
- * @returns {Transformed} - The transformed object with nested structure.
- *
- * @throws {Error} Throws an error if the input is not an object or if the key structure is invalid.
- *
- * @example
- * const input = {
- *   "a.b": 1,
- *   "a.c": 2,
- *   "d": 3,
- *   "e.0": 4,
- *   "e.1": 5
- * };
- * const result = transformObject(input);
- * console.log(result);
- * // Output: { a: { b: 1, c: 2 }, d: 3, e: [4, 5] }
- */
-export function transformObject(obj: ObjectTransformInput): Transformed {
+export function transformObject<T extends Record<string, any>>(
+  obj: T
+): Transformed<T> {
   if (!obj || typeof obj !== "object") {
     throw new Error("Invalid input: Expected an object");
   }
 
-  const result: Transformed = {};
+  const result: any = {};
 
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
