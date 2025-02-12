@@ -1,11 +1,46 @@
 import { isValidDate } from "./dateUtils";
 
-export type Transformed<T extends Record<string, any>> = {
-  [K in Extract<keyof T, string> as K extends `${infer Root}.${string}`
-    ? Root
-    : never]: Record<string, any>;
+type DotToNested<T> = T extends Record<string, any>
+  ? {
+      [K in keyof T as K extends `${infer P}.${infer R}`
+        ? P
+        : K]: K extends `${infer P}.${infer R}`
+        ? DotToNested<{ [key in R]: T[K] }>
+        : T[K];
+    }
+  : never;
+
+type Merge<T> = (T extends any ? (x: T) => void : never) extends (
+  x: infer R
+) => void
+  ? { [K in keyof R]: R[K] }
+  : never;
+
+type DeepMerge<T> = {
+  [K in keyof T]: T[K] extends object ? Merge<DeepMerge<T[K]>> : T[K];
 };
 
+type Transformed<T> = DeepMerge<DotToNested<T>>;
+
+/**
+ * Transforms a flat object into a nested object based on the dot notation of the keys.
+ *
+ * @example
+ * const input = {
+ *   "a.b": 1,
+ *   "a.c": 2,
+ *   "d.e.0": 3,
+ *   "d.e.1": 4,
+ * };
+ *
+ * const result = transformObject(input);
+ * // result will be { a: { b: 1, c: 2 }, d: { e: [3, 4] } }
+ *
+ * @template T The type of the object to transform.
+ *
+ * @param {T} obj The object to transform.
+ * @returns {Transformed<T>} The transformed object.
+ */
 export function transformObject<T extends Record<string, any>>(
   obj: T
 ): Transformed<T> {
