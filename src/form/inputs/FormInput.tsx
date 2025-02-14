@@ -15,6 +15,7 @@ import { InputError } from "./InputError";
 import { DateInput } from "./FormDateInput";
 import { useForm } from "../../react/snippets/formProvider";
 import { FormInputProps } from "../../input.type";
+import { useWindowSize } from "../../hooks";
 
 export function FormInput(props: FormInputProps) {
   const {
@@ -82,17 +83,22 @@ export function FormInput(props: FormInputProps) {
 
 type PasswordProps = FormInputProps & {
   minLength?: number;
-  showRequirements?: boolean;
+  hideRequirements?: boolean;
+  hideRevealer?: boolean;
 };
 
 FormInput.Password = function Password({
   minLength = 6,
-  showRequirements = true,
+  hideRequirements = false,
+  hideRevealer = false,
+  onChange,
+  type = "password",
   ...props
 }: PasswordProps) {
   const [popoverOpened, setPopoverOpened] = useState(false);
   const [value, setValue] = useState("");
   const [revealed, setReveal] = useState(false);
+  const window = useWindowSize();
 
   const checks = requirements.map((requirement, index) => (
     <PasswordRequirement
@@ -115,7 +121,7 @@ FormInput.Password = function Password({
       className="group explita-password-input-root"
       data-has-label={!!props.label}
     >
-      {showRequirements && (
+      {!hideRevealer && (
         <PasswordRevealer
           revealed={revealed}
           onReveal={() => setReveal(!revealed)}
@@ -131,12 +137,15 @@ FormInput.Password = function Password({
             type={revealed ? "text" : "password"}
             autoComplete="off"
             defaultValue={value}
-            onChange={(event) => setValue(event.currentTarget.value)}
+            onChange={(event) => {
+              setValue(event.currentTarget.value);
+              onChange?.(event);
+            }}
             {...props}
           />
         </PopoverTrigger>
 
-        {showRequirements && (
+        {!hideRequirements && window.width > 768 && (
           <PopoverContent
             className="explita-popover-content explita-password-popover"
             align="start"
