@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
  */
 export function useWindowScroll() {
   const [scroll, setScroll] = useState({
-    x: window.scrollX,
-    y: window.scrollY,
+    x: 0,
+    y: 0,
   });
 
   /**
@@ -31,6 +31,11 @@ export function useWindowScroll() {
   }
 
   useEffect(() => {
+    setScroll({
+      x: window.scrollX,
+      y: window.scrollY,
+    });
+
     function handleScroll() {
       setScroll({
         x: window.scrollX,
