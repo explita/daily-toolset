@@ -787,25 +787,16 @@ export function weekOfYear(date: Date = new Date()): number {
 }
 
 /**
- * Validates if the provided string is a valid ISO date.
+ * Checks if the given date is valid.
  *
- * This function checks if a given string matches the ISO date format
- * using a regular expression. It then attempts to parse it into a
- * JavaScript Date object to ensure it represents a valid date.
+ * Takes a date in any format that the Date constructor understands and
+ * checks if it is valid. Returns true if the date is valid, false otherwise.
  *
- * @param {string} value - The string to validate as a date.
- * @returns {boolean} - True if the string is a valid date, false otherwise.
+ * @param {any} date - The date to check.
+ * @returns {boolean} - `true` if the date is valid, `false` otherwise.
  */
-export function isValidDate(value: string): boolean {
-  if (typeof value !== "string") return false;
-
-  const isoDateRegex = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z)?)?$/;
-
-  if (!isoDateRegex.test(value)) return false;
-
-  const date = new Date(value);
-
-  return !isNaN(date.getTime());
+export function isValidDate(date: any): boolean {
+  return !isNaN(new Date(date).getTime());
 }
 
 /**
@@ -864,4 +855,112 @@ export function ageFromDOB(dateOfBirth: Date | string): {
   }
 
   return { years, months, days };
+}
+
+/**
+ * Returns the first moment of the month for the given date.
+ *
+ * This function takes a date object or a date string and returns a Date object
+ * representing the first moment of that month (00:00:00.000 on the first day).
+ * If the input is invalid, it throws an error.
+ *
+ * @param {Date | string} date - The date to retrieve the start of the month from.
+ * @returns {Date} A Date object representing the first moment of the month.
+ */
+export function startOfMonth(date: Date | string): Date {
+  const d = new Date(date);
+
+  if (!isValidDate(d)) {
+    throw new Error("Invalid date input");
+  }
+
+  return new Date(d.getFullYear(), d.getMonth(), 1);
+}
+
+/**
+ * Returns the last moment of the month for the given date.
+ *
+ * This function takes a date object or a date string and returns a Date object
+ * representing the last moment of that month (23:59:59.999 on the last day).
+ * If the input is invalid, it throws an error.
+ *
+ * @param {Date | string} date - The date to retrieve the end of the month from.
+ * @returns {Date} A Date object representing the last moment of the month.
+ * @throws {Error} Throws an error if the input date is invalid.
+ */
+export function endOfMonth(date: Date | string): Date {
+  const d = new Date(date);
+
+  if (!isValidDate(d)) {
+    throw new Error("Invalid date input");
+  }
+
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0, 23, 59, 59, 999);
+}
+
+/**
+ * Normalizes a date object or a date string to a Date object with the hours, minutes, and seconds set to 0.
+ *
+ * This function takes a date object or a date string and returns a Date object representing the same date, but with the time set to
+ * 00:00:00.000. If the input is invalid, it throws an error.
+ *
+ * @param {Date | string} date - The date to normalize. If a string is passed, it must be a valid date in the format "YYYY-MM-DD".
+ * @returns {Date} A Date object representing the normalized date.
+ * @throws {Error} Throws an error if the input date is invalid.
+ */
+export function normalizeDate(date: Date | string): Date {
+  const d = new Date(date);
+
+  if (!isValidDate(d)) {
+    throw new Error("Invalid date input");
+  }
+
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+}
+
+/**
+ * Checks if a given date is within the given interval.
+ *
+ * This function takes a target date and an object with start and end dates, and
+ * returns a boolean indicating whether the target date is within the given
+ * interval. If the `ignoreTime` option is set to true, the function will ignore
+ * the time of the dates and only compare the dates.
+ *
+ * If the target date or either of the start or end dates is invalid, the function
+ * throws an error.
+ *
+ * @param {Date | string} target - The date to check.
+ * @param {object} options - An object with the start and end dates, and an
+ * optional `ignoreTime` flag.
+ * @param {Date | string} options.start - The start date of the interval.
+ * @param {Date | string} options.end - The end date of the interval.
+ * @param {boolean} [options.ignoreTime=false] - If true, the time of the dates
+ * will be ignored.
+ * @returns {boolean} `true` if the target date is within the given interval.
+ * @throws {Error} Throws an error if the target date or either of the start or
+ * end dates is invalid.
+ */
+export function isWithinInterval(
+  target: Date | string,
+  options: { start: Date | string; end: Date | string; ignoreTime?: boolean }
+): boolean {
+  if (
+    !isValidDate(target) ||
+    !isValidDate(options.start) ||
+    !isValidDate(options.end)
+  ) {
+    throw new Error("Invalid date input");
+  }
+
+  let targetDate = new Date(target);
+  let startDate = new Date(options.start);
+  let endDate = new Date(options.end);
+
+  if (options.ignoreTime) {
+    targetDate = normalizeDate(targetDate);
+    startDate = normalizeDate(startDate);
+    endDate = normalizeDate(endDate);
+  }
+
+  return targetDate >= startDate && targetDate <= endDate;
 }
