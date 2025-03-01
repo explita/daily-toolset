@@ -1,2 +1,10 @@
-/node_modules
-/dist
+/packages/components/node_modules
+/packages/forms/node_modules
+/packages/hooks/node_modules
+/packages/utils/node_modules
+
+/packages/components/dist
+/packages/forms/dist
+/packages/hooks/dist
+/packages/utils/dist
+node_modules

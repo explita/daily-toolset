@@ -1,0 +1,65 @@
+{
+  "name": "@explita/daily-toolset-hooks",
+  "version": "1.0.0",
+  "description": "A lightweight and flexible collection of React hooks designed to simplify everyday development. Enhance your Next.js and React projects with a powerful set of well-structured hooks for state management, performance optimization, UI interactions, and more. Perfect for building modern, efficient applications with ease.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": {
+        "default": "./dist/index.js"
+      },
+      "import": {
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "test": "jest --passWithNoTests --coverage",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "utility functions",
+    "npm utilities",
+    "React utilities",
+    "Next.js utilities",
+    "Node.js utilities",
+    "utility library",
+    "general purpose utilities",
+    "developer toolset",
+    "ES6 helpers",
+    "typescript helpers",
+    "npm package",
+    "hooks",
+    "react hooks",
+    "next.js hooks"
+  ],
+  "author": "explita",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/explita/daily-toolset.git"
+  },
+  "homepage": "https://daily-toolset.explita.ng",
+  "devDependencies": {
+    "@babel/cli": "^7.25.9",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@types/react": "^19.0.10",
+    "jest": "^29.7.0",
+    "react": "^18.3.1 || ^19",
+    "rimraf": "^6.0.1",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.6.3"
+  },
+  "peerDependencies": {
+    "react": "^18.3.1 || ^19"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}
